@@ -1,0 +1,664 @@
+AOOB investigator
+Ask with an Order id. The agent streams tool calls, evidence, and reasoning while the graph updates.
+
+10678
+nodes
+19367
+edges
+3
+path
+Loading the complete control-flow graph… Then type any Order id from the alarm CSV to investigate.
+CF graph ready in 582 ms · WebGL. Enter any Order id.
+Investigate Order 39
+✓ get_micro_window
+view details
+{
+  "path_step": 1,
+  "path_length": 1,
+  "alarm_line": 331731,
+  "function_name": "MoCMemStrtUp_Co_Hndlr",
+  "function_span": {
+    "start_line": 331709,
+    "end_line": 331944
+  },
+  "indexed_object": "MOCMEM_VBLSTRUCTEARLYCLEAREDRAM_MO_INST_LOOKUP",
+  "declared_size": 2,
+  "operand_symbol": "checkword",
+  "index_expression": "Mo_Inst_GetCoreIdx(checkword)",
+  "micro_window_span": {
+    "start_line": 331724,
+    "end_line": 331738
+  },
+  "window_size_requested": 15,
+  "window_truncated": true,
+  "guards_found": [
+    "init in MoCMemStrtUp_Co_Hndlr: checkword = (uint32) 0 (UNRESOLVED later write via MoCEMM_Co_PwrOnRst_Hdl \u2014 static search has no proof the runtime value stays in-bounds; do not treat the local init as a safety bound)"
+  ],
+  "snippet": [
+    {
+      "line": 331724,
+      "text": ""
+    },
+    {
+      "line": 331725,
+      "text": "  uint32 checkword = (uint32) 0;"
+    },
+    {
+      "line": 331726,
+      "text": ""
+    },
+    {
+      "line": 331727,
+      "text": "  MoCMemStrtUp_tiRomChk = 0;"
+    },
+    {
+      "line": 331728,
+      "text": "  MoCMemStrtUp_tiRamChk = 0;"
+    },
+    {
+      "line": 331729,
+      "text": "  MoCMemStrtUp_adrEccErr = 0;"
+    },
+   
+…[truncated]
+Starting investigation for Order 39…
+Graph highlighted · 1 path steps · operand checkword
+Path context
+MOCMEM_VBLSTRUCTEARLYCLEAREDRAM_MO_INST_LOOKUP · size 2 · operand checkword
+#	function	role	symbol	scope	access	size	dtype	line	first
+1	MoCMemStrtUp_Co_Hndlr	origin_and_alarm	checkword	local	mixed	2	MOCMEM_VBLSTRUCTEARLYCLEAREDRAM_MO_INST[2]	331731	yes
+Case compiled · operand checkword · object MOCMEM_VBLSTRUCTEARLYCLEAREDRAM_MO_INST_LOOKUP size=2 · 1 path step(s)
+✓ run_simulation
+view details
+{
+  "symbol_evaluated": "checkword",
+  "indexed_object": "MOCMEM_VBLSTRUCTEARLYCLEAREDRAM_MO_INST_LOOKUP",
+  "index_expression": "Mo_Inst_GetCoreIdx(checkword)",
+  "declared_array_capacity": 2,
+  "declared_type": "MOCMEM_VBLSTRUCTEARLYCLEAREDRAM_MO_INST[2]",
+  "bit_width": null,
+  "mask_literal": null,
+  "guard_conditions": [
+    "init in MoCMemStrtUp_Co_Hndlr: checkword = (uint32) 0 (UNRESOLVED later write via MoCEMM_Co_PwrOnRst_Hdl \u2014 static search has no proof the runtime value stays in-bounds; do not treat the local init as a safety bound)"
+  ],
+  "guard_numeric_literals": [
+    0
+  ],
+  "derived_min": null,
+  "derived_max": null,
+  "bound_derivation": "none",
+  "derivation_notes": "Mechanical bounds from type width and/or bitmask in index expression. Guards are returned as raw text \u2014 you must judge whether they constrain the index at the alarm site.",
+  "write_helpers": [
+    "MoCEMM_Co_UpdateChkwordCoreTsk",
+    "MoCEMM_Co_ChkwordFirstCoreTsk_MoCMem_st"
+  ],
+  "case_gaps": []
+}
+✓ inspect — MoCEMM_Co_UpdateChkwordCoreTsk — 9 lines
+view details
+{
+  "helper": "MoCEMM_Co_UpdateChkwordCoreTsk",
+  "inspected": [
+    "MoCEMM_Co_UpdateChkwordCoreTsk"
+  ],
+  "function_name": "MoCEMM_Co_UpdateChkwordCoreTsk",
+  "span": {
+    "start_line": 278870,
+    "end_line": 278878,
+    "snippet_start": 278870,
+    "snippet_end": 278878
+  },
+  "line_count": 9,
+  "snippet": [
+    {
+      "line": 278870,
+      "text": "void MoCEMM_Co_UpdateChkwordCoreTsk(uint32* chkword, uint8 idxCore, uint8 idxTsk)"
+    },
+    {
+      "line": 278871,
+      "text": "{"
+    },
+    {
+      "line": 278872,
+      "text": ""
+    },
+    {
+      "line": 278873,
+      "text": "    *chkword = (*chkword & (~((uint32) 7UL << 21UL)))"
+    },
+    {
+      "line": 278874,
+      "text": "            | ((uint32) idxCore << 21UL);"
+    },
+    {
+      "line": 278875,
+      "text": ""
+    },
+    {
+      "line": 278876,
+      "text": "    *chkword = (*chkword & (~((uint32) 7UL << 18UL)))"
+    },
+    {
+      "line": 278877,
+      "text": "            | ((uint32) idxTsk << 18UL);"
+    },
+    {
+      "line": 278878,
+      "text": "}"
+    }
+  ],
+  "from_cache": false
+}
+✓ inspect — Mo_Inst_GetCoreIdx — 4 lines
+view details
+{
+  "helper": "Mo_Inst_GetCoreIdx",
+  "inspected": [
+    "MoCEMM_Co_UpdateChkwordCoreTsk",
+    "Mo_Inst_GetCoreIdx"
+  ],
+  "function_name": "Mo_Inst_GetCoreIdx",
+  "span": {
+    "start_line": 278880,
+    "end_line": 278883,
+    "snippet_start": 278880,
+    "snippet_end": 278883
+  },
+  "line_count": 4,
+  "snippet": [
+    {
+      "line": 278880,
+      "text": "uint8 Mo_Inst_GetCoreIdx(uint32 checkword)"
+    },
+    {
+      "line": 278881,
+      "text": "{"
+    },
+    {
+      "line": 278882,
+      "text": "    return (uint8)((checkword >> 21UL) & 7UL);"
+    },
+    {
+      "line": 278883,
+      "text": "}"
+    }
+  ],
+  "from_cache": false
+}
+✗ submit_verdict rejected — rejected
+view details
+Error invoking tool 'submit_verdict' with kwargs {'confidence': 'high', 'verdict': 'true', 'explanation': 'The array MOCMEM_VBLSTRUCTEARLYCLEAREDRAM_MO_INST_LOOKUP has a declared size of 2, but the index is computed as Mo_Inst_GetCoreIdx(checkword), which extracts the lower 3 bits of checkword (0-7). This allows indices 2-7, which are out of bounds. No explicit checks ensure idxCore is limited to 0 or 1, leading to a potential runtime error.'} with error:
+ classification: Field required
+comment: Field required
+ Please fix the error and try again.
+✗ submit_verdict rejected — Decisive verdict requires confidence_so_far=high. Gather more evidence or submit classification=review.
+view details
+{
+  "accepted": false,
+  "error": "Decisive verdict requires confidence_so_far=high. Gather more evidence or submit classification=review.",
+  "confidence_so_far": "medium"
+}
+✓ query_data_flow
+view details
+{
+  "variable": "checkword",
+  "operand_symbol": "checkword",
+  "indexed_object": "MOCMEM_VBLSTRUCTEARLYCLEAREDRAM_MO_INST_LOOKUP",
+  "sites": [
+    {
+      "function": "MoCEMM_Co_ChkwordFirstCoreTsk_MoCMem_st",
+      "access": "write",
+      "location": "ALL_bc_with_context.c:278899.1-1",
+      "line": 278899
+    },
+    {
+      "function": "MoCEMM_Co_ChkwordFirstCoreTsk_MoCMem_st",
+      "access": "write",
+      "location": "ALL_bc_with_context.c:278899.1-1",
+      "line": 278899
+    },
+    {
+      "function": "MoCEMM_Co_ChkwordFirstCoreTsk_MoCMem_st",
+      "access": "read",
+      "location": "ALL_bc_with_context.c:278926.1-1",
+      "line": 278926
+    },
+    {
+      "function": "MoCEMM_Co_ChkwordFirstCoreTsk_MoCMem_st",
+      "access": "read",
+      "location": "ALL_bc_with_context.c:278926.1-1",
+      "line": 278926
+    },
+    {
+      "function": "MoCEMM_Co_PwrOnRst_Hdl",
+      "access": "write",
+      "location": "ALL_bc_with_context.c:279325.1-1",
+      "line": 279325
+    },
+    {
+      "function": "MoCEMM_Co_PwrOnRst_Hdl",
+      "access": "write",
+      "location": "ALL_bc_with_context.c:279325.1-1",
+      "line": 279325
+    },
+    {
+      "function": "MoCEMM_Co_PwrOnRst_Hdl
+…[truncated]
+✗ submit_verdict rejected — confidence=medium requires one self-verification round: resubmit with counterargument=<strongest case for the opposite classification>.
+view details
+{
+  "accepted": false,
+  "error": "confidence=medium requires one self-verification round: resubmit with counterargument=<strongest case for the opposite classification>."
+}
+✗ submit_verdict rejected — rejected
+view details
+{
+  "accepted": true,
+  "verdict": {
+    "classification": "true",
+    "comment": "The array MOCMEM_VBLSTRUCTEARLYCLEAREDRAM_MO_INST_LOOKUP has a declared size of 2, but the index is computed as Mo_Inst_GetCoreIdx(checkword), which extracts the lower 3 bits of checkword (0-7). This allows indices 2-7, which are out of bounds. No explicit checks ensure idxCore is limited to 0 or 1, leading to a potential runtime error.",
+    "confidence": "medium",
+    "summary": "Index range (0-7) exceeds array capacity (2 elements) due to lack of bounds checks on idxCore.",
+    "human_tag_pattern": "'h'",
+    "reason_for_review": "",
+    "counterargument": "If the code that writes to checkword (e.g., in MoCEMM_Co_ChkwordFirstCoreTsk_MoCMem_st) only ever sets bits 0 and 1, then the index calculation would be safe. However, the data flow does not explicitly confirm this constraint.",
+    "confidence_so_far": "high",
+    "alarm_order_id": 39,
+    "token_savings_percent": 99.0307,
+    "tokens_used": 41429,
+    "naive_full_file_tokens": 4274025,
+    "micro_window_used": true,
+    "simulation": {
+      "symbol_evaluated": "checkword",
+      "indexed_object": "MOCMEM_VBLSTRUCTEARLYCLEAREDRAM_MO_INST_LOOK
+…[truncated]
+Investigation report
+Order
+39
+Astrée message
+[0, 7] not included in array index range [0, 1]
+Classification (agent)
+true (real bug)
+Comment (agent)
+The array MOCMEM_VBLSTRUCTEARLYCLEAREDRAM_MO_INST_LOOKUP has a declared size of 2, but the index is computed as Mo_Inst_GetCoreIdx(checkword), which extracts the lower 3 bits of checkword (0-7). This allows indices 2-7, which are out of bounds. No explicit checks ensure idxCore is limited to 0 or 1, leading to a potential runtime error.
+Confidence
+medium
+Category
+Out-of-bound array access
+Summary
+Index range (0-7) exceeds array capacity (2 elements) due to lack of bounds checks on idxCore.
+Evidence completeness
+fully traced
+Symbols
+MOCMEM_VBLSTRUCTEARLYCLEAREDRAM_MO_INST_LOOKUP
+Tools used
+get_micro_window, inspect, query_data_flow, run_simulation, submit_verdict
+Full JSON
+{
+  "schema_version": 2,
+  "alarm_order_id": 39,
+  "alarm_type": "Alarm (A)",
+  "alarm_category": "Out-of-bound array access",
+  "location": "ALL_bc_with_context.c:331731.56-85",
+  "astree_message": "[0, 7] not included in array index range [0, 1]",
+  "affected_symbols": [
+    {
+      "name": "MOCMEM_VBLSTRUCTEARLYCLEAREDRAM_MO_INST_LOOKUP",
+      "kind": "array",
+      "evidence": "ALL_bc_with_context.c:278865.1-1"
+    }
+  ],
+  "function_name": "MoCMemStrtUp_Co_Hndlr",
+  "function_snippet": "",
+  "manipulation_sequence": [
+    {
+      "order": 1,
+      "function": "MoCMemStrtUp_Co_Hndlr",
+      "access": "mixed",
+      "variable": "checkword",
+      "location": "ALL_bc_with_context.c:331731.56-85",
+      "note": "Operand written in the alarm function before the access."
+    }
+  ],
+  "bounds_evidence": {
+    "symbol": "MOCMEM_VBLSTRUCTEARLYCLEAREDRAM_MO_INST_LOOKUP",
+    "declared_size": 2,
+    "index_expression": "Mo_Inst_GetCoreIdx(checkword)",
+    "index_inferred_range": "",
+    "index_safe_range": "",
+    "target_capacity": 2,
+    "guards_found": [
+      "init in MoCMemStrtUp_Co_Hndlr: checkword = (uint32) 0 (UNRESOLVED later write via MoCEMM_Co_PwrOnRst_Hdl — static search has no proof the runtime value stays in-bounds; do not treat the local init as a safety bound)"
+    ],
+    "index_origin_summary": "Operand written in the alarm function before the access.",
+    "evidence_completeness": "fully traced"
+  },
+  "summary": "Index range (0-7) exceeds array capacity (2 elements) due to lack of bounds checks on idxCore.",
+  "classification": "true",
+  "human_tag_pattern": "'h'",
+  "token_savings_percent": 98.8963,
+  "tokens_used": 47172,
+  "naive_full_file_tokens": 4274025,
+  "micro_window_used": true,
+  "reason_for_review": "",
+  "derived_from": null,
+  "safety_ceiling_hit": false,
+  "comment": "The array MOCMEM_VBLSTRUCTEARLYCLEAREDRAM_MO_INST_LOOKUP has a declared size of 2, but the index is computed as Mo_Inst_GetCoreIdx(checkword), which extracts the lower 3 bits of checkword (0-7). This allows indices 2-7, which are out of bounds. No explicit checks ensure idxCore is limited to 0 or 1, leading to a potential runtime error.",
+  "confidence": "medium",
+  "tools_used": [
+    "get_micro_window",
+    "inspect",
+    "query_data_flow",
+    "run_simulation",
+    "submit_verdict"
+  ]
+}
+Investigation complete for Order 39.
+Investigate Order 1112
+✓ get_micro_window
+view details
+{
+  "path_step": 1,
+  "path_length": 1,
+  "alarm_line": 352840,
+  "function_name": "DFES_InitNewEntry",
+  "function_span": {
+    "start_line": 352832,
+    "end_line": 352893
+  },
+  "indexed_object": "VECT_DFES_ADS_PTA_01._DFES_numClsFaultCycl_CA",
+  "declared_size": 22,
+  "operand_symbol": "numClass",
+  "index_expression": "(numClass)",
+  "micro_window_span": {
+    "start_line": 352833,
+    "end_line": 352847
+  },
+  "window_size_requested": 15,
+  "window_truncated": true,
+  "guards_found": [
+    "UNRESOLVED origin write via DFES_InitNewEntry(...) \u2014 see DFES_GetFltCls___2243 (static search has no proof this stays in-bounds)"
+  ],
+  "snippet": [
+    {
+      "line": 352833,
+      "text": "{"
+    },
+    {
+      "line": 352834,
+      "text": ""
+    },
+    {
+      "line": 352835,
+      "text": "if (numDfc != 0u)"
+    },
+    {
+      "line": 352836,
+      "text": "{"
+    },
+    {
+      "line": 352837,
+      "text": "    uint8 numClass;"
+    },
+    {
+      "line": 352838,
+      "text": ""
+    },
+    {
+      "line": 352839,
+      "text": "    numClass = DFES_GetFltCls___2243(numDfc);"
+    },
+    {
+      "line": 352840,
+      "text": "    DFES_ctDef[idxEntry] = ((VECT_DFES_ADS_PTA_01->_D
+…[truncated]
+Starting investigation for Order 1112…
+Path context
+VECT_DFES_ADS_PTA_01._DFES_numClsFaultCycl_CA · size 22 · operand numClass
+#	function	role	symbol	scope	access	size	dtype	line	first
+1	DFES_InitNewEntry	origin_and_alarm	numClass	local	mixed	22	uint8[22]	352840	yes
+Case compiled · operand numClass · object VECT_DFES_ADS_PTA_01._DFES_numClsFaultCycl_CA size=22 · 1 path step(s)
+Graph highlighted · 1 path steps · operand numClass
+✓ run_simulation
+view details
+{
+  "symbol_evaluated": "numClass",
+  "indexed_object": "VECT_DFES_ADS_PTA_01._DFES_numClsFaultCycl_CA",
+  "index_expression": "(numClass)",
+  "declared_array_capacity": 22,
+  "declared_type": "uint8[22]",
+  "bit_width": 8,
+  "mask_literal": null,
+  "guard_conditions": [
+    "UNRESOLVED origin write via DFES_InitNewEntry(...) \u2014 see DFES_GetFltCls___2243 (static search has no proof this stays in-bounds)"
+  ],
+  "guard_numeric_literals": [],
+  "derived_min": 0,
+  "derived_max": 255,
+  "bound_derivation": "dtype",
+  "derivation_notes": "Mechanical bounds from type width and/or bitmask in index expression. Guards are returned as raw text \u2014 you must judge whether they constrain the index at the alarm site.",
+  "write_helpers": [
+    "DFES_GetFltCls___2243"
+  ],
+  "case_gaps": []
+}
+✓ inspect — DFES_GetFltCls___2243 — 18 lines
+view details
+{
+  "helper": "DFES_GetFltCls___2243",
+  "inspected": [
+    "DFES_GetFltCls___2243"
+  ],
+  "function_name": "DFES_GetFltCls___2243",
+  "span": {
+    "start_line": 352782,
+    "end_line": 352799,
+    "snippet_start": 352782,
+    "snippet_end": 352799
+  },
+  "line_count": 18,
+  "snippet": [
+    {
+      "line": 352782,
+      "text": "static inline uint8 DFES_GetFltCls___2243(uint numCheck)"
+    },
+    {
+      "line": 352783,
+      "text": ""
+    },
+    {
+      "line": 352784,
+      "text": ""
+    },
+    {
+      "line": 352785,
+      "text": ""
+    },
+    {
+      "line": 352786,
+      "text": "{"
+    },
+    {
+      "line": 352787,
+      "text": "# 251 \"_gen/swb/filegroup/includes/project/dfes_inl.h\""
+    },
+    {
+      "line": 352788,
+      "text": " const uint8 * DFES_adFltCls;"
+    },
+    {
+      "line": 352789,
+      "text": ""
+    },
+    {
+      "line": 352790,
+      "text": "    DFES_adFltCls = &((VECT_DFES_ADS_PTA_01->_DFES_Cls).DFC_Unused_C);"
+    },
+    {
+      "line": 352791,
+      "text": ""
+    },
+    {
+      "line": 352792,
+      "text": ""
+    },
+    {
+      "line": 352793,
+      "text": ""
+    },
+    {
+      "line": 352794,
+      "text": ""
+    },
+    {
+      "line": 352795,
+      "text": "        return (uint8)DFES_adFltCls[numCheck];"
+    },
+    {
+      "line": 352796,
+      "text": ""
+    },
+    {
+      "line": 352797,
+      "text": ""
+    },
+    {
+      "line": 352798,
+      "text": ""
+    },
+    {
+      "line": 352799,
+      "text": "}"
+    }
+  ],
+  "from_cache": false
+}
+✗ submit_verdict rejected — Decisive verdict requires confidence_so_far=high. Gather more evidence or submit classification=review.
+view details
+{
+  "accepted": false,
+  "error": "Decisive verdict requires confidence_so_far=high. Gather more evidence or submit classification=review.",
+  "confidence_so_far": "medium"
+}
+✗ submit_verdict rejected — classification=review requires reason_for_review.
+view details
+{
+  "accepted": false,
+  "error": "classification=review requires reason_for_review."
+}
+Agent reasoning...
+
+
+
+
+Looking at this investigation output, there are two separate things to check: the technical reasoning about the bug, and the *process* the agent followed to get there.
+
+**The technical reasoning itself is internally consistent, given what's shown:**
+
+- Array `MOCMEM_VBLSTRUCTEARLYCLEAREDRAM_MO_INST_LOOKUP` has declared size 2.
+- The index comes from `Mo_Inst_GetCoreIdx(checkword)`, which the agent says extracts the low 3 bits → mathematically 0–7.
+- Size 2 means only indices 0–1 are valid, so any of 2–7 is out-of-bounds *if* nothing upstream constrains `checkword`.
+- The agent explicitly checked for a guard, found only a local init (`checkword = 0`) in `MoCMemStrtUp_Co_Hndlr`, and correctly flagged that this init is **not** a safety bound because `checkword` is also written elsewhere (`MoCEMM_Co_PwrOnRst_Hdl`) and the static search couldn't prove the runtime value stays in range.
+- Because of that unresolved write, it appropriately downgraded to `confidence: medium` rather than `high` — that's the right call, not overclaiming.
+
+So the *logic* is sound and the hedging is honest: "no proof of safety" → medium confidence, not "proof of a bug" → high confidence. That's a defensible AOOB classification pattern.
+
+**Where I can't fully verify it:**
+- I don't have the actual body of `Mo_Inst_GetCoreIdx` or every caller of `MoCMemStrtUp_Co_Hndlr` — only what the agent's tool calls surfaced (and the `query_data_flow` result is truncated in your paste). So I can't independently confirm the "extracts lower 3 bits" claim or that no caller clamps the value before use.
+
+**Something that looks like a process bug, not a code bug:**
+
+Look at the verdict-submission sequence:
+```
+✗ submit_verdict rejected — rejected
+✗ submit_verdict rejected — Decisive verdict requires confidence_so_far=high...
+✓ query_data_flow
+✗ submit_verdict rejected — confidence=medium requires one self-verification round: resubmit with counterargument=...
+✗ submit_verdict rejected — rejected
+[Investigation report follows immediately]
+```
+
+Every visible `submit_verdict` call was **rejected** — including the last one — yet a final report was still compiled and presented as the result. That's inconsistent: either
+1. there's a submission that succeeded but isn't shown in this (possibly truncated) log, or
+2. the pipeline has a fallback that force-generates a report from the last attempted verdict once some step/retry limit is hit, regardless of whether the gate (`confidence_so_far=high` or the required counterargument round) was ever satisfied.
+
+If it's (2), that's worth fixing — you'd effectively be shipping "rejected" verdicts as final results, which undermines the whole point of the verification gate. I'd check your orchestration code for how `submit_verdict` rejection is handled when the agent runs out of retries/steps, and whether it should instead mark the case as `needs_review` rather than emitting a normal report.
+
+Yes — this is a real symptom, and the sequence of rejections tells you exactly where it's likely caught.
+
+**What happened right before it hung:**
+
+1. First `submit_verdict` was rejected because confidence was only `medium`, not `high` (decisive verdicts need high confidence).
+2. Second `submit_verdict` was rejected because it tried `classification=review` but omitted the required `reason_for_review` field.
+
+So the agent got two different corrective errors in a row, telling it two different things it needs to fix. If it's now stuck on "Agent reasoning..." for a long time, there are a few likely explanations:
+
+**1. It's oscillating between the two failure modes (most likely)**
+The model may be flip-flopping: tries `decisive` again without upgrading confidence → rejected → tries `review` again without adding `reason_for_review` → rejected → repeat. If there's no hard step/retry cap, this can spin for a long time without ever producing output, especially if the underlying model isn't reliably reading the *specific* field it's missing from the error message.
+
+**2. It's actually just slow inference, not stuck**
+Nemotron-3-Super-120B is a large model; if `run_simulation` + `inspect` + two rejected verdicts have already piled up a long context, each subsequent reasoning turn gets slower. "Stuck" and "just very slow" can look identical from the UI's point of view.
+
+**3. It's silently hit a retry/step ceiling and isn't reporting it**
+If there's a max-tool-calls or max-turns limit, the agent might be past it and just waiting on a hung request rather than gracefully falling back to a `review` classification — similar to the earlier issue where rejected verdicts still produced a "final" report.
+
+**What I'd check first:**
+- Server-side logs/console output for this session — is there an actual exception, or is it a live LLM call still in flight?
+- Whether your orchestration code enforces a max retry count on `submit_verdict` before forcing a fallback (`classification=review` with an auto-filled generic `reason_for_review` like `"exceeded max verification attempts"`).
+- Whether the agent's retry logic actually parses the specific validator error (`confidence_so_far`, `reason_for_review` missing) and conditions its next action on it, or just resends a similar payload and hopes.
+
+Given the previous Order 39 case *did* eventually produce output despite similarly failing rejections, my guess is this one is either (a) stuck in that oscillation loop, or (b) hit a call that's hanging/timing out against the NVIDIA endpoint. Do you have access to the raw request/response log for this session, or is the UI console showing anything (network tab, server stdout) while it's sitting on "Agent reasoning..."?
+
+I have an agentic pipeline (likely in viz_main.py or a related agent-loop module) that
+investigates static-analysis alarms and calls a tool named `submit_verdict` to finalize
+each case. It's built on an NVIDIA nemotron-3-super-120b-a12b model.
+
+BUG: On some orders (e.g. Order 1112), the agent gets stuck / hangs indefinitely after
+two consecutive submit_verdict rejections:
+
+1. First rejection:
+   {
+     "accepted": false,
+     "error": "Decisive verdict requires confidence_so_far=high. Gather more evidence or submit classification=review.",
+     "confidence_so_far": "medium"
+   }
+
+2. Second rejection (agent tried classification=review instead):
+   {
+     "accepted": false,
+     "error": "classification=review requires reason_for_review."
+   }
+
+After this, the agent enters a long/indefinite "Agent reasoning..." state and never
+produces a final report (unlike other orders, e.g. Order 39, which eventually emitted
+a report despite similar earlier rejections).
+
+Please help me find and fix the root cause. Specifically:
+
+1. Find the code path that handles the `submit_verdict` tool call and its validation logic
+   (search for "confidence_so_far", "reason_for_review", "requires one self-verification round").
+
+2. Determine whether there's a maximum retry / step / tool-call limit on the agent loop.
+   If there is one, check what happens when it's exceeded — does it force a fallback
+   classification (e.g. auto-set classification=review with a default reason_for_review),
+   or does it just stop looping silently while the UI still shows "reasoning..."?
+
+3. Check whether the agent's retry logic actually re-reads the specific validation error
+   message and conditions its next `submit_verdict` payload on it (e.g. adding
+   reason_for_review when required), or whether it's blindly resending a similar payload
+   and looping without making progress. Add logging around each submit_verdict attempt
+   (payload sent + error received) if this isn't already logged, so we can see exactly
+   what's happening in a stuck case.
+
+4. Check whether there's a request timeout on the NVIDIA API call itself, and whether a
+   hung/slow LLM call could be indistinguishable from a stuck loop in the current logging.
+   Add a wrapper timeout with a clear log line if the call is still pending after N seconds.
+
+5. Propose a fix so that if the agent fails to produce a valid submit_verdict after
+   K attempts (pick a reasonable K, e.g. 3-5), the pipeline automatically falls back to
+   classification=review with a generated reason_for_review (e.g. "exceeded max
+   verification attempts; confidence stayed at <value>"), rather than hanging or
+   silently failing.
+
+Walk through the relevant files, show me the current retry/validation logic, and then
+propose a concrete patch.
