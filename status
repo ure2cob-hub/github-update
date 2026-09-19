@@ -39,14 +39,14 @@ Prep complete · 1 path classes
     "note": "no local bound found in alarm function"
   },
   "array": "dataLinSmIndState_aen",
-  "array_size": null
+  "array_size": 2
 }
 stage
 Explorers starting · explore fan-out
 
 CALL_PATH_EXPLORE + VAR_VALUE_EXPLORE (LangGraph + tools)
 agent_input
-Input → CALL_PATH_EXPLORE [CALL_PATH_EXPLORE] · sequence n=1; must visit all
+Input → CALL_PATH_EXPLORE (code-driven) [CALL_PATH_EXPLORE] · code opens 1 funcs; LLM extracts only
 
 {
   "role": "call_path",
@@ -56,7 +56,7 @@ Input → CALL_PATH_EXPLORE [CALL_PATH_EXPLORE] · sequence n=1; must visit all
   "alarm_line": 82154,
   "index_expression": "dataReqMode_u16",
   "array_name": "dataLinSmIndState_aen",
-  "array_size": null,
+  "array_size": 2,
   "local_guard": {
     "found": false,
     "function": null,
@@ -94,7 +94,7 @@ Input → CALL_PATH_EXPLORE [CALL_PATH_EXPLORE] · sequence n=1; must visit all
   "edges": []
 }
 agent_input
-Input → VAR_VALUE_EXPLORE [VAR_VALUE_EXPLORE] · sequence n=9; must visit all
+Input → VAR_VALUE_EXPLORE (code-driven) [VAR_VALUE_EXPLORE] · code opens 4 funcs; LLM extracts only
 
 {
   "role": "var_value",
@@ -104,7 +104,7 @@ Input → VAR_VALUE_EXPLORE [VAR_VALUE_EXPLORE] · sequence n=9; must visit all
   "alarm_line": 82154,
   "index_expression": "dataReqMode_u16",
   "array_name": "dataLinSmIndState_aen",
-  "array_size": null,
+  "array_size": 2,
   "local_guard": {
     "found": false,
     "function": null,
@@ -115,14 +115,9 @@ Input → VAR_VALUE_EXPLORE [VAR_VALUE_EXPLORE] · sequence n=9; must visit all
   "coverage_cap": "full",
   "function_sequence": [
     "BswM_Prv_GetLinSmIdicationInfo_en",
-    "BswM_Prv_GetCanSMIndicationInfo_en",
-    "BswM_Prv_GetDcmComModeReqstInfo_en",
-    "BswM_Prv_GetEcuMWkpSrcInfo_en",
-    "BswM_Prv_GetGenReqInfo_en",
     "BswM_Prv_IntrptQueueOut",
     "BswM_Prv_ProcessDelayedReqst",
-    "BswM_Prv_IntrptQueueIn",
-    "BswM_Prv_ReqProcessOrQueue_b"
+    "BswM_Prv_IntrptQueueIn"
   ],
   "visit_instructions": [
     "Start at step 1 (already positioned).",
@@ -180,42 +175,80 @@ Input → VAR_VALUE_EXPLORE [VAR_VALUE_EXPLORE] · sequence n=9; must visit all
       "function_sequence": [
         "global",
         "BswM_Prv_GetCanSMIndicationInfo_en",
-       
+        "BswM_Prv_GetDcmComModeReqstInfo_en",
+        "BswM_Prv_GetEcuMWkpSrcInfo_en",
+        "BswM_Prv_GetGenReqInfo_en",
+        "BswM_Prv_GetLinSmIdicationInfo_en",
+        "BswM_Prv_IntrptQueueOu
 … [19 more chars]
+tool_result
+CALL_PATH_EXPLORE ← get_func(BswM_Prv_GetLinSmIdicationInfo_en) [CALL_PATH_EXPLORE] · opened BswM_Prv_GetLinSmIdicationInfo_en
+
+82136: BswM_ReqProcessing_ten BswM_Prv_GetLinSmIdicationInfo_en
+82137: (
+82138:  uint16 idxMRPChnl_u16,
+82139:  uint16 dataReqMode_u16,
+82140:  uint16 * nrRules_pu16,
+82141:  const uint16 * *adrRules_pu16
+82142: )
+82143: {
+82144:     BswM_ReqProcessing_ten retVal;
+82145: 
+82146:     LinSM_ModeType dataLinSmIndState_aen[] =
+82147:     {
+82148:             LINSM_NO_COM___83379D74,
+82149:             LINSM_FULL_COM___83379D74
+82150:     };
+82151: 
+82152: 
+82153:     BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].isValidModePresent_b = (1 != 0);
+82154:     BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];
+82155: 
+82156: 
+82157:     *nrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].nrAssociatedRules_u16;
+82158:     *adrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].adrRulesRef_pu16;
+82159: 
+82160:     retVal = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].dataReqProcessing_en;
+82161: 
+82162:     return retVa
 agent_thinking
-CALL_PATH_EXPLORE reasoning [CALL_PATH_EXPLORE] · planning next move/get/submit
+CALL_PATH_EXPLORE extract @ BswM_Prv_GetLinSmIdicationInfo_en [CALL_PATH_EXPLORE] · JSON fact extract (no tools)
 
+tool_result
+VAR_VALUE_EXPLORE ← get_func(BswM_Prv_GetLinSmIdicationInfo_en) [VAR_VALUE_EXPLORE] · opened BswM_Prv_GetLinSmIdicationInfo_en
+
+82136: BswM_ReqProcessing_ten BswM_Prv_GetLinSmIdicationInfo_en
+82137: (
+82138:  uint16 idxMRPChnl_u16,
+82139:  uint16 dataReqMode_u16,
+82140:  uint16 * nrRules_pu16,
+82141:  const uint16 * *adrRules_pu16
+82142: )
+82143: {
+82144:     BswM_ReqProcessing_ten retVal;
+82145: 
+82146:     LinSM_ModeType dataLinSmIndState_aen[] =
+82147:     {
+82148:             LINSM_NO_COM___83379D74,
+82149:             LINSM_FULL_COM___83379D74
+82150:     };
+82151: 
+82152: 
+82153:     BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].isValidModePresent_b = (1 != 0);
+82154:     BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];
+82155: 
+82156: 
+82157:     *nrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].nrAssociatedRules_u16;
+82158:     *adrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].adrRulesRef_pu16;
+82159: 
+82160:     retVal = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].dataReqProcessing_en;
+82161: 
+82162:     return retVa
 agent_thinking
-VAR_VALUE_EXPLORE reasoning [VAR_VALUE_EXPLORE] · planning next move/get/submit
+VAR_VALUE_EXPLORE extract @ BswM_Prv_GetLinSmIdicationInfo_en [VAR_VALUE_EXPLORE] · JSON fact extract (no tools)
 
-agent_thinking
-CALL_PATH_EXPLORE reasoning [CALL_PATH_EXPLORE] · planning next move/get/submit
-
-agent_thinking
-VAR_VALUE_EXPLORE reasoning [VAR_VALUE_EXPLORE] · planning next move/get/submit
-
-agent_thinking
-CALL_PATH_EXPLORE reasoning [CALL_PATH_EXPLORE] · planning next move/get/submit
-
-agent_thinking
-VAR_VALUE_EXPLORE reasoning [VAR_VALUE_EXPLORE] · planning next move/get/submit
-
-agent_thinking
-CALL_PATH_EXPLORE reasoning [CALL_PATH_EXPLORE] · planning next move/get/submit
-
-agent_thinking
-VAR_VALUE_EXPLORE reasoning [VAR_VALUE_EXPLORE] · planning next move/get/submit
-
-stage
-CALL_PATH_EXPLORE forced open remaining [CALL_PATH_EXPLORE] · deterministic coverage fill
-
-['BswM_Prv_GetLinSmIdicationInfo_en']
-stage
-VAR_VALUE_EXPLORE forced open remaining [VAR_VALUE_EXPLORE] · deterministic coverage fill
-
-['BswM_Prv_GetLinSmIdicationInfo_en', 'BswM_Prv_GetCanSMIndicationInfo_en', 'BswM_Prv_GetDcmComModeReqstInfo_en', 'BswM_Prv_GetEcuMWkpSrcInfo_en', 'BswM_Prv_GetGenReqInfo_en', 'BswM_Prv_IntrptQueueOut', 'BswM_Prv_ProcessDelayedReqst', 'BswM_Prv_IntrptQueueIn', 'BswM_Prv_ReqProcessOrQueue_b']
 agent_output
-Output ← CALL_PATH_EXPLORE [CALL_PATH_EXPLORE] · produced 4 facts; opened=['BswM_Prv_GetLinSmIdicationInfo_en']
+Output ← CALL_PATH_EXPLORE [CALL_PATH_EXPLORE] · produced 10 facts (code-driven)
 
 {
   "agent": "CALL_PATH_EXPLORE",
@@ -231,6 +264,16 @@ Output ← CALL_PATH_EXPLORE [CALL_PATH_EXPLORE] · produced 4 facts; opened=['B
       "verified": true
     },
     {
+      "kind": "array_size_hint",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82150,
+      "quote": "LinSM_ModeType dataLinSmIndState_aen[] = { LINSM_NO_COM___83379D74, LINSM_FULL_COM___83379D74 };",
+      "symbol": "dataLinSmIndState_aen",
+      "path_class_id": null,
+      "note": "initializer element count=2",
+      "verified": true
+    },
+    {
       "kind": "declaration",
       "function": "global",
       "line": 82258,
@@ -251,25 +294,166 @@ Output ← CALL_PATH_EXPLORE [CALL_PATH_EXPLORE] · produced 4 facts; opened=['B
       "verified": true
     },
     {
-      "kind": "path_step",
+      "kind": "access",
       "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-      "line": 82139,
-      "quote": "uint16 dataReqMode_u16,",
+      "line": 82146,
+      "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
       "symbol": "dataReqMode_u16",
       "path_class_id": null,
-      "note": "fallback extract after forced open",
+      "note": "mined indexed access",
       "verified": null
-    }
-  ],
-  "notes": [
-    "fallback facts after forced open; LLM did not submit",
-    "seeded 3 deterministic facts from prep/source"
-  ],
-  "tool_trace": [],
-  "error": null
-}
+    },
+    {
+      "kind": "arg_binding",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82154,
+      "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "llm extract",
+      "verified": null
+    },
+    {
+      "kind": "alarm_site",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82157,
+      "quote": "*nrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].nrAssociatedRules_u16;",
+      "symbol": null,
+      "path_class_id": null,
+      "note": "llm extract",
+   
+… [20 more chars]
+tool_result
+VAR_VALUE_EXPLORE ← get_func(BswM_Prv_IntrptQueueOut) [VAR_VALUE_EXPLORE] · opened BswM_Prv_IntrptQueueOut
+
+82263: Std_ReturnType BswM_Prv_IntrptQueueOut
+82264: (
+82265:     BswM_Cfg_MRPType_ten * dataMRPType_pen,
+82266:     uint16 * idChannel_pu16,
+82267:     uint16 * idxMRPChnl_pu16,
+82268:     uint16 * dataReqMode_pu16
+82269: )
+82270: {
+82271: 
+82272:     Std_ReturnType retVal = 0x00u;
+82273:     uint8 headIndex_u8= 0;
+82274: 
+82275:     if(0 == BswM_Prv_IntrptQueueInfo_st.dataSize_u8)
+82276:     {
+82277:         retVal = 0x01u;
+82278:     }
+82279:     else
+82280:     {
+82281:         headIndex_u8 = BswM_Prv_IntrptQueueInfo_st.idxHead_u8;
+82282: 
+82283: 
+82284:         *dataMRPType_pen = BswM_Prv_IntrptQueue_ast___36[headIndex_u8].dataMRPType_en;
+82285:         *idChannel_pu16 = BswM_Prv_IntrptQueue_ast___36[headIndex_u8].idChannel_u16;
+82286:         *idxMRPChnl_pu16 = BswM_Prv_IntrptQueue_ast___36[headIndex_u8].idxMRPChnl_u16;
+82287:         *dataReqMode_pu16 = BswM_Prv_IntrptQueue_ast___36[headIndex_u8].dataReqMode_u16;
+82288: 
+82289: 
+82290:         BswM_Prv_IntrptQueue_ast___36[headIndex_u8].dataMRPType_en = BSWM_MRP_DEFAULT___063242EB;
+82291:         BswM_Prv_IntrptQueue_ast___36[headIndex_u8].idChannel_u16 = 0xFF;
+82292:         BswM_Prv_IntrptQueue_ast___36[headIndex_u8].idxMR
+agent_thinking
+VAR_VALUE_EXPLORE extract @ BswM_Prv_IntrptQueueOut [VAR_VALUE_EXPLORE] · JSON fact extract (no tools)
+
+tool_result
+VAR_VALUE_EXPLORE ← get_func(BswM_Prv_ProcessDelayedReqst) [VAR_VALUE_EXPLORE] · opened BswM_Prv_ProcessDelayedReqst
+
+82411: void BswM_Prv_ProcessDelayedReqst
+82412: (
+82413:     void
+82414: )
+82415: {
+82416: 
+82417:     uint8 queueSize_u8 = 0;
+82418: 
+82419:     BswM_Cfg_MRPType_ten dataMRPType_en = BSWM_MRP_DEFAULT___063242EB;
+82420:     uint16 idChannel_u16 = 0;
+82421:     uint16 idxMRPChnl_u16 = 0;
+82422:     uint16 dataReqMode_u16 = 0;
+82423:     Std_ReturnType queueOutRetVal_u8;
+82424: 
+82425:     uint8 mirror_u8 = 0;
+82426:     uint16 nrRules_u16 = 0;
+82427:     const uint16 * adrRules_pu16 = ((void *)0);
+82428:     BswM_ReqProcessing_ten dataReqProc_u16;
+82429: 
+82430: 
+82431: 
+82432:     BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);
+82433: 
+82434: 
+82435:     { rba_BswSrv_GetLockCommon___39();
+82436: 
+82437: 
+82438:     queueSize_u8 = BswM_Prv_IntrptQueueInfo_st.dataSize_u8;
+82439: 
+82440: 
+82441:     rba_BswSrv_ReleaseLockCommon___39(); } /* SAMS: ASM47610 asm volatile("" :: : "memory"); */
+82442: 
+82443: 
+82444: 
+82445: 
+82446:     while(queueSize_u8 != 0)
+82447:     {
+82448: 
+82449: 
+82450:         { rba_BswSrv_GetLockCommon___39();
+82451: 
+82452: 
+82453:         queueOutRetVal_u8 = BswM_Prv_IntrptQueueOut(&dataMRPType_en, &idChannel_u16, &idxMRPChnl_u16, &dataReqMode_u16);
+82454: 
+82
+agent_thinking
+VAR_VALUE_EXPLORE extract @ BswM_Prv_ProcessDelayedReqst [VAR_VALUE_EXPLORE] · JSON fact extract (no tools)
+
+tool_result
+VAR_VALUE_EXPLORE ← get_func(BswM_Prv_IntrptQueueIn) [VAR_VALUE_EXPLORE] · opened BswM_Prv_IntrptQueueIn
+
+82584: void BswM_Prv_IntrptQueueIn
+82585: (
+82586:     BswM_Cfg_MRPType_ten dataMRPType_en,
+82587:     uint16 idChannel_u16,
+82588:     uint16 idxMRPChnl_u16,
+82589:     uint16 dataReqMode_u16
+82590: )
+82591: {
+82592: 
+82593:     uint8 tailIndex_u8= 0;
+82594: 
+82595:     if((1) == BswM_Prv_IntrptQueueInfo_st.dataSize_u8)
+82596:     {
+82597: 
+82598: 
+82599:     }
+82600:     else
+82601:     {
+82602:         tailIndex_u8 = BswM_Prv_IntrptQueueInfo_st.idxTail_u8;
+82603: 
+82604: 
+82605:         BswM_Prv_IntrptQueue_ast___36[tailIndex_u8].dataMRPType_en = dataMRPType_en;
+82606:         BswM_Prv_IntrptQueue_ast___36[tailIndex_u8].idChannel_u16 = idChannel_u16;
+82607:         BswM_Prv_IntrptQueue_ast___36[tailIndex_u8].idxMRPChnl_u16 = idxMRPChnl_u16;
+82608:         BswM_Prv_IntrptQueue_ast___36[tailIndex_u8].dataReqMode_u16 = dataReqMode_u16;
+82609: 
+82610: 
+82611:         BswM_Prv_IntrptQueueInfo_st.idxTail_u8++;
+82612:         BswM_Prv_IntrptQueueInfo_st.dataSize_u8++;
+82613: 
+82614:         BswM_Prv_isReqstDelayed_b = (1 != 0);
+82615: 
+82616:         if ((1) == BswM_Prv_IntrptQueueInfo_st.idxTail_u8)
+82617:         {
+82618: 
+82619:             BswM_Prv_IntrptQueueInfo_st.idxTail_u8 = 0
+agent_thinking
+VAR_VALUE_EXPLORE extract @ BswM_Prv_IntrptQueueIn [VAR_VALUE_EXPLORE] · JSON fact extract (no tools)
+
 agent_output
-Output ← VAR_VALUE_EXPLORE [VAR_VALUE_EXPLORE] · produced 12 facts; opened=['BswM_Prv_GetCanSMIndicationInfo_en', 'BswM_Prv_GetDcmComModeReqstInfo_en', 'BswM_Prv_GetEcuMWkpSrcInfo_en', 'BswM_Prv_GetGenReqInfo_en', 'BswM_Prv_GetLinSmIdicationInfo_en', 'BswM_Prv_IntrptQueueIn', 'BswM_Prv_IntrptQueueOut', 'BswM_Prv_ProcessDelayedReqst', 'BswM_Prv_ReqProcessOrQueue_b']
+Output ← VAR_VALUE_EXPLORE [VAR_VALUE_EXPLORE] · produced 35 facts (code-driven)
 
 {
   "agent": "VAR_VALUE_EXPLORE",
@@ -285,6 +469,16 @@ Output ← VAR_VALUE_EXPLORE [VAR_VALUE_EXPLORE] · produced 12 facts; opened=['
       "verified": true
     },
     {
+      "kind": "array_size_hint",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82150,
+      "quote": "LinSM_ModeType dataLinSmIndState_aen[] = { LINSM_NO_COM___83379D74, LINSM_FULL_COM___83379D74 };",
+      "symbol": "dataLinSmIndState_aen",
+      "path_class_id": null,
+      "note": "initializer element count=2",
+      "verified": true
+    },
+    {
       "kind": "declaration",
       "function": "global",
       "line": 82258,
@@ -305,52 +499,38 @@ Output ← VAR_VALUE_EXPLORE [VAR_VALUE_EXPLORE] · produced 12 facts; opened=['
       "verified": true
     },
     {
-      "kind": "value_site",
+      "kind": "access",
       "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-      "line": 82139,
-      "quote": "uint16 dataReqMode_u16,",
+      "line": 82146,
+      "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
       "symbol": "dataReqMode_u16",
       "path_class_id": null,
-      "note": "fallback extract after forced open",
+      "note": "mined indexed access",
       "verified": null
     },
     {
-      "kind": "value_site",
-      "function": "BswM_Prv_GetCanSMIndicationInfo_en",
-      "line": 81995,
-      "quote": "uint16 dataReqMode_u16,",
-      "symbol": "dataReqMode_u16",
+      "kind": "write",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82154,
+      "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+      "symbol": "dataLinSmIndState_aen",
       "path_class_id": null,
-      "note": "fallback extract after forced open",
+      "note": "llm extract",
       "verified": null
     },
     {
-      "kind": "value_site",
-      "function": "BswM_Prv_GetDcmComModeReqstInfo_en",
-      "line": 82037,
-      "quote": "uint16 dataReqMode_u16,",
+      "kind": "write",
+      "function": "BswM_Prv_IntrptQueueOut",
+      "line": 82293,
+      "quote": "BswM_Prv_IntrptQueue_ast___36[headIndex_u8].dataReqMode_u16 = 0xFF;",
       "symbol": "dataReqMode_u16",
       "path_class_id": null,
-      "note": "fallback extract after forced open",
+      "note": "mined index write/assign",
       "verified": null
     },
     {
-      "kind": "value_site",
-      "function": "BswM_Prv_GetEcuMWkpSrcInfo_en",
-      "line": 82071,
-      "quote": "uint16 dataReqMode_u16,",
-      "symbol": "dataReqMode_u16",
-      "path_class_id": null,
-      "note": "fallback extract after forced open",
-      "verified": null
-    },
-    {
-      "kind": "value_site",
-      "function": "BswM_Prv_GetGenReqInfo_en",
-      "line": 82106,
-      "quote": "uint16 dataReqMode_u16,",
-      "symbol": "dataReqMode_u16",
-      "path_class_id": 
+      "kind": "declaration",
+      "func
 … [20 more chars]
 stage
 Merge + snippet check · attaching facts to path classes
@@ -360,10 +540,11 @@ Merged pack ready · coverage=full
 
 {
   "coverage": "full",
-  "call_facts": 4,
-  "var_facts": 12,
+  "call_facts": 9,
+  "var_facts": 34,
   "notes": [
-    "8 facts not tied to a path-class function"
+    "array_size recovered from initializer count=2",
+    "29 facts not tied to a path-class function"
   ]
 }
 stage
@@ -371,106 +552,19 @@ Provers starting · prove fan-out
 
 TP_PROVE + FP_PROVE (no tools)
 agent_input
-Input → TP_PROVE [TP_PROVE] · consuming merged pack
-
-{
-  "coverage": "full",
-  "notes": [
-    "8 facts not tied to a path-class function"
-  ],
-  "prep": {
-    "order": "2,475",
-    "index_expression": "dataReqMode_u16",
-    "array_name": "dataLinSmIndState_aen",
-    "array_size": null,
-    "path_classes": [
-      {
-        "class_id": "C1",
-        "sequence": [
-          {
-            "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-            "call_site_line": 82467
-          }
-        ],
-        "member_path_ids": [
-          1
-        ],
-        "representative_path_id": 1,
-        "cluster_note": null
-      }
-    ],
-    "local_guard": {
-      "found": false,
-      "function": null,
-      "line": null,
-      "quote": null,
-      "note": "no local bound found in alarm function"
-    }
-  },
-  "facts_by_class": {
-    "C1": [
-      {
-        "kind": "declaration",
-        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-        "line": 82146,
-        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
-        "symbol": "dataLinSmIndState_aen",
-        "path_class_id": null,
-        "note": "seeded from analyzer declaration",
-        "verified": true
-      },
-      {
-        "kind": "declaration",
-        "function": "global",
-        "line": 82258,
-        "quote": "uint16 dataReqMode_u16;",
-        "symbol": "dataReqMode_u16",
-        "path_class_id": null,
-        "note": "seeded from analyzer declaration",
-        "verified": true
-      },
-      {
-        "kind": "alarm_site",
-        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-        "line": 82154,
-        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
-        "symbol": "dataReqMode_u16",
-        "path_class_id": null,
-        "note": "seeded alarm location line",
-        "verified": true
-      },
-      {
-        "kind": "path_step",
-        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-        "line": 82139,
-        "quote": "uint16 dataReqMode_u16,",
-        "symbol": "dataReqMode_u16",
-        "path_class_id": null,
-        "note": "fallback extract after forced open",
-        "verified": true
-      },
-      {
-        "kind": "declaration",
-        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-        "line": 82146,
-        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
-        "symbol": "dataLinSmIndState_aen",
-        "path_class_id": null,
-        "note": "seeded
-… [6045 more chars]
-agent_input
 Input → FP_PROVE [FP_PROVE] · consuming merged pack
 
 {
   "coverage": "full",
   "notes": [
-    "8 facts not tied to a path-class function"
+    "array_size recovered from initializer count=2",
+    "29 facts not tied to a path-class function"
   ],
   "prep": {
     "order": "2,475",
     "index_expression": "dataReqMode_u16",
     "array_name": "dataLinSmIndState_aen",
-    "array_size": null,
+    "array_size": 2,
     "path_classes": [
       {
         "class_id": "C1",
@@ -528,15 +622,64 @@ Input → FP_PROVE [FP_PROVE] · consuming merged pack
         "verified": true
       },
       {
-        "kind": "path_step",
+        "kind": "access",
         "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-        "line": 82139,
-        "quote": "uint16 dataReqMode_u16,",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
         "symbol": "dataReqMode_u16",
         "path_class_id": null,
-        "note": "fallback extract after forced open",
+        "note": "mined indexed access",
         "verified": true
       },
+      {
+        "kind": "arg_binding",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[da
+… [16763 more chars]
+agent_thinking
+FP_PROVE reasoning [FP_PROVE] · proving from merged facts (no tools)
+
+agent_input
+Input → TP_PROVE [TP_PROVE] · consuming merged pack
+
+{
+  "coverage": "full",
+  "notes": [
+    "array_size recovered from initializer count=2",
+    "29 facts not tied to a path-class function"
+  ],
+  "prep": {
+    "order": "2,475",
+    "index_expression": "dataReqMode_u16",
+    "array_name": "dataLinSmIndState_aen",
+    "array_size": 2,
+    "path_classes": [
+      {
+        "class_id": "C1",
+        "sequence": [
+          {
+            "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+            "call_site_line": 82467
+          }
+        ],
+        "member_path_ids": [
+          1
+        ],
+        "representative_path_id": 1,
+        "cluster_note": null
+      }
+    ],
+    "local_guard": {
+      "found": false,
+      "function": null,
+      "line": null,
+      "quote": null,
+      "note": "no local bound found in alarm function"
+    }
+  },
+  "facts_by_class": {
+    "C1": [
       {
         "kind": "declaration",
         "function": "BswM_Prv_GetLinSmIdicationInfo_en",
@@ -544,56 +687,48 @@ Input → FP_PROVE [FP_PROVE] · consuming merged pack
         "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
         "symbol": "dataLinSmIndState_aen",
         "path_class_id": null,
-        "note": "seeded
-… [6045 more chars]
+        "note": "seeded from analyzer declaration",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "global",
+        "line": 82258,
+        "quote": "uint16 dataReqMode_u16;",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "seeded from analyzer declaration",
+        "verified": true
+      },
+      {
+        "kind": "alarm_site",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "seeded alarm location line",
+        "verified": true
+      },
+      {
+        "kind": "access",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "mined indexed access",
+        "verified": true
+      },
+      {
+        "kind": "arg_binding",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[da
+… [16763 more chars]
 agent_thinking
 TP_PROVE reasoning [TP_PROVE] · proving from merged facts (no tools)
 
-agent_thinking
-FP_PROVE reasoning [FP_PROVE] · proving from merged facts (no tools)
-
-agent_output
-Output ← TP_PROVE [TP_PROVE] · claim=no_credible_case witness=none
-
-{
-  "agent": "TP_PROVE",
-  "claim": "no_credible_case",
-  "index_range": "unknown",
-  "array_size": "unknown",
-  "witness": "none",
-  "coverage": "full",
-  "findings": [
-    {
-      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-      "line": 82154,
-      "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
-      "path_class_id": "C1"
-    },
-    {
-      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-      "line": 82146,
-      "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
-      "path_class_id": "C1"
-    },
-    {
-      "function": "global",
-      "line": 82258,
-      "quote": "uint16 dataReqMode_u16;",
-      "path_class_id": "C1"
-    }
-  ],
-  "missing_evidence": [
-    "Array 'dataLinSmIndState_aen' size is not declared or determinable from context",
-    "No bounds checks or constraints on 'dataReqMode_u16' value",
-    "No information about how 'dataReqMode_u16' is initialized or modified"
-  ],
-  "addressed_path_classes": [
-    "C1"
-  ],
-  "unaddressed_path_classes": [],
-  "rationale": "The array 'dataLinSmIndState_aen' is declared as a flexible array with no explicit size, and no evidence exists in the provided data about its actual size or bounds constraints. Without knowing the array's size or how 'dataReqMode_u16' is constrained, it's impossible to confirm whether the index is out-of-bounds. The lack of array size information is critical to determining OOB feasibility.",
-  "error": null
-}
 agent_output
 Output ← FP_PROVE [FP_PROVE] · claim=no_credible_case witness=none
 
@@ -603,33 +738,30 @@ Output ← FP_PROVE [FP_PROVE] · claim=no_credible_case witness=none
   "index_range": "unknown",
   "array_size": "unknown",
   "witness": "none",
-  "coverage": "full",
-  "findings": [
-    {
-      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-      "line": 82146,
-      "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
-      "path_class_id": "C1",
-      "note": "array declaration with unknown size"
-    },
-    {
-      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-      "line": 82154,
-      "quote": "dataLinSmIndState_aen[dataReqMode_u16]",
-      "path_class_id": "C1",
-      "note": "array access using unbounded index"
-    }
-  ],
-  "missing_evidence": [
-    "array size declaration for dataLinSmIndState_aen",
-    "bounds validation for dataReqMode_u16 index"
-  ],
-  "addressed_path_classes": [
-    "C1"
-  ],
+  "coverage": "partial",
+  "findings": [],
+  "missing_evidence": [],
+  "addressed_path_classes": [],
   "unaddressed_path_classes": [],
-  "rationale": "Array size is unknown (declared as flexible array), and index dataReqMode_u16 lacks bounds validation. No local guard found in alarm function. Missing evidence prevents FP classification.",
+  "rationale": "",
   "error": null
+}
+agent_output
+Output ← TP_PROVE [TP_PROVE] · claim=no_credible_case witness=none
+
+{
+  "agent": "TP_PROVE",
+  "claim": "no_credible_case",
+  "index_range": "unknown",
+  "array_size": "unknown",
+  "witness": "none",
+  "coverage": "partial",
+  "findings": [],
+  "missing_evidence": [],
+  "addressed_path_classes": [],
+  "unaddressed_path_classes": [],
+  "rationale": "The JSON structure you've provided appears to be a detailed analysis of code elements, likely generated by a static analysis tool. It includes information about **functions**, **variables**, **accesses**, and **declarations** within a codebase. Below is a breakdown of the key components and potential use cases for this data:\n\n---\n\n### **Key Components of the JSON**\n1. **`var` and `var2` Arrays**:\n   - These arrays contain objects with two main fields:\n     - **`type`**: Categorizes the data (e.g., `function`, `variable`, `access`, `declaration`).\n     - **`data`**: Contains detailed information about the element, such as:\n       - **Function names** (e.g., `BswM_Prv_ProcessDelayedReqst`).\n       - **Variable names** (e.g., `BswM_Prv_flgDelayedReqstProgress_b`).\n       - **Line numbers** (e.g., `line: 82432`).\n       - **Code context** (e.g., `BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);`).\n\n2. **Types of Entries**:\n   - **`function`**: Lists functions and their associated metadata (e",
+  "error": "Expecting value: line 1 column 1 (char 0)"
 }
 stage
 Evidence validator · dropping uncited claims
@@ -641,7 +773,9 @@ Validation done · reports scrubbed
   "dropped": [],
   "tp_claim": "no_credible_case",
   "fp_claim": "no_credible_case",
-  "fp_unaddressed": []
+  "fp_unaddressed": [
+    "C1"
+  ]
 }
 stage
 Final classification · adjudicating
@@ -663,38 +797,13 @@ Input → FINAL (run 1) [FINAL_CLASSIFICATION] · adjudicating run 1
     "index_range": "unknown",
     "array_size": "unknown",
     "witness": "none",
-    "coverage": "full",
-    "findings": [
-      {
-        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-        "line": 82154,
-        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
-        "path_class_id": "C1"
-      },
-      {
-        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-        "line": 82146,
-        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
-        "path_class_id": "C1"
-      },
-      {
-        "function": "global",
-        "line": 82258,
-        "quote": "uint16 dataReqMode_u16;",
-        "path_class_id": "C1"
-      }
-    ],
-    "missing_evidence": [
-      "Array 'dataLinSmIndState_aen' size is not declared or determinable from context",
-      "No bounds checks or constraints on 'dataReqMode_u16' value",
-      "No information about how 'dataReqMode_u16' is initialized or modified"
-    ],
-    "addressed_path_classes": [
-      "C1"
-    ],
+    "coverage": "partial",
+    "findings": [],
+    "missing_evidence": [],
+    "addressed_path_classes": [],
     "unaddressed_path_classes": [],
-    "rationale": "The array 'dataLinSmIndState_aen' is declared as a flexible array with no explicit size, and no evidence exists in the provided data about its actual size or bounds constraints. Without knowing the array's size or how 'dataReqMode_u16' is constrained, it's impossible to confirm whether the index is out-of-bounds. The lack of array size information is critical to determining OOB feasibility.",
-    "error": null
+    "rationale": "The JSON structure you've provided appears to be a detailed analysis of code elements, likely generated by a static analysis tool. It includes information about **functions**, **variables**, **accesses**, and **declarations** within a codebase. Below is a breakdown of the key components and potential use cases for this data:\n\n---\n\n### **Key Components of the JSON**\n1. **`var` and `var2` Arrays**:\n   - These arrays contain objects with two main fields:\n     - **`type`**: Categorizes the data (e.g., `function`, `variable`, `access`, `declaration`).\n     - **`data`**: Contains detailed information about the element, such as:\n       - **Function names** (e.g., `BswM_Prv_ProcessDelayedReqst`).\n       - **Variable names** (e.g., `BswM_Prv_flgDelayedReqstProgress_b`).\n       - **Line numbers** (e.g., `line: 82432`).\n       - **Code context** (e.g., `BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);`).\n\n2. **Types of Entries**:\n   - **`function`**: Lists functions and their associated metadata (e",
+    "error": "Expecting value: line 1 column 1 (char 0)"
   },
   "fp": {
     "agent": "FP_PROVE",
@@ -702,22 +811,21 @@ Input → FINAL (run 1) [FINAL_CLASSIFICATION] · adjudicating run 1
     "index_range": "unknown",
     "array_size": "unknown",
     "witness": "none",
-    "coverage": "full",
-    "findings": [
-      {
-        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-        "line": 82146,
-        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
-        "path_class_id": "C1",
-        "note": "array declaration with unknown size"
-      },
-      {
-        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-        "line": 82154,
-        "quote": "dataLinSmIndState_aen[dataReqMode_u16]",
-        "path_class_id": "C1",
-        "note": "array access using 
-… [19 more chars]
+    "coverage": "partial",
+    "findings": [],
+    "missing_evidence": [],
+    "addressed_path_classes": [],
+    "unaddressed_path_classes": [
+      "C1"
+    ],
+    "rationale": "",
+    "error": null
+  },
+  "dropped_claims": [],
+  "notes": [
+    "validator checked quotes against merged facts and source"
+  ]
+}
 agent_thinking
 FINAL reasoning (run 1) [FINAL_CLASSIFICATION] · FP-precision policy (never miss TP)
 
@@ -726,7 +834,7 @@ Output ← FINAL (run 1) [FINAL_CLASSIFICATION] · vote=uncertain
 
 {
   "label": "uncertain",
-  "rationale": "The report is fundamentally inconclusive. Both the TP and FP claims are identical in their findings: they both acknowledge that the array size for 'dataLinSmIndState_aen' is unknown and that there are no visible bounds checks for 'dataReqMode_u16'. Since the array size and index constraints are missing, it is impossible to prove either a True Positive (OOB) or a False Positive (Safe). Per the policy, when evidence is thin or missing (specifically array size and index bounds), the result must be 'uncertain'.",
+  "rationale": "The TP report provides no analysis of a code path, instead describing the JSON structure itself, and contains a parsing error. The FP report is incomplete, lacks a rationale, and explicitly identifies unaddressed path classes (C1) and partial coverage. Since the FP report does not meet the ironclad requirement and there is no validated witness for a TP, the result must be uncertain.",
   "reexplore_requested": false,
   "reexplore_focus": null
 }
@@ -746,38 +854,13 @@ Input → FINAL (run 2) [FINAL_CLASSIFICATION] · adjudicating run 2
     "index_range": "unknown",
     "array_size": "unknown",
     "witness": "none",
-    "coverage": "full",
-    "findings": [
-      {
-        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-        "line": 82154,
-        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
-        "path_class_id": "C1"
-      },
-      {
-        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-        "line": 82146,
-        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
-        "path_class_id": "C1"
-      },
-      {
-        "function": "global",
-        "line": 82258,
-        "quote": "uint16 dataReqMode_u16;",
-        "path_class_id": "C1"
-      }
-    ],
-    "missing_evidence": [
-      "Array 'dataLinSmIndState_aen' size is not declared or determinable from context",
-      "No bounds checks or constraints on 'dataReqMode_u16' value",
-      "No information about how 'dataReqMode_u16' is initialized or modified"
-    ],
-    "addressed_path_classes": [
-      "C1"
-    ],
+    "coverage": "partial",
+    "findings": [],
+    "missing_evidence": [],
+    "addressed_path_classes": [],
     "unaddressed_path_classes": [],
-    "rationale": "The array 'dataLinSmIndState_aen' is declared as a flexible array with no explicit size, and no evidence exists in the provided data about its actual size or bounds constraints. Without knowing the array's size or how 'dataReqMode_u16' is constrained, it's impossible to confirm whether the index is out-of-bounds. The lack of array size information is critical to determining OOB feasibility.",
-    "error": null
+    "rationale": "The JSON structure you've provided appears to be a detailed analysis of code elements, likely generated by a static analysis tool. It includes information about **functions**, **variables**, **accesses**, and **declarations** within a codebase. Below is a breakdown of the key components and potential use cases for this data:\n\n---\n\n### **Key Components of the JSON**\n1. **`var` and `var2` Arrays**:\n   - These arrays contain objects with two main fields:\n     - **`type`**: Categorizes the data (e.g., `function`, `variable`, `access`, `declaration`).\n     - **`data`**: Contains detailed information about the element, such as:\n       - **Function names** (e.g., `BswM_Prv_ProcessDelayedReqst`).\n       - **Variable names** (e.g., `BswM_Prv_flgDelayedReqstProgress_b`).\n       - **Line numbers** (e.g., `line: 82432`).\n       - **Code context** (e.g., `BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);`).\n\n2. **Types of Entries**:\n   - **`function`**: Lists functions and their associated metadata (e",
+    "error": "Expecting value: line 1 column 1 (char 0)"
   },
   "fp": {
     "agent": "FP_PROVE",
@@ -785,22 +868,21 @@ Input → FINAL (run 2) [FINAL_CLASSIFICATION] · adjudicating run 2
     "index_range": "unknown",
     "array_size": "unknown",
     "witness": "none",
-    "coverage": "full",
-    "findings": [
-      {
-        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-        "line": 82146,
-        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
-        "path_class_id": "C1",
-        "note": "array declaration with unknown size"
-      },
-      {
-        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-        "line": 82154,
-        "quote": "dataLinSmIndState_aen[dataReqMode_u16]",
-        "path_class_id": "C1",
-        "note": "array access using 
-… [19 more chars]
+    "coverage": "partial",
+    "findings": [],
+    "missing_evidence": [],
+    "addressed_path_classes": [],
+    "unaddressed_path_classes": [
+      "C1"
+    ],
+    "rationale": "",
+    "error": null
+  },
+  "dropped_claims": [],
+  "notes": [
+    "validator checked quotes against merged facts and source"
+  ]
+}
 agent_thinking
 FINAL reasoning (run 2) [FINAL_CLASSIFICATION] · FP-precision policy (never miss TP)
 
@@ -809,7 +891,7 @@ Output ← FINAL (run 2) [FINAL_CLASSIFICATION] · vote=uncertain
 
 {
   "label": "uncertain",
-  "rationale": "The report is fundamentally inconclusive. Both the TP and FP claims are identical in their findings: they both acknowledge that the array size for 'dataLinSmIndState_aen' is unknown and that there are no visible bounds checks for 'dataReqMode_u16'. Since the array size and index constraints are missing, it is impossible to prove either a True Positive (OOB exists) or a False Positive (OOB is impossible). Per the policy, when evidence is thin or missing critical bounds/size information, the result must be 'uncertain'.",
+  "rationale": "The FP report is not ironclad: it explicitly states 'partial' coverage and identifies an unaddressed path class ('C1'). The TP report does not provide a validated witness of a bug; it contains a parsing error ('Expecting value: line 1 column 1') and merely describes the structure of the input data rather than presenting a proof of an out-of-bounds access.",
   "reexplore_requested": false,
   "reexplore_focus": null
 }
@@ -829,38 +911,13 @@ Input → FINAL (run 3) [FINAL_CLASSIFICATION] · adjudicating run 3
     "index_range": "unknown",
     "array_size": "unknown",
     "witness": "none",
-    "coverage": "full",
-    "findings": [
-      {
-        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-        "line": 82154,
-        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
-        "path_class_id": "C1"
-      },
-      {
-        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-        "line": 82146,
-        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
-        "path_class_id": "C1"
-      },
-      {
-        "function": "global",
-        "line": 82258,
-        "quote": "uint16 dataReqMode_u16;",
-        "path_class_id": "C1"
-      }
-    ],
-    "missing_evidence": [
-      "Array 'dataLinSmIndState_aen' size is not declared or determinable from context",
-      "No bounds checks or constraints on 'dataReqMode_u16' value",
-      "No information about how 'dataReqMode_u16' is initialized or modified"
-    ],
-    "addressed_path_classes": [
-      "C1"
-    ],
+    "coverage": "partial",
+    "findings": [],
+    "missing_evidence": [],
+    "addressed_path_classes": [],
     "unaddressed_path_classes": [],
-    "rationale": "The array 'dataLinSmIndState_aen' is declared as a flexible array with no explicit size, and no evidence exists in the provided data about its actual size or bounds constraints. Without knowing the array's size or how 'dataReqMode_u16' is constrained, it's impossible to confirm whether the index is out-of-bounds. The lack of array size information is critical to determining OOB feasibility.",
-    "error": null
+    "rationale": "The JSON structure you've provided appears to be a detailed analysis of code elements, likely generated by a static analysis tool. It includes information about **functions**, **variables**, **accesses**, and **declarations** within a codebase. Below is a breakdown of the key components and potential use cases for this data:\n\n---\n\n### **Key Components of the JSON**\n1. **`var` and `var2` Arrays**:\n   - These arrays contain objects with two main fields:\n     - **`type`**: Categorizes the data (e.g., `function`, `variable`, `access`, `declaration`).\n     - **`data`**: Contains detailed information about the element, such as:\n       - **Function names** (e.g., `BswM_Prv_ProcessDelayedReqst`).\n       - **Variable names** (e.g., `BswM_Prv_flgDelayedReqstProgress_b`).\n       - **Line numbers** (e.g., `line: 82432`).\n       - **Code context** (e.g., `BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);`).\n\n2. **Types of Entries**:\n   - **`function`**: Lists functions and their associated metadata (e",
+    "error": "Expecting value: line 1 column 1 (char 0)"
   },
   "fp": {
     "agent": "FP_PROVE",
@@ -868,22 +925,21 @@ Input → FINAL (run 3) [FINAL_CLASSIFICATION] · adjudicating run 3
     "index_range": "unknown",
     "array_size": "unknown",
     "witness": "none",
-    "coverage": "full",
-    "findings": [
-      {
-        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-        "line": 82146,
-        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
-        "path_class_id": "C1",
-        "note": "array declaration with unknown size"
-      },
-      {
-        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-        "line": 82154,
-        "quote": "dataLinSmIndState_aen[dataReqMode_u16]",
-        "path_class_id": "C1",
-        "note": "array access using 
-… [19 more chars]
+    "coverage": "partial",
+    "findings": [],
+    "missing_evidence": [],
+    "addressed_path_classes": [],
+    "unaddressed_path_classes": [
+      "C1"
+    ],
+    "rationale": "",
+    "error": null
+  },
+  "dropped_claims": [],
+  "notes": [
+    "validator checked quotes against merged facts and source"
+  ]
+}
 agent_thinking
 FINAL reasoning (run 3) [FINAL_CLASSIFICATION] · FP-precision policy (never miss TP)
 
@@ -892,7 +948,7 @@ Output ← FINAL (run 3) [FINAL_CLASSIFICATION] · vote=uncertain
 
 {
   "label": "uncertain",
-  "rationale": "The report is a self-contradiction. The TP agent claims 'no_credible_case' (which is a claim of no bug), but the evidence provided is actually an admission of missing information (unknown array size, unknown index bounds, unknown initialization). The FP agent also admits 'Missing evidence prevents FP classification'. Since the array size and index constraints are unknown, it is impossible to prove a False Positive (FP) or a True Positive (TP). According to the policy, when evidence is thin or bounds are unknown, the result must be 'uncertain'.",
+  "rationale": "The TP report does not present a valid vulnerability witness; instead, it provides a description of a JSON metadata structure and contains a parsing error ('Expecting value: line 1 column 1'). The FP report is explicitly marked as having 'partial' coverage and contains 'unaddressed_path_classes' (C1), which fails the requirement for an ironclad FP classification. Since neither the TP nor the FP claims meet the required threshold of evidence, the result must be uncertain.",
   "reexplore_requested": false,
   "reexplore_focus": null
 }
@@ -901,9 +957,9 @@ Final verdict [FINAL_CLASSIFICATION] · label=uncertain
 
 {
   "label": "uncertain",
-  "rationale": "The report is a self-contradiction. The TP agent claims 'no_credible_case' (which is a claim of no bug), but the evidence provided is actually an admission of missing information (unknown array size, unknown index bounds, unknown initialization). The FP agent also admits 'Missing evidence prevents FP classification'. Since the array size and index constraints are unknown, it is impossible to prove a False Positive (FP) or a True Positive (TP). According to the policy, when evidence is thin or bounds are unknown, the result must be 'uncertain'.",
-  "tp_summary": "The array 'dataLinSmIndState_aen' is declared as a flexible array with no explicit size, and no evidence exists in the provided data about its actual size or bounds constraints. Without knowing the array's size or how 'dataReqMode_u16' is constrained, it's impossible to confirm whether the index is out-of-bounds. The lack of array size information is critical to determining OOB feasibility.",
-  "fp_summary": "Array size is unknown (declared as flexible array), and index dataReqMode_u16 lacks bounds validation. No local guard found in alarm function. Missing evidence prevents FP classification.",
+  "rationale": "The TP report does not present a valid vulnerability witness; instead, it provides a description of a JSON metadata structure and contains a parsing error ('Expecting value: line 1 column 1'). The FP report is explicitly marked as having 'partial' coverage and contains 'unaddressed_path_classes' (C1), which fails the requirement for an ironclad FP classification. Since neither the TP nor the FP claims meet the required threshold of evidence, the result must be uncertain.",
+  "tp_summary": "The JSON structure you've provided appears to be a detailed analysis of code elements, likely generated by a static analysis tool. It includes information about **functions**, **variables**, **accesses**, and **declarations** within a codebase. Below is a breakdown of the key components and potential use cases for this data:\n\n---\n\n### **Key Components of the JSON**\n1. **`var` and `var2` Arrays**:\n   - These arrays contain objects with two main fields:\n     - **`type`**: Categorizes the data (e.g., `function`, `variable`, `access`, `declaration`).\n     - **`data`**: Contains detailed information about the element, such as:\n       - **Function names** (e.g., `BswM_Prv_ProcessDelayedReqst`).\n       - **Variable names** (e.g., `BswM_Prv_flgDelayedReqstProgress_b`).\n       - **Line numbers** (e.g., `line: 82432`).\n       - **Code context** (e.g., `BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);`).\n\n2. **Types of Entries**:\n   - **`function`**: Lists functions and their associated metadata (e",
+  "fp_summary": "",
   "reexplore_requested": false,
   "reexplore_focus": null,
   "votes": [
@@ -914,13 +970,13 @@ Final verdict [FINAL_CLASSIFICATION] · label=uncertain
   "run_details": [
     {
       "label": "uncertain",
-      "rationale": "The report is fundamentally inconclusive. Both the TP and FP claims are identical in their findings: they both acknowledge that the array size for 'dataLinSmIndState_aen' is unknown and that there are no visible bounds checks for 'dataReqMode_u16'. Since the array size and index constraints are missing, it is impossible to prove either a True Positive (OOB) or a False Positive (Safe). Per the policy, when evidence is thin or missing (specifically array size and index bounds), the result must be 'uncertain'.",
+      "rationale": "The TP report provides no analysis of a code path, instead describing the JSON structure itself, and contains a parsing error. The FP report is incomplete, lacks a rationale, and explicitly identifies unaddressed path classes (C1) and partial coverage. Since the FP report does not meet the ironclad requirement and there is no validated witness for a TP, the result must be uncertain.",
       "reexplore_requested": false,
       "reexplore_focus": null
     },
     {
       "label": "uncertain",
-      "rationale": "The report is fundamentally inconclusive. Both the TP and FP claims are identical in their findings: they both acknowledge that the array size for 'dataLinSmIndState_aen' is unknown and that there are no visible bounds checks for 'dataReqMode_u16'. Since the array size and index constraints are missing, it is impossible to prove either a True
+      "rationale": "The FP report is not ironclad: it explicitly states 'partial' coverage and identifies an unaddressed path clas
 … [20 more chars]
 done
 Verdict: uncertain · uncertain
@@ -928,12 +984,12 @@ Verdict: uncertain · uncertain
 {
   "pver_id": "4105",
   "order": "2,475",
-  "run_dir": "C:\\Users\\URE2COB\\Downloads\\AOOB-9-9 (2)\\AOOB-9-9\\AOOB-SANJEEV\\PVERs\\4105\\agent_runs\\2_475\\20260919T145917Z",
+  "run_dir": "C:\\Users\\URE2COB\\Downloads\\AOOB-9-9 (2)\\AOOB-9-9\\AOOB-SANJEEV\\PVERs\\4105\\agent_runs\\2_475\\20260919T152444Z",
   "verdict": {
     "label": "uncertain",
-    "rationale": "The report is a self-contradiction. The TP agent claims 'no_credible_case' (which is a claim of no bug), but the evidence provided is actually an admission of missing information (unknown array size, unknown index bounds, unknown initialization). The FP agent also admits 'Missing evidence prevents FP classification'. Since the array size and index constraints are unknown, it is impossible to prove a False Positive (FP) or a True Positive (TP). According to the policy, when evidence is thin or bounds are unknown, the result must be 'uncertain'.",
-    "tp_summary": "The array 'dataLinSmIndState_aen' is declared as a flexible array with no explicit size, and no evidence exists in the provided data about its actual size or bounds constraints. Without knowing the array's size or how 'dataReqMode_u16' is constrained, it's impossible to confirm whether the index is out-of-bounds. The lack of array size information is critical to determining OOB feasibility.",
-    "fp_summary": "Array size is unknown (declared as flexible array), and index dataReqMode_u16 lacks bounds validation. No local guard found in alarm function. Missing evidence prevents FP classification.",
+    "rationale": "The TP report does not present a valid vulnerability witness; instead, it provides a description of a JSON metadata structure and contains a parsing error ('Expecting value: line 1 column 1'). The FP report is explicitly marked as having 'partial' coverage and contains 'unaddressed_path_classes' (C1), which fails the requirement for an ironclad FP classification. Since neither the TP nor the FP claims meet the required threshold of evidence, the result must be uncertain.",
+    "tp_summary": "The JSON structure you've provided appears to be a detailed analysis of code elements, likely generated by a static analysis tool. It includes information about **functions**, **variables**, **accesses**, and **declarations** within a codebase. Below is a breakdown of the key components and potential use cases for this data:\n\n---\n\n### **Key Components of the JSON**\n1. **`var` and `var2` Arrays**:\n   - These arrays contain objects with two main fields:\n     - **`type`**: Categorizes the data (e.g., `function`, `variable`, `access`, `declaration`).\n     - **`data`**: Contains detailed information about the element, such as:\n       - **Function names** (e.g., `BswM_Prv_ProcessDelayedReqst`).\n       - **Variable names** (e.g., `BswM_Prv_flgDelayedReqstProgress_b`).\n       - **Line numbers** (e.g., `line: 82432`).\n       - **Code context** (e.g., `BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);`).\n\n2. **Types of Entries**:\n   - **`function`**: Lists functions and their associated metadata (e",
+    "fp_summary": "",
     "reexplore_requested": false,
     "reexplore_focus": null,
     "votes": [
@@ -944,18 +1000,1426 @@ Verdict: uncertain · uncertain
     "run_details": [
       {
         "label": "uncertain",
-        "rationale": "The report is fundamentally inconclusive. Both the TP and FP claims are identical in their findings: they both acknowledge that the array size for 'dataLinSmIndState_aen' is unknown and that there are no visible bounds checks for 'dataReqMode_u16'. Since the array size and index constraints are missing, it is impossible to prove either a True Positive (OOB) or a False Positive (Safe). Per the policy, when evidence is thin or missing (specifically array size and index bounds), the result must be 'uncertain'.",
+        "rationale": "The TP report provides no analysis of a code path, instead describing the JSON structure itself, and contains a parsing error. The FP report is incomplete, lacks a rationale, and explicitly identifies unaddressed path classes (C1) and partial coverage. Since the FP report does not meet the ironclad requirement and there is no validated witness for a TP, the result must be uncertain.",
+        "reexplor
+… [20 more chars]
+assistant
+Verdict: uncertain
+Rationale: The TP report does not present a valid vulnerability witness; instead, it provides a description of a JSON metadata structure and contains a parsing error ('Expecting value: line 1 column 1'). The FP report is explicitly marked as having 'partial' coverage and contains 'unaddressed_path_classes' (C1), which fails the requirement for an ironclad FP classification. Since neither the TP nor the FP claims meet the required threshold of evidence, the result must be uncertain.
+Votes: uncertain, uncertain, uncertain
+TP: claim=no_credible_case witness=none
+FP: claim=no_credible_case coverage=partial
+Artifacts: C:\Users\URE2COB\Downloads\AOOB-9-9 (2)\AOOB-9-9\AOOB-SANJEEV\PVERs\4105\agent_runs\2_475\20260919T152444Z
+
+
+{
+  "pver_id": "4105",
+  "order": "2,475",
+  "group_id": 141,
+  "location": "ALL_bc_with_context.c:82154.91-106",
+  "enclosing_function": "BswM_Prv_GetLinSmIdicationInfo_en",
+  "alarm_line": 82154,
+  "index_expression": "dataReqMode_u16",
+  "array_name": "dataLinSmIndState_aen",
+  "array_size": 2,
+  "raw_paths": [
+    {
+      "path_id": 1,
+      "sequence": [
+        {
+          "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+          "call_site_line": 82467
+        }
+      ],
+      "call_stack": [
+        "call#BswM_Prv_ProcessDelayedReqst|separate at ALL_bc_with_context.c:82411.5-33",
+        "loop>=1 at ALL_bc_with_context.c:82446.4-82528.5",
+        "call#BswM_Prv_GetLinSmIdicationInfo_en at ALL_bc_with_context.c:82467.34-142"
+      ],
+      "alarm_text": "ALARM (A) array_out_of_bounds: [0, 255] not included in array index range [0, 1] at ALL_bc_with_context.c:82154.91-106",
+      "source_lines": [
+        "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];"
+      ]
+    }
+  ],
+  "path_classes": [
+    {
+      "class_id": "C1",
+      "sequence": [
+        {
+          "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+          "call_site_line": 82467
+        }
+      ],
+      "member_path_ids": [
+        1
+      ],
+      "representative_path_id": 1,
+      "cluster_note": null
+    }
+  ],
+  "coverage_cap": "full",
+  "symbols": [
+    {
+      "symbol_name": "dataLinSmIndState_aen",
+      "role": "flagged_array",
+      "kind": "array",
+      "declaration_line": 82146,
+      "declaration_text": "LinSM_ModeType dataLinSmIndState_aen[] =",
+      "array_dims": "[]",
+      "resolved_sizes": [],
+      "size_known": false,
+      "index_expression": "dataReqMode_u16",
+      "function_sequence": [
+        "BswM_Prv_GetLinSmIdicationInfo_en"
+      ],
+      "write_lines": [
+        82146
+      ],
+      "guard_candidate_lines": []
+    },
+    {
+      "symbol_name": "dataReqMode_u16",
+      "role": "index",
+      "kind": "struct_member",
+      "declaration_line": 82258,
+      "declaration_text": "uint16 dataReqMode_u16;",
+      "array_dims": null,
+      "resolved_sizes": [],
+      "size_known": false,
+      "index_expression": null,
+      "function_sequence": [
+        "global",
+        "BswM_Prv_GetCanSMIndicationInfo_en",
+        "BswM_Prv_GetDcmComModeReqstInfo_en",
+        "BswM_Prv_GetEcuMWkpSrcInfo_en",
+        "BswM_Prv_GetGenReqInfo_en",
+        "BswM_Prv_GetLinSmIdicationInfo_en",
+        "BswM_Prv_IntrptQueueOut",
+        "BswM_Prv_ProcessDelayedReqst",
+        "BswM_Prv_IntrptQueueIn",
+        "BswM_Prv_ReqProcessOrQueue_b"
+      ],
+      "write_lines": [
+        82258,
+        82293,
+        82422,
+        82485,
+        82608
+      ],
+      "guard_candidate_lines": []
+    }
+  ],
+  "local_guard": {
+    "found": false,
+    "function": null,
+    "line": null,
+    "quote": null,
+    "note": "no local bound found in alarm function"
+  },
+  "skip_path_explore": false,
+  "edges": [],
+  "notes": [
+    "array_size recovered from initializer count=2"
+  ]
+}
+
+
+
+
+{
+  "agent": "CALL_PATH_EXPLORE",
+  "facts": [
+    {
+      "kind": "declaration",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82146,
+      "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+      "symbol": "dataLinSmIndState_aen",
+      "path_class_id": null,
+      "note": "seeded from analyzer declaration",
+      "verified": true
+    },
+    {
+      "kind": "array_size_hint",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82150,
+      "quote": "LinSM_ModeType dataLinSmIndState_aen[] = { LINSM_NO_COM___83379D74, LINSM_FULL_COM___83379D74 };",
+      "symbol": "dataLinSmIndState_aen",
+      "path_class_id": null,
+      "note": "initializer element count=2",
+      "verified": true
+    },
+    {
+      "kind": "declaration",
+      "function": "global",
+      "line": 82258,
+      "quote": "uint16 dataReqMode_u16;",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "seeded from analyzer declaration",
+      "verified": true
+    },
+    {
+      "kind": "alarm_site",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82154,
+      "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "seeded alarm location line",
+      "verified": true
+    },
+    {
+      "kind": "access",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82146,
+      "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "mined indexed access",
+      "verified": null
+    },
+    {
+      "kind": "arg_binding",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82154,
+      "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "llm extract",
+      "verified": null
+    },
+    {
+      "kind": "alarm_site",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82157,
+      "quote": "*nrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].nrAssociatedRules_u16;",
+      "symbol": null,
+      "path_class_id": null,
+      "note": "llm extract",
+      "verified": null
+    },
+    {
+      "kind": "arg_binding",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82157,
+      "quote": "*nrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].nrAssociatedRules_u16;",
+      "symbol": "nrRules_pu16",
+      "path_class_id": null,
+      "note": "llm extract",
+      "verified": null
+    },
+    {
+      "kind": "alarm_site",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82158,
+      "quote": "*adrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].adrRulesRef_pu16;",
+      "symbol": null,
+      "path_class_id": null,
+      "note": "llm extract",
+      "verified": null
+    },
+    {
+      "kind": "arg_binding",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82158,
+      "quote": "*adrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].adrRulesRef_pu16;",
+      "symbol": "adrRules_pu16",
+      "path_class_id": null,
+      "note": "llm extract",
+      "verified": null
+    }
+  ],
+  "notes": [
+    "explore_mode=code_driven",
+    "opened=['BswM_Prv_GetLinSmIdicationInfo_en']",
+    "seeded 4 deterministic facts"
+  ],
+  "tool_trace": [],
+  "error": null
+}
+
+
+
+{
+  "agent": "CALL_PATH_EXPLORE",
+  "facts": [
+    {
+      "kind": "declaration",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82146,
+      "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+      "symbol": "dataLinSmIndState_aen",
+      "path_class_id": null,
+      "note": "seeded from analyzer declaration",
+      "verified": true
+    },
+    {
+      "kind": "array_size_hint",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82150,
+      "quote": "LinSM_ModeType dataLinSmIndState_aen[] = { LINSM_NO_COM___83379D74, LINSM_FULL_COM___83379D74 };",
+      "symbol": "dataLinSmIndState_aen",
+      "path_class_id": null,
+      "note": "initializer element count=2",
+      "verified": true
+    },
+    {
+      "kind": "declaration",
+      "function": "global",
+      "line": 82258,
+      "quote": "uint16 dataReqMode_u16;",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "seeded from analyzer declaration",
+      "verified": true
+    },
+    {
+      "kind": "alarm_site",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82154,
+      "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "seeded alarm location line",
+      "verified": true
+    },
+    {
+      "kind": "access",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82146,
+      "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "mined indexed access",
+      "verified": null
+    },
+    {
+      "kind": "arg_binding",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82154,
+      "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "llm extract",
+      "verified": null
+    },
+    {
+      "kind": "alarm_site",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82157,
+      "quote": "*nrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].nrAssociatedRules_u16;",
+      "symbol": null,
+      "path_class_id": null,
+      "note": "llm extract",
+      "verified": null
+    },
+    {
+      "kind": "arg_binding",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82157,
+      "quote": "*nrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].nrAssociatedRules_u16;",
+      "symbol": "nrRules_pu16",
+      "path_class_id": null,
+      "note": "llm extract",
+      "verified": null
+    },
+    {
+      "kind": "alarm_site",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82158,
+      "quote": "*adrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].adrRulesRef_pu16;",
+      "symbol": null,
+      "path_class_id": null,
+      "note": "llm extract",
+      "verified": null
+    },
+    {
+      "kind": "arg_binding",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82158,
+      "quote": "*adrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].adrRulesRef_pu16;",
+      "symbol": "adrRules_pu16",
+      "path_class_id": null,
+      "note": "llm extract",
+      "verified": null
+    }
+  ],
+  "notes": [
+    "explore_mode=code_driven",
+    "opened=['BswM_Prv_GetLinSmIdicationInfo_en']",
+    "seeded 4 deterministic facts"
+  ],
+  "tool_trace": [],
+  "error": null
+}
+
+
+{
+  "prep": {
+    "pver_id": "4105",
+    "order": "2,475",
+    "group_id": 141,
+    "location": "ALL_bc_with_context.c:82154.91-106",
+    "enclosing_function": "BswM_Prv_GetLinSmIdicationInfo_en",
+    "alarm_line": 82154,
+    "index_expression": "dataReqMode_u16",
+    "array_name": "dataLinSmIndState_aen",
+    "array_size": 2,
+    "raw_paths": [
+      {
+        "path_id": 1,
+        "sequence": [
+          {
+            "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+            "call_site_line": 82467
+          }
+        ],
+        "call_stack": [
+          "call#BswM_Prv_ProcessDelayedReqst|separate at ALL_bc_with_context.c:82411.5-33",
+          "loop>=1 at ALL_bc_with_context.c:82446.4-82528.5",
+          "call#BswM_Prv_GetLinSmIdicationInfo_en at ALL_bc_with_context.c:82467.34-142"
+        ],
+        "alarm_text": "ALARM (A) array_out_of_bounds: [0, 255] not included in array index range [0, 1] at ALL_bc_with_context.c:82154.91-106",
+        "source_lines": [
+          "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];"
+        ]
+      }
+    ],
+    "path_classes": [
+      {
+        "class_id": "C1",
+        "sequence": [
+          {
+            "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+            "call_site_line": 82467
+          }
+        ],
+        "member_path_ids": [
+          1
+        ],
+        "representative_path_id": 1,
+        "cluster_note": null
+      }
+    ],
+    "coverage_cap": "full",
+    "symbols": [
+      {
+        "symbol_name": "dataLinSmIndState_aen",
+        "role": "flagged_array",
+        "kind": "array",
+        "declaration_line": 82146,
+        "declaration_text": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "array_dims": "[]",
+        "resolved_sizes": [],
+        "size_known": false,
+        "index_expression": "dataReqMode_u16",
+        "function_sequence": [
+          "BswM_Prv_GetLinSmIdicationInfo_en"
+        ],
+        "write_lines": [
+          82146
+        ],
+        "guard_candidate_lines": []
+      },
+      {
+        "symbol_name": "dataReqMode_u16",
+        "role": "index",
+        "kind": "struct_member",
+        "declaration_line": 82258,
+        "declaration_text": "uint16 dataReqMode_u16;",
+        "array_dims": null,
+        "resolved_sizes": [],
+        "size_known": false,
+        "index_expression": null,
+        "function_sequence": [
+          "global",
+          "BswM_Prv_GetCanSMIndicationInfo_en",
+          "BswM_Prv_GetDcmComModeReqstInfo_en",
+          "BswM_Prv_GetEcuMWkpSrcInfo_en",
+          "BswM_Prv_GetGenReqInfo_en",
+          "BswM_Prv_GetLinSmIdicationInfo_en",
+          "BswM_Prv_IntrptQueueOut",
+          "BswM_Prv_ProcessDelayedReqst",
+          "BswM_Prv_IntrptQueueIn",
+          "BswM_Prv_ReqProcessOrQueue_b"
+        ],
+        "write_lines": [
+          82258,
+          82293,
+          82422,
+          82485,
+          82608
+        ],
+        "guard_candidate_lines": []
+      }
+    ],
+    "local_guard": {
+      "found": false,
+      "function": null,
+      "line": null,
+      "quote": null,
+      "note": "no local bound found in alarm function"
+    },
+    "skip_path_explore": false,
+    "edges": [],
+    "notes": [
+      "array_size recovered from initializer count=2"
+    ]
+  },
+  "call_path": {
+    "agent": "CALL_PATH_EXPLORE",
+    "facts": [
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "symbol": "dataLinSmIndState_aen",
+        "path_class_id": null,
+        "note": "seeded from analyzer declaration",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "global",
+        "line": 82258,
+        "quote": "uint16 dataReqMode_u16;",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "seeded from analyzer declaration",
+        "verified": true
+      },
+      {
+        "kind": "alarm_site",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "seeded alarm location line",
+        "verified": true
+      },
+      {
+        "kind": "access",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "mined indexed access",
+        "verified": true
+      },
+      {
+        "kind": "arg_binding",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "alarm_site",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82157,
+        "quote": "*nrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].nrAssociatedRules_u16;",
+        "symbol": null,
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "arg_binding",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82157,
+        "quote": "*nrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].nrAssociatedRules_u16;",
+        "symbol": "nrRules_pu16",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "alarm_site",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82158,
+        "quote": "*adrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].adrRulesRef_pu16;",
+        "symbol": null,
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "arg_binding",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82158,
+        "quote": "*adrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].adrRulesRef_pu16;",
+        "symbol": "adrRules_pu16",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      }
+    ],
+    "notes": [
+      "explore_mode=code_driven",
+      "opened=['BswM_Prv_GetLinSmIdicationInfo_en']",
+      "seeded 4 deterministic facts"
+    ],
+    "tool_trace": [],
+    "error": null
+  },
+  "var_value": {
+    "agent": "VAR_VALUE_EXPLORE",
+    "facts": [
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "symbol": "dataLinSmIndState_aen",
+        "path_class_id": null,
+        "note": "seeded from analyzer declaration",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "global",
+        "line": 82258,
+        "quote": "uint16 dataReqMode_u16;",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "seeded from analyzer declaration",
+        "verified": true
+      },
+      {
+        "kind": "alarm_site",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "seeded alarm location line",
+        "verified": true
+      },
+      {
+        "kind": "access",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "mined indexed access",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+        "symbol": "dataLinSmIndState_aen",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_IntrptQueueOut",
+        "line": 82293,
+        "quote": "BswM_Prv_IntrptQueue_ast___36[headIndex_u8].dataReqMode_u16 = 0xFF;",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "mined index write/assign",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_IntrptQueueOut",
+        "line": 82268,
+        "quote": "uint16 * dataReqMode_pu16",
+        "symbol": "dataReqMode_pu16",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_IntrptQueueOut",
+        "line": 82287,
+        "quote": "*dataReqMode_pu16 = BswM_Prv_IntrptQueue_ast___36[headIndex_u8].dataReqMode_u16;",
+        "symbol": "dataReqMode_pu16",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_ProcessDelayedReqst",
+        "line": 82422,
+        "quote": "uint16 dataReqMode_u16 = 0;",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "mined index write/assign",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_ProcessDelayedReqst",
+        "line": 82485,
+        "quote": "dataReqMode_u16 = 0;",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "mined index write/assign",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_ProcessDelayedReqst",
+        "line": 82422,
+        "quote": "uint16 dataReqMode_u16 = 0;",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_ProcessDelayedReqst",
+        "line": 82415,
+        "quote": "uint8 queueSize_u8 = 0;",
+        "symbol": "queueSize_u8",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_ProcessDelayedReqst",
+        "line": 82417,
+        "quote": "BswM_Cfg_MRPType_ten dataMRPType_en = BSWM_MRP_DEFAULT___063242EB;",
+        "symbol": "dataMRPType_en",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_ProcessDelayedReqst",
+        "line": 82418,
+        "quote": "uint16 idChannel_u16 = 0;",
+        "symbol": "idChannel_u16",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_ProcessDelayedReqst",
+        "line": 82419,
+        "quote": "uint16 idxMRPChnl_u16 = 0;",
+        "symbol": "idxMRPChnl_u16",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_ProcessDelayedReqst",
+        "line": 82420,
+        "quote": "uint16 dataReqMode_u16 = 0;",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_ProcessDelayedReqst",
+        "line": 82421,
+        "quote": "Std_ReturnType queueOutRetVal_u8;",
+        "symbol": "queueOutRetVal_u8",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_ProcessDelayedReqst",
+        "line": 82422,
+        "quote": "uint8 mirror_u8 = 0;",
+        "symbol": "mirror_u8",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_ProcessDelayedReqst",
+        "line": 82423,
+        "quote": "uint16 nrRules_u16 = 0;",
+        "symbol": "nrRules_u16",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_ProcessDelayedReqst",
+        "line": 82424,
+        "quote": "const uint16 * adrRules_pu16 = ((void *)0);",
+        "symbol": "adrRules_pu16",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_ProcessDelayedReqst",
+        "line": 82425,
+        "quote": "BswM_ReqProcessing_ten dataReqProc_u16;",
+        "symbol": "dataReqProc_u16",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_ProcessDelayedReqst",
+        "line": 82432,
+        "quote": "BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);",
+        "symbol": "BswM_Prv_flgDelayedReqstProgress_b",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_ProcessDelayedReqst",
+        "line": 82435,
+        "quote": "BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);",
+        "symbol": "BswM_Prv_flgDelayedReqstProgress_b",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_ProcessDelayedReqst",
+        "line": 82537,
+        "quote": "BswM_Prv_flgDelayedReqstProgress_b = (0 != 0);",
+        "symbol": "BswM_Prv_flgDelayedReqstProgress_b",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_IntrptQueueIn",
+        "line": 82608,
+        "quote": "BswM_Prv_IntrptQueue_ast___36[tailIndex_u8].dataReqMode_u16 = dataReqMode_u16;",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "mined index write/assign",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_IntrptQueueIn",
+        "line": 82602,
+        "quote": "tailIndex_u8 = BswM_Prv_IntrptQueueInfo_st.idxTail_u8;",
+        "symbol": "tailIndex_u8",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_IntrptQueueIn",
+        "line": 82605,
+        "quote": "BswM_Prv_IntrptQueue_ast___36[tailIndex_u8].dataMRPType_en = dataMRPType_en;",
+        "symbol": "dataMRPType_en",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_IntrptQueueIn",
+        "line": 82606,
+        "quote": "BswM_Prv_IntrptQueue_ast___36[tailIndex_u8].idChannel_u16 = idChannel_u16;",
+        "symbol": "idChannel_u16",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_IntrptQueueIn",
+        "line": 82607,
+        "quote": "BswM_Prv_IntrptQueue_ast___36[tailIndex_u8].idxMRPChnl_u16 = idxMRPChnl_u16;",
+        "symbol": "idxMRPChnl_u16",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_IntrptQueueIn",
+        "line": 82611,
+        "quote": "BswM_Prv_IntrptQueueInfo_st.idxTail_u8++;",
+        "symbol": "idxTail_u8",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_IntrptQueueIn",
+        "line": 82612,
+        "quote": "BswM_Prv_IntrptQueueInfo_st.dataSize_u8++;",
+        "symbol": "dataSize_u8",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_IntrptQueueIn",
+        "line": 82614,
+        "quote": "BswM_Prv_isReqstDelayed_b = (1 != 0);",
+        "symbol": "BswM_Prv_isReqstDelayed_b",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_IntrptQueueIn",
+        "line": 82616,
+        "quote": "if ((1) == BswM_Prv_IntrptQueueInfo_st.idxTail_u8)",
+        "symbol": "idxTail_u8",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_IntrptQueueIn",
+        "line": 82619,
+        "quote": "BswM_Prv_IntrptQueueInfo_st.idxTail_u8 = 0;",
+        "symbol": "idxTail_u8",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      }
+    ],
+    "notes": [
+      "explore_mode=code_driven",
+      "opened=['BswM_Prv_GetLinSmIdicationInfo_en', 'BswM_Prv_IntrptQueueOut', 'BswM_Prv_ProcessDelayedReqst', 'BswM_Prv_IntrptQueueIn']",
+      "seeded 4 deterministic facts"
+    ],
+    "tool_trace": [],
+    "error": null
+  },
+  "facts_by_class": {
+    "C1": [
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "symbol": "dataLinSmIndState_aen",
+        "path_class_id": null,
+        "note": "seeded from analyzer declaration",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "global",
+        "line": 82258,
+        "quote": "uint16 dataReqMode_u16;",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "seeded from analyzer declaration",
+        "verified": true
+      },
+      {
+        "kind": "alarm_site",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "seeded alarm location line",
+        "verified": true
+      },
+      {
+        "kind": "access",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "mined indexed access",
+        "verified": true
+      },
+      {
+        "kind": "arg_binding",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "alarm_site",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82157,
+        "quote": "*nrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].nrAssociatedRules_u16;",
+        "symbol": null,
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "arg_binding",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82157,
+        "quote": "*nrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].nrAssociatedRules_u16;",
+        "symbol": "nrRules_pu16",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "alarm_site",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82158,
+        "quote": "*adrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].adrRulesRef_pu16;",
+        "symbol": null,
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "arg_binding",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82158,
+        "quote": "*adrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].adrRulesRef_pu16;",
+        "symbol": "adrRules_pu16",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "symbol": "dataLinSmIndState_aen",
+        "path_class_id": null,
+        "note": "seeded from analyzer declaration",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "global",
+        "line": 82258,
+        "quote": "uint16 dataReqMode_u16;",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "seeded from analyzer declaration",
+        "verified": true
+      },
+      {
+        "kind": "alarm_site",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "seeded alarm location line",
+        "verified": true
+      },
+      {
+        "kind": "access",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "mined indexed access",
+        "verified": true
+      },
+      {
+        "kind": "write",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+        "symbol": "dataLinSmIndState_aen",
+        "path_class_id": null,
+        "note": "llm extract",
+        "verified": true
+      }
+    ]
+  },
+  "coverage": "full",
+  "notes": [
+    "array_size recovered from initializer count=2",
+    "29 facts not tied to a path-class function"
+  ]
+}
+
+
+{
+  "agent": "FP_PROVE",
+  "claim": "no_credible_case",
+  "index_range": "unknown",
+  "array_size": "unknown",
+  "witness": "none",
+  "coverage": "partial",
+  "findings": [],
+  "missing_evidence": [],
+  "addressed_path_classes": [],
+  "unaddressed_path_classes": [],
+  "rationale": "",
+  "error": null
+}
+
+
+{
+  "agent": "TP_PROVE",
+  "claim": "no_credible_case",
+  "index_range": "unknown",
+  "array_size": "unknown",
+  "witness": "none",
+  "coverage": "partial",
+  "findings": [],
+  "missing_evidence": [],
+  "addressed_path_classes": [],
+  "unaddressed_path_classes": [],
+  "rationale": "The JSON structure you've provided appears to be a detailed analysis of code elements, likely generated by a static analysis tool. It includes information about **functions**, **variables**, **accesses**, and **declarations** within a codebase. Below is a breakdown of the key components and potential use cases for this data:\n\n---\n\n### **Key Components of the JSON**\n1. **`var` and `var2` Arrays**:\n   - These arrays contain objects with two main fields:\n     - **`type`**: Categorizes the data (e.g., `function`, `variable`, `access`, `declaration`).\n     - **`data`**: Contains detailed information about the element, such as:\n       - **Function names** (e.g., `BswM_Prv_ProcessDelayedReqst`).\n       - **Variable names** (e.g., `BswM_Prv_flgDelayedReqstProgress_b`).\n       - **Line numbers** (e.g., `line: 82432`).\n       - **Code context** (e.g., `BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);`).\n\n2. **Types of Entries**:\n   - **`function`**: Lists functions and their associated metadata (e",
+  "error": "Expecting value: line 1 column 1 (char 0)"
+}
+
+
+{
+  "tp": {
+    "agent": "TP_PROVE",
+    "claim": "no_credible_case",
+    "index_range": "unknown",
+    "array_size": "unknown",
+    "witness": "none",
+    "coverage": "partial",
+    "findings": [],
+    "missing_evidence": [],
+    "addressed_path_classes": [],
+    "unaddressed_path_classes": [],
+    "rationale": "The JSON structure you've provided appears to be a detailed analysis of code elements, likely generated by a static analysis tool. It includes information about **functions**, **variables**, **accesses**, and **declarations** within a codebase. Below is a breakdown of the key components and potential use cases for this data:\n\n---\n\n### **Key Components of the JSON**\n1. **`var` and `var2` Arrays**:\n   - These arrays contain objects with two main fields:\n     - **`type`**: Categorizes the data (e.g., `function`, `variable`, `access`, `declaration`).\n     - **`data`**: Contains detailed information about the element, such as:\n       - **Function names** (e.g., `BswM_Prv_ProcessDelayedReqst`).\n       - **Variable names** (e.g., `BswM_Prv_flgDelayedReqstProgress_b`).\n       - **Line numbers** (e.g., `line: 82432`).\n       - **Code context** (e.g., `BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);`).\n\n2. **Types of Entries**:\n   - **`function`**: Lists functions and their associated metadata (e",
+    "error": "Expecting value: line 1 column 1 (char 0)"
+  },
+  "fp": {
+    "agent": "FP_PROVE",
+    "claim": "no_credible_case",
+    "index_range": "unknown",
+    "array_size": "unknown",
+    "witness": "none",
+    "coverage": "partial",
+    "findings": [],
+    "missing_evidence": [],
+    "addressed_path_classes": [],
+    "unaddressed_path_classes": [
+      "C1"
+    ],
+    "rationale": "",
+    "error": null
+  },
+  "dropped_claims": [],
+  "notes": [
+    "validator checked quotes against merged facts and source"
+  ]
+}
+
+
+{
+  "label": "uncertain",
+  "rationale": "The TP report does not present a valid vulnerability witness; instead, it provides a description of a JSON metadata structure and contains a parsing error ('Expecting value: line 1 column 1'). The FP report is explicitly marked as having 'partial' coverage and contains 'unaddressed_path_classes' (C1), which fails the requirement for an ironclad FP classification. Since neither the TP nor the FP claims meet the required threshold of evidence, the result must be uncertain.",
+  "tp_summary": "The JSON structure you've provided appears to be a detailed analysis of code elements, likely generated by a static analysis tool. It includes information about **functions**, **variables**, **accesses**, and **declarations** within a codebase. Below is a breakdown of the key components and potential use cases for this data:\n\n---\n\n### **Key Components of the JSON**\n1. **`var` and `var2` Arrays**:\n   - These arrays contain objects with two main fields:\n     - **`type`**: Categorizes the data (e.g., `function`, `variable`, `access`, `declaration`).\n     - **`data`**: Contains detailed information about the element, such as:\n       - **Function names** (e.g., `BswM_Prv_ProcessDelayedReqst`).\n       - **Variable names** (e.g., `BswM_Prv_flgDelayedReqstProgress_b`).\n       - **Line numbers** (e.g., `line: 82432`).\n       - **Code context** (e.g., `BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);`).\n\n2. **Types of Entries**:\n   - **`function`**: Lists functions and their associated metadata (e",
+  "fp_summary": "",
+  "reexplore_requested": false,
+  "reexplore_focus": null,
+  "votes": [
+    "uncertain",
+    "uncertain",
+    "uncertain"
+  ],
+  "run_details": [
+    {
+      "label": "uncertain",
+      "rationale": "The TP report provides no analysis of a code path, instead describing the JSON structure itself, and contains a parsing error. The FP report is incomplete, lacks a rationale, and explicitly identifies unaddressed path classes (C1) and partial coverage. Since the FP report does not meet the ironclad requirement and there is no validated witness for a TP, the result must be uncertain.",
+      "reexplore_requested": false,
+      "reexplore_focus": null
+    },
+    {
+      "label": "uncertain",
+      "rationale": "The FP report is not ironclad: it explicitly states 'partial' coverage and identifies an unaddressed path class ('C1'). The TP report does not provide a validated witness of a bug; it contains a parsing error ('Expecting value: line 1 column 1') and merely describes the structure of the input data rather than presenting a proof of an out-of-bounds access.",
+      "reexplore_requested": false,
+      "reexplore_focus": null
+    },
+    {
+      "label": "uncertain",
+      "rationale": "The TP report does not present a valid vulnerability witness; instead, it provides a description of a JSON metadata structure and contains a parsing error ('Expecting value: line 1 column 1'). The FP report is explicitly marked as having 'partial' coverage and contains 'unaddressed_path_classes' (C1), which fails the requirement for an ironclad FP classification. Since neither the TP nor the FP claims meet the required threshold of evidence, the result must be uncertain.",
+      "reexplore_requested": false,
+      "reexplore_focus": null
+    }
+  ],
+  "hard_gates": [
+    "fp-block: FP agent did not claim fp",
+    "fp-block: FP coverage is not full",
+    "fp-block: unaddressed path classes: ['C1']",
+    "fp-block: index_range unknown — cannot prove safe bounds",
+    "fp-block: array_size not known",
+    "fp-block: no validated FP findings/quotes",
+    "fp-block: not every path class addressed"
+  ]
+}
+
+
+
+{"ts": 1789831484.5168195, "kind": "stage", "agent": null, "stage": "prep", "title": "Deterministic prep", "detail": "pver=4105 order=2,475", "input_preview": null, "output_preview": null, "tool": null, "functions": [], "edges": [], "activity": "loading alarm + building path/symbol skeletons"}
+{"ts": 1789831487.464662, "kind": "stage", "agent": null, "stage": "prep", "title": "Prep complete", "detail": null, "input_preview": null, "output_preview": "{\n  \"group_id\": 141,\n  \"path_classes\": 1,\n  \"edges\": 0,\n  \"coverage_cap\": \"full\",\n  \"local_guard\": {\n    \"found\": false,\n    \"function\": null,\n    \"line\": null,\n    \"quote\": null,\n    \"note\": \"no local bound found in alarm function\"\n  },\n  \"array\": \"dataLinSmIndState_aen\",\n  \"array_size\": 2\n}", "tool": null, "functions": ["BswM_Prv_GetLinSmIdicationInfo_en"], "edges": [], "activity": "1 path classes"}
+{"ts": 1789831487.4747837, "kind": "stage", "agent": null, "stage": "explore", "title": "Explorers starting", "detail": "CALL_PATH_EXPLORE + VAR_VALUE_EXPLORE (LangGraph + tools)", "input_preview": null, "output_preview": null, "tool": null, "functions": ["BswM_Prv_GetLinSmIdicationInfo_en"], "edges": [], "activity": "explore fan-out"}
+{"ts": 1789831487.4759514, "kind": "agent_input", "agent": "CALL_PATH_EXPLORE", "stage": "explore", "title": "Input → CALL_PATH_EXPLORE (code-driven)", "detail": null, "input_preview": "{\n  \"role\": \"call_path\",\n  \"order\": \"2,475\",\n  \"location\": \"ALL_bc_with_context.c:82154.91-106\",\n  \"enclosing_function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n  \"alarm_line\": 82154,\n  \"index_expression\": \"dataReqMode_u16\",\n  \"array_name\": \"dataLinSmIndState_aen\",\n  \"array_size\": 2,\n  \"local_guard\": {\n    \"found\": false,\n    \"function\": null,\n    \"line\": null,\n    \"quote\": null,\n    \"note\": \"no local bound found in alarm function\"\n  },\n  \"coverage_cap\": \"full\",\n  \"function_sequence\": [\n    \"BswM_Prv_GetLinSmIdicationInfo_en\"\n  ],\n  \"visit_instructions\": [\n    \"Start at step 1 (already positioned).\",\n    \"Call get_current() to load the FULL current function.\",\n    \"Extract quoted facts from that body.\",\n    \"Call move_func(direction='next') and repeat until remaining=[].\",\n    \"Call visit_status() anytime to check coverage.\",\n    \"Then submit_explore_pack with a non-empty facts array.\"\n  ],\n  \"path_classes\": [\n    {\n      \"class_id\": \"C1\",\n      \"sequence\": [\n        {\n          \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n          \"call_site_line\": 82467\n        }\n      ],\n      \"member_path_ids\": [\n        1\n      ],\n      \"cluster_note\": null\n    }\n  ],\n  \"edges\": []\n}", "output_preview": null, "tool": null, "functions": ["BswM_Prv_GetLinSmIdicationInfo_en"], "edges": [], "activity": "code opens 1 funcs; LLM extracts only"}
+{"ts": 1789831487.4765754, "kind": "agent_input", "agent": "VAR_VALUE_EXPLORE", "stage": "explore", "title": "Input → VAR_VALUE_EXPLORE (code-driven)", "detail": null, "input_preview": "{\n  \"role\": \"var_value\",\n  \"order\": \"2,475\",\n  \"location\": \"ALL_bc_with_context.c:82154.91-106\",\n  \"enclosing_function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n  \"alarm_line\": 82154,\n  \"index_expression\": \"dataReqMode_u16\",\n  \"array_name\": \"dataLinSmIndState_aen\",\n  \"array_size\": 2,\n  \"local_guard\": {\n    \"found\": false,\n    \"function\": null,\n    \"line\": null,\n    \"quote\": null,\n    \"note\": \"no local bound found in alarm function\"\n  },\n  \"coverage_cap\": \"full\",\n  \"function_sequence\": [\n    \"BswM_Prv_GetLinSmIdicationInfo_en\",\n    \"BswM_Prv_IntrptQueueOut\",\n    \"BswM_Prv_ProcessDelayedReqst\",\n    \"BswM_Prv_IntrptQueueIn\"\n  ],\n  \"visit_instructions\": [\n    \"Start at step 1 (already positioned).\",\n    \"Call get_current() to load the FULL current function.\",\n    \"Extract quoted facts from that body.\",\n    \"Call move_func(direction='next') and repeat until remaining=[].\",\n    \"Call visit_status() anytime to check coverage.\",\n    \"Then submit_explore_pack with a non-empty facts array.\"\n  ],\n  \"path_classes\": [\n    {\n      \"class_id\": \"C1\",\n      \"sequence\": [\n        {\n          \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n          \"call_site_line\": 82467\n        }\n      ],\n      \"member_path_ids\": [\n        1\n      ],\n      \"cluster_note\": null\n    }\n  ],\n  \"edges\": [],\n  \"symbols\": [\n    {\n      \"symbol_name\": \"dataLinSmIndState_aen\",\n      \"role\": \"flagged_array\",\n      \"kind\": \"array\",\n      \"declaration_line\": 82146,\n      \"declaration_text\": \"LinSM_ModeType dataLinSmIndState_aen[] =\",\n      \"array_dims\": \"[]\",\n      \"resolved_sizes\": [],\n      \"size_known\": false,\n      \"index_expression\": \"dataReqMode_u16\",\n      \"function_sequence\": [\n        \"BswM_Prv_GetLinSmIdicationInfo_en\"\n      ],\n      \"write_lines\": [\n        82146\n      ],\n      \"guard_candidate_lines\": []\n    },\n    {\n      \"symbol_name\": \"dataReqMode_u16\",\n      \"role\": \"index\",\n      \"kind\": \"struct_member\",\n      \"declaration_line\": 82258,\n      \"declaration_text\": \"uint16 dataReqMode_u16;\",\n      \"array_dims\": null,\n      \"resolved_sizes\": [],\n      \"size_known\": false,\n      \"index_expression\": null,\n      \"function_sequence\": [\n        \"global\",\n        \"BswM_Prv_GetCanSMIndicationInfo_en\",\n        \"BswM_Prv_GetDcmComModeReqstInfo_en\",\n        \"BswM_Prv_GetEcuMWkpSrcInfo_en\",\n        \"BswM_Prv_GetGenReqInfo_en\",\n        \"BswM_Prv_GetLinSmIdicationInfo_en\",\n        \"BswM_Prv_IntrptQueueOu\n… [19 more chars]", "output_preview": null, "tool": null, "functions": ["BswM_Prv_GetLinSmIdicationInfo_en", "BswM_Prv_IntrptQueueOut", "BswM_Prv_ProcessDelayedReqst", "BswM_Prv_IntrptQueueIn"], "edges": [], "activity": "code opens 4 funcs; LLM extracts only"}
+{"ts": 1789831487.661269, "kind": "tool_result", "agent": "CALL_PATH_EXPLORE", "stage": "explore", "title": "CALL_PATH_EXPLORE ← get_func(BswM_Prv_GetLinSmIdicationInfo_en)", "detail": null, "input_preview": null, "output_preview": "82136: BswM_ReqProcessing_ten BswM_Prv_GetLinSmIdicationInfo_en\n82137: (\n82138:  uint16 idxMRPChnl_u16,\n82139:  uint16 dataReqMode_u16,\n82140:  uint16 * nrRules_pu16,\n82141:  const uint16 * *adrRules_pu16\n82142: )\n82143: {\n82144:     BswM_ReqProcessing_ten retVal;\n82145: \n82146:     LinSM_ModeType dataLinSmIndState_aen[] =\n82147:     {\n82148:             LINSM_NO_COM___83379D74,\n82149:             LINSM_FULL_COM___83379D74\n82150:     };\n82151: \n82152: \n82153:     BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].isValidModePresent_b = (1 != 0);\n82154:     BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];\n82155: \n82156: \n82157:     *nrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].nrAssociatedRules_u16;\n82158:     *adrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].adrRulesRef_pu16;\n82159: \n82160:     retVal = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].dataReqProcessing_en;\n82161: \n82162:     return retVa", "tool": "get_func", "functions": ["BswM_Prv_GetLinSmIdicationInfo_en"], "edges": [], "activity": "opened BswM_Prv_GetLinSmIdicationInfo_en"}
+{"ts": 1789831487.6622014, "kind": "agent_thinking", "agent": "CALL_PATH_EXPLORE", "stage": "explore", "title": "CALL_PATH_EXPLORE extract @ BswM_Prv_GetLinSmIdicationInfo_en", "detail": null, "input_preview": null, "output_preview": null, "tool": null, "functions": ["BswM_Prv_GetLinSmIdicationInfo_en"], "edges": [], "activity": "JSON fact extract (no tools)"}
+{"ts": 1789831487.6615334, "kind": "tool_result", "agent": "VAR_VALUE_EXPLORE", "stage": "explore", "title": "VAR_VALUE_EXPLORE ← get_func(BswM_Prv_GetLinSmIdicationInfo_en)", "detail": null, "input_preview": null, "output_preview": "82136: BswM_ReqProcessing_ten BswM_Prv_GetLinSmIdicationInfo_en\n82137: (\n82138:  uint16 idxMRPChnl_u16,\n82139:  uint16 dataReqMode_u16,\n82140:  uint16 * nrRules_pu16,\n82141:  const uint16 * *adrRules_pu16\n82142: )\n82143: {\n82144:     BswM_ReqProcessing_ten retVal;\n82145: \n82146:     LinSM_ModeType dataLinSmIndState_aen[] =\n82147:     {\n82148:             LINSM_NO_COM___83379D74,\n82149:             LINSM_FULL_COM___83379D74\n82150:     };\n82151: \n82152: \n82153:     BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].isValidModePresent_b = (1 != 0);\n82154:     BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];\n82155: \n82156: \n82157:     *nrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].nrAssociatedRules_u16;\n82158:     *adrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].adrRulesRef_pu16;\n82159: \n82160:     retVal = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].dataReqProcessing_en;\n82161: \n82162:     return retVa", "tool": "get_func", "functions": ["BswM_Prv_GetLinSmIdicationInfo_en"], "edges": [], "activity": "opened BswM_Prv_GetLinSmIdicationInfo_en"}
+{"ts": 1789831487.6635473, "kind": "agent_thinking", "agent": "VAR_VALUE_EXPLORE", "stage": "explore", "title": "VAR_VALUE_EXPLORE extract @ BswM_Prv_GetLinSmIdicationInfo_en", "detail": null, "input_preview": null, "output_preview": null, "tool": null, "functions": ["BswM_Prv_GetLinSmIdicationInfo_en"], "edges": [], "activity": "JSON fact extract (no tools)"}
+{"ts": 1789831518.7028115, "kind": "agent_output", "agent": "CALL_PATH_EXPLORE", "stage": "explore", "title": "Output ← CALL_PATH_EXPLORE", "detail": null, "input_preview": null, "output_preview": "{\n  \"agent\": \"CALL_PATH_EXPLORE\",\n  \"facts\": [\n    {\n      \"kind\": \"declaration\",\n      \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n      \"line\": 82146,\n      \"quote\": \"LinSM_ModeType dataLinSmIndState_aen[] =\",\n      \"symbol\": \"dataLinSmIndState_aen\",\n      \"path_class_id\": null,\n      \"note\": \"seeded from analyzer declaration\",\n      \"verified\": true\n    },\n    {\n      \"kind\": \"array_size_hint\",\n      \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n      \"line\": 82150,\n      \"quote\": \"LinSM_ModeType dataLinSmIndState_aen[] = { LINSM_NO_COM___83379D74, LINSM_FULL_COM___83379D74 };\",\n      \"symbol\": \"dataLinSmIndState_aen\",\n      \"path_class_id\": null,\n      \"note\": \"initializer element count=2\",\n      \"verified\": true\n    },\n    {\n      \"kind\": \"declaration\",\n      \"function\": \"global\",\n      \"line\": 82258,\n      \"quote\": \"uint16 dataReqMode_u16;\",\n      \"symbol\": \"dataReqMode_u16\",\n      \"path_class_id\": null,\n      \"note\": \"seeded from analyzer declaration\",\n      \"verified\": true\n    },\n    {\n      \"kind\": \"alarm_site\",\n      \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n      \"line\": 82154,\n      \"quote\": \"BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];\",\n      \"symbol\": \"dataReqMode_u16\",\n      \"path_class_id\": null,\n      \"note\": \"seeded alarm location line\",\n      \"verified\": true\n    },\n    {\n      \"kind\": \"access\",\n      \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n      \"line\": 82146,\n      \"quote\": \"LinSM_ModeType dataLinSmIndState_aen[] =\",\n      \"symbol\": \"dataReqMode_u16\",\n      \"path_class_id\": null,\n      \"note\": \"mined indexed access\",\n      \"verified\": null\n    },\n    {\n      \"kind\": \"arg_binding\",\n      \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n      \"line\": 82154,\n      \"quote\": \"BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];\",\n      \"symbol\": \"dataReqMode_u16\",\n      \"path_class_id\": null,\n      \"note\": \"llm extract\",\n      \"verified\": null\n    },\n    {\n      \"kind\": \"alarm_site\",\n      \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n      \"line\": 82157,\n      \"quote\": \"*nrRules_pu16 = BswM_Prv_adrSelectedConfig_pcst->dataModeArbitration_st.dataModeRequestPorts_st.dataLinSMInd_ast[idxMRPChnl_u16].nrAssociatedRules_u16;\",\n      \"symbol\": null,\n      \"path_class_id\": null,\n      \"note\": \"llm extract\",\n   \n… [20 more chars]", "tool": null, "functions": ["BswM_Prv_GetLinSmIdicationInfo_en"], "edges": [], "activity": "produced 10 facts (code-driven)"}
+{"ts": 1789831526.2739205, "kind": "tool_result", "agent": "VAR_VALUE_EXPLORE", "stage": "explore", "title": "VAR_VALUE_EXPLORE ← get_func(BswM_Prv_IntrptQueueOut)", "detail": null, "input_preview": null, "output_preview": "82263: Std_ReturnType BswM_Prv_IntrptQueueOut\n82264: (\n82265:     BswM_Cfg_MRPType_ten * dataMRPType_pen,\n82266:     uint16 * idChannel_pu16,\n82267:     uint16 * idxMRPChnl_pu16,\n82268:     uint16 * dataReqMode_pu16\n82269: )\n82270: {\n82271: \n82272:     Std_ReturnType retVal = 0x00u;\n82273:     uint8 headIndex_u8= 0;\n82274: \n82275:     if(0 == BswM_Prv_IntrptQueueInfo_st.dataSize_u8)\n82276:     {\n82277:         retVal = 0x01u;\n82278:     }\n82279:     else\n82280:     {\n82281:         headIndex_u8 = BswM_Prv_IntrptQueueInfo_st.idxHead_u8;\n82282: \n82283: \n82284:         *dataMRPType_pen = BswM_Prv_IntrptQueue_ast___36[headIndex_u8].dataMRPType_en;\n82285:         *idChannel_pu16 = BswM_Prv_IntrptQueue_ast___36[headIndex_u8].idChannel_u16;\n82286:         *idxMRPChnl_pu16 = BswM_Prv_IntrptQueue_ast___36[headIndex_u8].idxMRPChnl_u16;\n82287:         *dataReqMode_pu16 = BswM_Prv_IntrptQueue_ast___36[headIndex_u8].dataReqMode_u16;\n82288: \n82289: \n82290:         BswM_Prv_IntrptQueue_ast___36[headIndex_u8].dataMRPType_en = BSWM_MRP_DEFAULT___063242EB;\n82291:         BswM_Prv_IntrptQueue_ast___36[headIndex_u8].idChannel_u16 = 0xFF;\n82292:         BswM_Prv_IntrptQueue_ast___36[headIndex_u8].idxMR", "tool": "get_func", "functions": ["BswM_Prv_IntrptQueueOut"], "edges": [], "activity": "opened BswM_Prv_IntrptQueueOut"}
+{"ts": 1789831526.2749689, "kind": "agent_thinking", "agent": "VAR_VALUE_EXPLORE", "stage": "explore", "title": "VAR_VALUE_EXPLORE extract @ BswM_Prv_IntrptQueueOut", "detail": null, "input_preview": null, "output_preview": null, "tool": null, "functions": ["BswM_Prv_IntrptQueueOut"], "edges": [], "activity": "JSON fact extract (no tools)"}
+{"ts": 1789831535.2973585, "kind": "tool_result", "agent": "VAR_VALUE_EXPLORE", "stage": "explore", "title": "VAR_VALUE_EXPLORE ← get_func(BswM_Prv_ProcessDelayedReqst)", "detail": null, "input_preview": null, "output_preview": "82411: void BswM_Prv_ProcessDelayedReqst\n82412: (\n82413:     void\n82414: )\n82415: {\n82416: \n82417:     uint8 queueSize_u8 = 0;\n82418: \n82419:     BswM_Cfg_MRPType_ten dataMRPType_en = BSWM_MRP_DEFAULT___063242EB;\n82420:     uint16 idChannel_u16 = 0;\n82421:     uint16 idxMRPChnl_u16 = 0;\n82422:     uint16 dataReqMode_u16 = 0;\n82423:     Std_ReturnType queueOutRetVal_u8;\n82424: \n82425:     uint8 mirror_u8 = 0;\n82426:     uint16 nrRules_u16 = 0;\n82427:     const uint16 * adrRules_pu16 = ((void *)0);\n82428:     BswM_ReqProcessing_ten dataReqProc_u16;\n82429: \n82430: \n82431: \n82432:     BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);\n82433: \n82434: \n82435:     { rba_BswSrv_GetLockCommon___39();\n82436: \n82437: \n82438:     queueSize_u8 = BswM_Prv_IntrptQueueInfo_st.dataSize_u8;\n82439: \n82440: \n82441:     rba_BswSrv_ReleaseLockCommon___39(); } /* SAMS: ASM47610 asm volatile(\"\" :: : \"memory\"); */\n82442: \n82443: \n82444: \n82445: \n82446:     while(queueSize_u8 != 0)\n82447:     {\n82448: \n82449: \n82450:         { rba_BswSrv_GetLockCommon___39();\n82451: \n82452: \n82453:         queueOutRetVal_u8 = BswM_Prv_IntrptQueueOut(&dataMRPType_en, &idChannel_u16, &idxMRPChnl_u16, &dataReqMode_u16);\n82454: \n82", "tool": "get_func", "functions": ["BswM_Prv_ProcessDelayedReqst"], "edges": [], "activity": "opened BswM_Prv_ProcessDelayedReqst"}
+{"ts": 1789831535.2987363, "kind": "agent_thinking", "agent": "VAR_VALUE_EXPLORE", "stage": "explore", "title": "VAR_VALUE_EXPLORE extract @ BswM_Prv_ProcessDelayedReqst", "detail": null, "input_preview": null, "output_preview": null, "tool": null, "functions": ["BswM_Prv_ProcessDelayedReqst"], "edges": [], "activity": "JSON fact extract (no tools)"}
+{"ts": 1789831571.9502602, "kind": "tool_result", "agent": "VAR_VALUE_EXPLORE", "stage": "explore", "title": "VAR_VALUE_EXPLORE ← get_func(BswM_Prv_IntrptQueueIn)", "detail": null, "input_preview": null, "output_preview": "82584: void BswM_Prv_IntrptQueueIn\n82585: (\n82586:     BswM_Cfg_MRPType_ten dataMRPType_en,\n82587:     uint16 idChannel_u16,\n82588:     uint16 idxMRPChnl_u16,\n82589:     uint16 dataReqMode_u16\n82590: )\n82591: {\n82592: \n82593:     uint8 tailIndex_u8= 0;\n82594: \n82595:     if((1) == BswM_Prv_IntrptQueueInfo_st.dataSize_u8)\n82596:     {\n82597: \n82598: \n82599:     }\n82600:     else\n82601:     {\n82602:         tailIndex_u8 = BswM_Prv_IntrptQueueInfo_st.idxTail_u8;\n82603: \n82604: \n82605:         BswM_Prv_IntrptQueue_ast___36[tailIndex_u8].dataMRPType_en = dataMRPType_en;\n82606:         BswM_Prv_IntrptQueue_ast___36[tailIndex_u8].idChannel_u16 = idChannel_u16;\n82607:         BswM_Prv_IntrptQueue_ast___36[tailIndex_u8].idxMRPChnl_u16 = idxMRPChnl_u16;\n82608:         BswM_Prv_IntrptQueue_ast___36[tailIndex_u8].dataReqMode_u16 = dataReqMode_u16;\n82609: \n82610: \n82611:         BswM_Prv_IntrptQueueInfo_st.idxTail_u8++;\n82612:         BswM_Prv_IntrptQueueInfo_st.dataSize_u8++;\n82613: \n82614:         BswM_Prv_isReqstDelayed_b = (1 != 0);\n82615: \n82616:         if ((1) == BswM_Prv_IntrptQueueInfo_st.idxTail_u8)\n82617:         {\n82618: \n82619:             BswM_Prv_IntrptQueueInfo_st.idxTail_u8 = 0", "tool": "get_func", "functions": ["BswM_Prv_IntrptQueueIn"], "edges": [], "activity": "opened BswM_Prv_IntrptQueueIn"}
+{"ts": 1789831571.9512079, "kind": "agent_thinking", "agent": "VAR_VALUE_EXPLORE", "stage": "explore", "title": "VAR_VALUE_EXPLORE extract @ BswM_Prv_IntrptQueueIn", "detail": null, "input_preview": null, "output_preview": null, "tool": null, "functions": ["BswM_Prv_IntrptQueueIn"], "edges": [], "activity": "JSON fact extract (no tools)"}
+{"ts": 1789831601.5318882, "kind": "agent_output", "agent": "VAR_VALUE_EXPLORE", "stage": "explore", "title": "Output ← VAR_VALUE_EXPLORE", "detail": null, "input_preview": null, "output_preview": "{\n  \"agent\": \"VAR_VALUE_EXPLORE\",\n  \"facts\": [\n    {\n      \"kind\": \"declaration\",\n      \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n      \"line\": 82146,\n      \"quote\": \"LinSM_ModeType dataLinSmIndState_aen[] =\",\n      \"symbol\": \"dataLinSmIndState_aen\",\n      \"path_class_id\": null,\n      \"note\": \"seeded from analyzer declaration\",\n      \"verified\": true\n    },\n    {\n      \"kind\": \"array_size_hint\",\n      \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n      \"line\": 82150,\n      \"quote\": \"LinSM_ModeType dataLinSmIndState_aen[] = { LINSM_NO_COM___83379D74, LINSM_FULL_COM___83379D74 };\",\n      \"symbol\": \"dataLinSmIndState_aen\",\n      \"path_class_id\": null,\n      \"note\": \"initializer element count=2\",\n      \"verified\": true\n    },\n    {\n      \"kind\": \"declaration\",\n      \"function\": \"global\",\n      \"line\": 82258,\n      \"quote\": \"uint16 dataReqMode_u16;\",\n      \"symbol\": \"dataReqMode_u16\",\n      \"path_class_id\": null,\n      \"note\": \"seeded from analyzer declaration\",\n      \"verified\": true\n    },\n    {\n      \"kind\": \"alarm_site\",\n      \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n      \"line\": 82154,\n      \"quote\": \"BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];\",\n      \"symbol\": \"dataReqMode_u16\",\n      \"path_class_id\": null,\n      \"note\": \"seeded alarm location line\",\n      \"verified\": true\n    },\n    {\n      \"kind\": \"access\",\n      \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n      \"line\": 82146,\n      \"quote\": \"LinSM_ModeType dataLinSmIndState_aen[] =\",\n      \"symbol\": \"dataReqMode_u16\",\n      \"path_class_id\": null,\n      \"note\": \"mined indexed access\",\n      \"verified\": null\n    },\n    {\n      \"kind\": \"write\",\n      \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n      \"line\": 82154,\n      \"quote\": \"BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];\",\n      \"symbol\": \"dataLinSmIndState_aen\",\n      \"path_class_id\": null,\n      \"note\": \"llm extract\",\n      \"verified\": null\n    },\n    {\n      \"kind\": \"write\",\n      \"function\": \"BswM_Prv_IntrptQueueOut\",\n      \"line\": 82293,\n      \"quote\": \"BswM_Prv_IntrptQueue_ast___36[headIndex_u8].dataReqMode_u16 = 0xFF;\",\n      \"symbol\": \"dataReqMode_u16\",\n      \"path_class_id\": null,\n      \"note\": \"mined index write/assign\",\n      \"verified\": null\n    },\n    {\n      \"kind\": \"declaration\",\n      \"func\n… [20 more chars]", "tool": null, "functions": ["BswM_Prv_GetLinSmIdicationInfo_en", "BswM_Prv_IntrptQueueOut", "BswM_Prv_ProcessDelayedReqst", "BswM_Prv_IntrptQueueIn"], "edges": [], "activity": "produced 35 facts (code-driven)"}
+{"ts": 1789831601.5428734, "kind": "stage", "agent": null, "stage": "merge", "title": "Merge + snippet check", "detail": null, "input_preview": null, "output_preview": null, "tool": null, "functions": [], "edges": [], "activity": "attaching facts to path classes"}
+{"ts": 1789831601.5454645, "kind": "stage", "agent": null, "stage": "merge", "title": "Merged pack ready", "detail": null, "input_preview": null, "output_preview": "{\n  \"coverage\": \"full\",\n  \"call_facts\": 9,\n  \"var_facts\": 34,\n  \"notes\": [\n    \"array_size recovered from initializer count=2\",\n    \"29 facts not tied to a path-class function\"\n  ]\n}", "tool": null, "functions": [], "edges": [], "activity": "coverage=full"}
+{"ts": 1789831601.5460405, "kind": "stage", "agent": null, "stage": "prove", "title": "Provers starting", "detail": "TP_PROVE + FP_PROVE (no tools)", "input_preview": null, "output_preview": null, "tool": null, "functions": [], "edges": [], "activity": "prove fan-out"}
+{"ts": 1789831601.6224017, "kind": "agent_input", "agent": "FP_PROVE", "stage": "prove", "title": "Input → FP_PROVE", "detail": null, "input_preview": "{\n  \"coverage\": \"full\",\n  \"notes\": [\n    \"array_size recovered from initializer count=2\",\n    \"29 facts not tied to a path-class function\"\n  ],\n  \"prep\": {\n    \"order\": \"2,475\",\n    \"index_expression\": \"dataReqMode_u16\",\n    \"array_name\": \"dataLinSmIndState_aen\",\n    \"array_size\": 2,\n    \"path_classes\": [\n      {\n        \"class_id\": \"C1\",\n        \"sequence\": [\n          {\n            \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n            \"call_site_line\": 82467\n          }\n        ],\n        \"member_path_ids\": [\n          1\n        ],\n        \"representative_path_id\": 1,\n        \"cluster_note\": null\n      }\n    ],\n    \"local_guard\": {\n      \"found\": false,\n      \"function\": null,\n      \"line\": null,\n      \"quote\": null,\n      \"note\": \"no local bound found in alarm function\"\n    }\n  },\n  \"facts_by_class\": {\n    \"C1\": [\n      {\n        \"kind\": \"declaration\",\n        \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n        \"line\": 82146,\n        \"quote\": \"LinSM_ModeType dataLinSmIndState_aen[] =\",\n        \"symbol\": \"dataLinSmIndState_aen\",\n        \"path_class_id\": null,\n        \"note\": \"seeded from analyzer declaration\",\n        \"verified\": true\n      },\n      {\n        \"kind\": \"declaration\",\n        \"function\": \"global\",\n        \"line\": 82258,\n        \"quote\": \"uint16 dataReqMode_u16;\",\n        \"symbol\": \"dataReqMode_u16\",\n        \"path_class_id\": null,\n        \"note\": \"seeded from analyzer declaration\",\n        \"verified\": true\n      },\n      {\n        \"kind\": \"alarm_site\",\n        \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n        \"line\": 82154,\n        \"quote\": \"BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];\",\n        \"symbol\": \"dataReqMode_u16\",\n        \"path_class_id\": null,\n        \"note\": \"seeded alarm location line\",\n        \"verified\": true\n      },\n      {\n        \"kind\": \"access\",\n        \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n        \"line\": 82146,\n        \"quote\": \"LinSM_ModeType dataLinSmIndState_aen[] =\",\n        \"symbol\": \"dataReqMode_u16\",\n        \"path_class_id\": null,\n        \"note\": \"mined indexed access\",\n        \"verified\": true\n      },\n      {\n        \"kind\": \"arg_binding\",\n        \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n        \"line\": 82154,\n        \"quote\": \"BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[da\n… [16763 more chars]", "output_preview": null, "tool": null, "functions": ["BswM_Prv_GetLinSmIdicationInfo_en"], "edges": [], "activity": "consuming merged pack"}
+{"ts": 1789831601.629144, "kind": "agent_thinking", "agent": "FP_PROVE", "stage": "prove", "title": "FP_PROVE reasoning", "detail": null, "input_preview": null, "output_preview": null, "tool": null, "functions": ["BswM_Prv_GetLinSmIdicationInfo_en"], "edges": [], "activity": "proving from merged facts (no tools)"}
+{"ts": 1789831601.6365795, "kind": "agent_input", "agent": "TP_PROVE", "stage": "prove", "title": "Input → TP_PROVE", "detail": null, "input_preview": "{\n  \"coverage\": \"full\",\n  \"notes\": [\n    \"array_size recovered from initializer count=2\",\n    \"29 facts not tied to a path-class function\"\n  ],\n  \"prep\": {\n    \"order\": \"2,475\",\n    \"index_expression\": \"dataReqMode_u16\",\n    \"array_name\": \"dataLinSmIndState_aen\",\n    \"array_size\": 2,\n    \"path_classes\": [\n      {\n        \"class_id\": \"C1\",\n        \"sequence\": [\n          {\n            \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n            \"call_site_line\": 82467\n          }\n        ],\n        \"member_path_ids\": [\n          1\n        ],\n        \"representative_path_id\": 1,\n        \"cluster_note\": null\n      }\n    ],\n    \"local_guard\": {\n      \"found\": false,\n      \"function\": null,\n      \"line\": null,\n      \"quote\": null,\n      \"note\": \"no local bound found in alarm function\"\n    }\n  },\n  \"facts_by_class\": {\n    \"C1\": [\n      {\n        \"kind\": \"declaration\",\n        \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n        \"line\": 82146,\n        \"quote\": \"LinSM_ModeType dataLinSmIndState_aen[] =\",\n        \"symbol\": \"dataLinSmIndState_aen\",\n        \"path_class_id\": null,\n        \"note\": \"seeded from analyzer declaration\",\n        \"verified\": true\n      },\n      {\n        \"kind\": \"declaration\",\n        \"function\": \"global\",\n        \"line\": 82258,\n        \"quote\": \"uint16 dataReqMode_u16;\",\n        \"symbol\": \"dataReqMode_u16\",\n        \"path_class_id\": null,\n        \"note\": \"seeded from analyzer declaration\",\n        \"verified\": true\n      },\n      {\n        \"kind\": \"alarm_site\",\n        \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n        \"line\": 82154,\n        \"quote\": \"BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];\",\n        \"symbol\": \"dataReqMode_u16\",\n        \"path_class_id\": null,\n        \"note\": \"seeded alarm location line\",\n        \"verified\": true\n      },\n      {\n        \"kind\": \"access\",\n        \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n        \"line\": 82146,\n        \"quote\": \"LinSM_ModeType dataLinSmIndState_aen[] =\",\n        \"symbol\": \"dataReqMode_u16\",\n        \"path_class_id\": null,\n        \"note\": \"mined indexed access\",\n        \"verified\": true\n      },\n      {\n        \"kind\": \"arg_binding\",\n        \"function\": \"BswM_Prv_GetLinSmIdicationInfo_en\",\n        \"line\": 82154,\n        \"quote\": \"BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[da\n… [16763 more chars]", "output_preview": null, "tool": null, "functions": ["BswM_Prv_GetLinSmIdicationInfo_en"], "edges": [], "activity": "consuming merged pack"}
+{"ts": 1789831601.640731, "kind": "agent_thinking", "agent": "TP_PROVE", "stage": "prove", "title": "TP_PROVE reasoning", "detail": null, "input_preview": null, "output_preview": null, "tool": null, "functions": ["BswM_Prv_GetLinSmIdicationInfo_en"], "edges": [], "activity": "proving from merged facts (no tools)"}
+{"ts": 1789831705.8362162, "kind": "agent_output", "agent": "FP_PROVE", "stage": "prove", "title": "Output ← FP_PROVE", "detail": null, "input_preview": null, "output_preview": "{\n  \"agent\": \"FP_PROVE\",\n  \"claim\": \"no_credible_case\",\n  \"index_range\": \"unknown\",\n  \"array_size\": \"unknown\",\n  \"witness\": \"none\",\n  \"coverage\": \"partial\",\n  \"findings\": [],\n  \"missing_evidence\": [],\n  \"addressed_path_classes\": [],\n  \"unaddressed_path_classes\": [],\n  \"rationale\": \"\",\n  \"error\": null\n}", "tool": null, "functions": ["BswM_Prv_GetLinSmIdicationInfo_en"], "edges": [], "activity": "claim=no_credible_case witness=none"}
+{"ts": 1789831778.3428366, "kind": "agent_output", "agent": "TP_PROVE", "stage": "prove", "title": "Output ← TP_PROVE", "detail": null, "input_preview": null, "output_preview": "{\n  \"agent\": \"TP_PROVE\",\n  \"claim\": \"no_credible_case\",\n  \"index_range\": \"unknown\",\n  \"array_size\": \"unknown\",\n  \"witness\": \"none\",\n  \"coverage\": \"partial\",\n  \"findings\": [],\n  \"missing_evidence\": [],\n  \"addressed_path_classes\": [],\n  \"unaddressed_path_classes\": [],\n  \"rationale\": \"The JSON structure you've provided appears to be a detailed analysis of code elements, likely generated by a static analysis tool. It includes information about **functions**, **variables**, **accesses**, and **declarations** within a codebase. Below is a breakdown of the key components and potential use cases for this data:\\n\\n---\\n\\n### **Key Components of the JSON**\\n1. **`var` and `var2` Arrays**:\\n   - These arrays contain objects with two main fields:\\n     - **`type`**: Categorizes the data (e.g., `function`, `variable`, `access`, `declaration`).\\n     - **`data`**: Contains detailed information about the element, such as:\\n       - **Function names** (e.g., `BswM_Prv_ProcessDelayedReqst`).\\n       - **Variable names** (e.g., `BswM_Prv_flgDelayedReqstProgress_b`).\\n       - **Line numbers** (e.g., `line: 82432`).\\n       - **Code context** (e.g., `BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);`).\\n\\n2. **Types of Entries**:\\n   - **`function`**: Lists functions and their associated metadata (e\",\n  \"error\": \"Expecting value: line 1 column 1 (char 0)\"\n}", "tool": null, "functions": ["BswM_Prv_GetLinSmIdicationInfo_en"], "edges": [], "activity": "claim=no_credible_case witness=none"}
+{"ts": 1789831778.3496962, "kind": "stage", "agent": null, "stage": "validate", "title": "Evidence validator", "detail": null, "input_preview": null, "output_preview": null, "tool": null, "functions": [], "edges": [], "activity": "dropping uncited claims"}
+{"ts": 1789831778.3507993, "kind": "stage", "agent": null, "stage": "validate", "title": "Validation done", "detail": null, "input_preview": null, "output_preview": "{\n  \"dropped\": [],\n  \"tp_claim\": \"no_credible_case\",\n  \"fp_claim\": \"no_credible_case\",\n  \"fp_unaddressed\": [\n    \"C1\"\n  ]\n}", "tool": null, "functions": [], "edges": [], "activity": "reports scrubbed"}
+{"ts": 1789831778.3511977, "kind": "stage", "agent": null, "stage": "final", "title": "Final classification", "detail": "multi-run ×3", "input_preview": null, "output_preview": null, "tool": null, "functions": [], "edges": [], "activity": "adjudicating"}
+{"ts": 1789831778.3927445, "kind": "agent_input", "agent": "FINAL_CLASSIFICATION", "stage": "final", "title": "Input → FINAL (run 1)", "detail": null, "input_preview": "{\n  \"policy\": {\n    \"wrong_fp_is_worst_error\": true,\n    \"fp_requires_ironclad_full_trace\": true,\n    \"default_when_unsure\": \"uncertain\",\n    \"fp_currently_ironclad\": false\n  },\n  \"tp\": {\n    \"agent\": \"TP_PROVE\",\n    \"claim\": \"no_credible_case\",\n    \"index_range\": \"unknown\",\n    \"array_size\": \"unknown\",\n    \"witness\": \"none\",\n    \"coverage\": \"partial\",\n    \"findings\": [],\n    \"missing_evidence\": [],\n    \"addressed_path_classes\": [],\n    \"unaddressed_path_classes\": [],\n    \"rationale\": \"The JSON structure you've provided appears to be a detailed analysis of code elements, likely generated by a static analysis tool. It includes information about **functions**, **variables**, **accesses**, and **declarations** within a codebase. Below is a breakdown of the key components and potential use cases for this data:\\n\\n---\\n\\n### **Key Components of the JSON**\\n1. **`var` and `var2` Arrays**:\\n   - These arrays contain objects with two main fields:\\n     - **`type`**: Categorizes the data (e.g., `function`, `variable`, `access`, `declaration`).\\n     - **`data`**: Contains detailed information about the element, such as:\\n       - **Function names** (e.g., `BswM_Prv_ProcessDelayedReqst`).\\n       - **Variable names** (e.g., `BswM_Prv_flgDelayedReqstProgress_b`).\\n       - **Line numbers** (e.g., `line: 82432`).\\n       - **Code context** (e.g., `BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);`).\\n\\n2. **Types of Entries**:\\n   - **`function`**: Lists functions and their associated metadata (e\",\n    \"error\": \"Expecting value: line 1 column 1 (char 0)\"\n  },\n  \"fp\": {\n    \"agent\": \"FP_PROVE\",\n    \"claim\": \"no_credible_case\",\n    \"index_range\": \"unknown\",\n    \"array_size\": \"unknown\",\n    \"witness\": \"none\",\n    \"coverage\": \"partial\",\n    \"findings\": [],\n    \"missing_evidence\": [],\n    \"addressed_path_classes\": [],\n    \"unaddressed_path_classes\": [\n      \"C1\"\n    ],\n    \"rationale\": \"\",\n    \"error\": null\n  },\n  \"dropped_claims\": [],\n  \"notes\": [\n    \"validator checked quotes against merged facts and source\"\n  ]\n}", "output_preview": null, "tool": null, "functions": [], "edges": [], "activity": "adjudicating run 1"}
+{"ts": 1789831778.3960202, "kind": "agent_thinking", "agent": "FINAL_CLASSIFICATION", "stage": "final", "title": "FINAL reasoning (run 1)", "detail": null, "input_preview": null, "output_preview": null, "tool": null, "functions": [], "edges": [], "activity": "FP-precision policy (never miss TP)"}
+{"ts": 1789831828.1322427, "kind": "agent_output", "agent": "FINAL_CLASSIFICATION", "stage": "final", "title": "Output ← FINAL (run 1)", "detail": null, "input_preview": null, "output_preview": "{\n  \"label\": \"uncertain\",\n  \"rationale\": \"The TP report provides no analysis of a code path, instead describing the JSON structure itself, and contains a parsing error. The FP report is incomplete, lacks a rationale, and explicitly identifies unaddressed path classes (C1) and partial coverage. Since the FP report does not meet the ironclad requirement and there is no validated witness for a TP, the result must be uncertain.\",\n  \"reexplore_requested\": false,\n  \"reexplore_focus\": null\n}", "tool": null, "functions": [], "edges": [], "activity": "vote=uncertain"}
+{"ts": 1789831828.179152, "kind": "agent_input", "agent": "FINAL_CLASSIFICATION", "stage": "final", "title": "Input → FINAL (run 2)", "detail": null, "input_preview": "{\n  \"policy\": {\n    \"wrong_fp_is_worst_error\": true,\n    \"fp_requires_ironclad_full_trace\": true,\n    \"default_when_unsure\": \"uncertain\",\n    \"fp_currently_ironclad\": false\n  },\n  \"tp\": {\n    \"agent\": \"TP_PROVE\",\n    \"claim\": \"no_credible_case\",\n    \"index_range\": \"unknown\",\n    \"array_size\": \"unknown\",\n    \"witness\": \"none\",\n    \"coverage\": \"partial\",\n    \"findings\": [],\n    \"missing_evidence\": [],\n    \"addressed_path_classes\": [],\n    \"unaddressed_path_classes\": [],\n    \"rationale\": \"The JSON structure you've provided appears to be a detailed analysis of code elements, likely generated by a static analysis tool. It includes information about **functions**, **variables**, **accesses**, and **declarations** within a codebase. Below is a breakdown of the key components and potential use cases for this data:\\n\\n---\\n\\n### **Key Components of the JSON**\\n1. **`var` and `var2` Arrays**:\\n   - These arrays contain objects with two main fields:\\n     - **`type`**: Categorizes the data (e.g., `function`, `variable`, `access`, `declaration`).\\n     - **`data`**: Contains detailed information about the element, such as:\\n       - **Function names** (e.g., `BswM_Prv_ProcessDelayedReqst`).\\n       - **Variable names** (e.g., `BswM_Prv_flgDelayedReqstProgress_b`).\\n       - **Line numbers** (e.g., `line: 82432`).\\n       - **Code context** (e.g., `BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);`).\\n\\n2. **Types of Entries**:\\n   - **`function`**: Lists functions and their associated metadata (e\",\n    \"error\": \"Expecting value: line 1 column 1 (char 0)\"\n  },\n  \"fp\": {\n    \"agent\": \"FP_PROVE\",\n    \"claim\": \"no_credible_case\",\n    \"index_range\": \"unknown\",\n    \"array_size\": \"unknown\",\n    \"witness\": \"none\",\n    \"coverage\": \"partial\",\n    \"findings\": [],\n    \"missing_evidence\": [],\n    \"addressed_path_classes\": [],\n    \"unaddressed_path_classes\": [\n      \"C1\"\n    ],\n    \"rationale\": \"\",\n    \"error\": null\n  },\n  \"dropped_claims\": [],\n  \"notes\": [\n    \"validator checked quotes against merged facts and source\"\n  ]\n}", "output_preview": null, "tool": null, "functions": [], "edges": [], "activity": "adjudicating run 2"}
+{"ts": 1789831828.1825671, "kind": "agent_thinking", "agent": "FINAL_CLASSIFICATION", "stage": "final", "title": "FINAL reasoning (run 2)", "detail": null, "input_preview": null, "output_preview": null, "tool": null, "functions": [], "edges": [], "activity": "FP-precision policy (never miss TP)"}
+{"ts": 1789831862.153756, "kind": "agent_output", "agent": "FINAL_CLASSIFICATION", "stage": "final", "title": "Output ← FINAL (run 2)", "detail": null, "input_preview": null, "output_preview": "{\n  \"label\": \"uncertain\",\n  \"rationale\": \"The FP report is not ironclad: it explicitly states 'partial' coverage and identifies an unaddressed path class ('C1'). The TP report does not provide a validated witness of a bug; it contains a parsing error ('Expecting value: line 1 column 1') and merely describes the structure of the input data rather than presenting a proof of an out-of-bounds access.\",\n  \"reexplore_requested\": false,\n  \"reexplore_focus\": null\n}", "tool": null, "functions": [], "edges": [], "activity": "vote=uncertain"}
+{"ts": 1789831862.2063005, "kind": "agent_input", "agent": "FINAL_CLASSIFICATION", "stage": "final", "title": "Input → FINAL (run 3)", "detail": null, "input_preview": "{\n  \"policy\": {\n    \"wrong_fp_is_worst_error\": true,\n    \"fp_requires_ironclad_full_trace\": true,\n    \"default_when_unsure\": \"uncertain\",\n    \"fp_currently_ironclad\": false\n  },\n  \"tp\": {\n    \"agent\": \"TP_PROVE\",\n    \"claim\": \"no_credible_case\",\n    \"index_range\": \"unknown\",\n    \"array_size\": \"unknown\",\n    \"witness\": \"none\",\n    \"coverage\": \"partial\",\n    \"findings\": [],\n    \"missing_evidence\": [],\n    \"addressed_path_classes\": [],\n    \"unaddressed_path_classes\": [],\n    \"rationale\": \"The JSON structure you've provided appears to be a detailed analysis of code elements, likely generated by a static analysis tool. It includes information about **functions**, **variables**, **accesses**, and **declarations** within a codebase. Below is a breakdown of the key components and potential use cases for this data:\\n\\n---\\n\\n### **Key Components of the JSON**\\n1. **`var` and `var2` Arrays**:\\n   - These arrays contain objects with two main fields:\\n     - **`type`**: Categorizes the data (e.g., `function`, `variable`, `access`, `declaration`).\\n     - **`data`**: Contains detailed information about the element, such as:\\n       - **Function names** (e.g., `BswM_Prv_ProcessDelayedReqst`).\\n       - **Variable names** (e.g., `BswM_Prv_flgDelayedReqstProgress_b`).\\n       - **Line numbers** (e.g., `line: 82432`).\\n       - **Code context** (e.g., `BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);`).\\n\\n2. **Types of Entries**:\\n   - **`function`**: Lists functions and their associated metadata (e\",\n    \"error\": \"Expecting value: line 1 column 1 (char 0)\"\n  },\n  \"fp\": {\n    \"agent\": \"FP_PROVE\",\n    \"claim\": \"no_credible_case\",\n    \"index_range\": \"unknown\",\n    \"array_size\": \"unknown\",\n    \"witness\": \"none\",\n    \"coverage\": \"partial\",\n    \"findings\": [],\n    \"missing_evidence\": [],\n    \"addressed_path_classes\": [],\n    \"unaddressed_path_classes\": [\n      \"C1\"\n    ],\n    \"rationale\": \"\",\n    \"error\": null\n  },\n  \"dropped_claims\": [],\n  \"notes\": [\n    \"validator checked quotes against merged facts and source\"\n  ]\n}", "output_preview": null, "tool": null, "functions": [], "edges": [], "activity": "adjudicating run 3"}
+{"ts": 1789831862.209921, "kind": "agent_thinking", "agent": "FINAL_CLASSIFICATION", "stage": "final", "title": "FINAL reasoning (run 3)", "detail": null, "input_preview": null, "output_preview": null, "tool": null, "functions": [], "edges": [], "activity": "FP-precision policy (never miss TP)"}
+{"ts": 1789831902.6526074, "kind": "agent_output", "agent": "FINAL_CLASSIFICATION", "stage": "final", "title": "Output ← FINAL (run 3)", "detail": null, "input_preview": null, "output_preview": "{\n  \"label\": \"uncertain\",\n  \"rationale\": \"The TP report does not present a valid vulnerability witness; instead, it provides a description of a JSON metadata structure and contains a parsing error ('Expecting value: line 1 column 1'). The FP report is explicitly marked as having 'partial' coverage and contains 'unaddressed_path_classes' (C1), which fails the requirement for an ironclad FP classification. Since neither the TP nor the FP claims meet the required threshold of evidence, the result must be uncertain.\",\n  \"reexplore_requested\": false,\n  \"reexplore_focus\": null\n}", "tool": null, "functions": [], "edges": [], "activity": "vote=uncertain"}
+{"ts": 1789831902.65798, "kind": "agent_output", "agent": "FINAL_CLASSIFICATION", "stage": "final", "title": "Final verdict", "detail": null, "input_preview": null, "output_preview": "{\n  \"label\": \"uncertain\",\n  \"rationale\": \"The TP report does not present a valid vulnerability witness; instead, it provides a description of a JSON metadata structure and contains a parsing error ('Expecting value: line 1 column 1'). The FP report is explicitly marked as having 'partial' coverage and contains 'unaddressed_path_classes' (C1), which fails the requirement for an ironclad FP classification. Since neither the TP nor the FP claims meet the required threshold of evidence, the result must be uncertain.\",\n  \"tp_summary\": \"The JSON structure you've provided appears to be a detailed analysis of code elements, likely generated by a static analysis tool. It includes information about **functions**, **variables**, **accesses**, and **declarations** within a codebase. Below is a breakdown of the key components and potential use cases for this data:\\n\\n---\\n\\n### **Key Components of the JSON**\\n1. **`var` and `var2` Arrays**:\\n   - These arrays contain objects with two main fields:\\n     - **`type`**: Categorizes the data (e.g., `function`, `variable`, `access`, `declaration`).\\n     - **`data`**: Contains detailed information about the element, such as:\\n       - **Function names** (e.g., `BswM_Prv_ProcessDelayedReqst`).\\n       - **Variable names** (e.g., `BswM_Prv_flgDelayedReqstProgress_b`).\\n       - **Line numbers** (e.g., `line: 82432`).\\n       - **Code context** (e.g., `BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);`).\\n\\n2. **Types of Entries**:\\n   - **`function`**: Lists functions and their associated metadata (e\",\n  \"fp_summary\": \"\",\n  \"reexplore_requested\": false,\n  \"reexplore_focus\": null,\n  \"votes\": [\n    \"uncertain\",\n    \"uncertain\",\n    \"uncertain\"\n  ],\n  \"run_details\": [\n    {\n      \"label\": \"uncertain\",\n      \"rationale\": \"The TP report provides no analysis of a code path, instead describing the JSON structure itself, and contains a parsing error. The FP report is incomplete, lacks a rationale, and explicitly identifies unaddressed path classes (C1) and partial coverage. Since the FP report does not meet the ironclad requirement and there is no validated witness for a TP, the result must be uncertain.\",\n      \"reexplore_requested\": false,\n      \"reexplore_focus\": null\n    },\n    {\n      \"label\": \"uncertain\",\n      \"rationale\": \"The FP report is not ironclad: it explicitly states 'partial' coverage and identifies an unaddressed path clas\n… [20 more chars]", "tool": null, "functions": [], "edges": [], "activity": "label=uncertain"}
+{"ts": 1789831902.659896, "kind": "done", "agent": null, "stage": "done", "title": "Verdict: uncertain", "detail": null, "input_preview": null, "output_preview": "{\n  \"pver_id\": \"4105\",\n  \"order\": \"2,475\",\n  \"run_dir\": \"C:\\\\Users\\\\URE2COB\\\\Downloads\\\\AOOB-9-9 (2)\\\\AOOB-9-9\\\\AOOB-SANJEEV\\\\PVERs\\\\4105\\\\agent_runs\\\\2_475\\\\20260919T152444Z\",\n  \"verdict\": {\n    \"label\": \"uncertain\",\n    \"rationale\": \"The TP report does not present a valid vulnerability witness; instead, it provides a description of a JSON metadata structure and contains a parsing error ('Expecting value: line 1 column 1'). The FP report is explicitly marked as having 'partial' coverage and contains 'unaddressed_path_classes' (C1), which fails the requirement for an ironclad FP classification. Since neither the TP nor the FP claims meet the required threshold of evidence, the result must be uncertain.\",\n    \"tp_summary\": \"The JSON structure you've provided appears to be a detailed analysis of code elements, likely generated by a static analysis tool. It includes information about **functions**, **variables**, **accesses**, and **declarations** within a codebase. Below is a breakdown of the key components and potential use cases for this data:\\n\\n---\\n\\n### **Key Components of the JSON**\\n1. **`var` and `var2` Arrays**:\\n   - These arrays contain objects with two main fields:\\n     - **`type`**: Categorizes the data (e.g., `function`, `variable`, `access`, `declaration`).\\n     - **`data`**: Contains detailed information about the element, such as:\\n       - **Function names** (e.g., `BswM_Prv_ProcessDelayedReqst`).\\n       - **Variable names** (e.g., `BswM_Prv_flgDelayedReqstProgress_b`).\\n       - **Line numbers** (e.g., `line: 82432`).\\n       - **Code context** (e.g., `BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);`).\\n\\n2. **Types of Entries**:\\n   - **`function`**: Lists functions and their associated metadata (e\",\n    \"fp_summary\": \"\",\n    \"reexplore_requested\": false,\n    \"reexplore_focus\": null,\n    \"votes\": [\n      \"uncertain\",\n      \"uncertain\",\n      \"uncertain\"\n    ],\n    \"run_details\": [\n      {\n        \"label\": \"uncertain\",\n        \"rationale\": \"The TP report provides no analysis of a code path, instead describing the JSON structure itself, and contains a parsing error. The FP report is incomplete, lacks a rationale, and explicitly identifies unaddressed path classes (C1) and partial coverage. Since the FP report does not meet the ironclad requirement and there is no validated witness for a TP, the result must be uncertain.\",\n        \"reexplor\n… [20 more chars]", "tool": null, "functions": ["BswM_Prv_GetLinSmIdicationInfo_en"], "edges": [], "activity": "uncertain"}
+
+
+
+{
+  "pver_id": "4105",
+  "order": "2,475",
+  "run_dir": "C:\\Users\\URE2COB\\Downloads\\AOOB-9-9 (2)\\AOOB-9-9\\AOOB-SANJEEV\\PVERs\\4105\\agent_runs\\2_475\\20260919T152444Z",
+  "verdict": {
+    "label": "uncertain",
+    "rationale": "The TP report does not present a valid vulnerability witness; instead, it provides a description of a JSON metadata structure and contains a parsing error ('Expecting value: line 1 column 1'). The FP report is explicitly marked as having 'partial' coverage and contains 'unaddressed_path_classes' (C1), which fails the requirement for an ironclad FP classification. Since neither the TP nor the FP claims meet the required threshold of evidence, the result must be uncertain.",
+    "tp_summary": "The JSON structure you've provided appears to be a detailed analysis of code elements, likely generated by a static analysis tool. It includes information about **functions**, **variables**, **accesses**, and **declarations** within a codebase. Below is a breakdown of the key components and potential use cases for this data:\n\n---\n\n### **Key Components of the JSON**\n1. **`var` and `var2` Arrays**:\n   - These arrays contain objects with two main fields:\n     - **`type`**: Categorizes the data (e.g., `function`, `variable`, `access`, `declaration`).\n     - **`data`**: Contains detailed information about the element, such as:\n       - **Function names** (e.g., `BswM_Prv_ProcessDelayedReqst`).\n       - **Variable names** (e.g., `BswM_Prv_flgDelayedReqstProgress_b`).\n       - **Line numbers** (e.g., `line: 82432`).\n       - **Code context** (e.g., `BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);`).\n\n2. **Types of Entries**:\n   - **`function`**: Lists functions and their associated metadata (e",
+    "fp_summary": "",
+    "reexplore_requested": false,
+    "reexplore_focus": null,
+    "votes": [
+      "uncertain",
+      "uncertain",
+      "uncertain"
+    ],
+    "run_details": [
+      {
+        "label": "uncertain",
+        "rationale": "The TP report provides no analysis of a code path, instead describing the JSON structure itself, and contains a parsing error. The FP report is incomplete, lacks a rationale, and explicitly identifies unaddressed path classes (C1) and partial coverage. Since the FP report does not meet the ironclad requirement and there is no validated witness for a TP, the result must be uncertain.",
         "reexplore_requested": false,
         "reexplore_focus": null
       },
       {
         "label": "uncertain",
-        "rationale": "The report is fundamentally inconclusive. Both the TP and FP claims are identical in their findings: they both a
-… [20 more chars]
-assistant
-Verdict: uncertain
-Rationale: The report is a self-contradiction. The TP agent claims 'no_credible_case' (which is a claim of no bug), but the evidence provided is actually an admission of missing information (unknown array size, unknown index bounds, unknown initialization). The FP agent also admits 'Missing evidence prevents FP classification'. Since the array size and index constraints are unknown, it is impossible to prove a False Positive (FP) or a True Positive (TP). According to the policy, when evidence is thin or bounds are unknown, the result must be 'uncertain'.
-Votes: uncertain, uncertain, uncertain
-TP: claim=no_credible_case witness=none
-FP: claim=no_credible_case coverage=full
-Artifacts: C:\Users\URE2COB\Downloads\AOOB-9-9 (2)\AOOB-9-9\AOOB-SANJEEV\PVERs\4105\agent_runs\2_475\20260919T145917Z
+        "rationale": "The FP report is not ironclad: it explicitly states 'partial' coverage and identifies an unaddressed path class ('C1'). The TP report does not provide a validated witness of a bug; it contains a parsing error ('Expecting value: line 1 column 1') and merely describes the structure of the input data rather than presenting a proof of an out-of-bounds access.",
+        "reexplore_requested": false,
+        "reexplore_focus": null
+      },
+      {
+        "label": "uncertain",
+        "rationale": "The TP report does not present a valid vulnerability witness; instead, it provides a description of a JSON metadata structure and contains a parsing error ('Expecting value: line 1 column 1'). The FP report is explicitly marked as having 'partial' coverage and contains 'unaddressed_path_classes' (C1), which fails the requirement for an ironclad FP classification. Since neither the TP nor the FP claims meet the required threshold of evidence, the result must be uncertain.",
+        "reexplore_requested": false,
+        "reexplore_focus": null
+      }
+    ],
+    "hard_gates": [
+      "fp-block: FP agent did not claim fp",
+      "fp-block: FP coverage is not full",
+      "fp-block: unaddressed path classes: ['C1']",
+      "fp-block: index_range unknown — cannot prove safe bounds",
+      "fp-block: array_size not known",
+      "fp-block: no validated FP findings/quotes",
+      "fp-block: not every path class addressed"
+    ]
+  },
+  "prep": {
+    "pver_id": "4105",
+    "order": "2,475",
+    "group_id": 141,
+    "location": "ALL_bc_with_context.c:82154.91-106",
+    "enclosing_function": "BswM_Prv_GetLinSmIdicationInfo_en",
+    "alarm_line": 82154,
+    "index_expression": "dataReqMode_u16",
+    "array_name": "dataLinSmIndState_aen",
+    "array_size": 2,
+    "raw_paths": [
+      {
+        "path_id": 1,
+        "sequence": [
+          {
+            "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+            "call_site_line": 82467
+          }
+        ],
+        "call_stack": [
+          "call#BswM_Prv_ProcessDelayedReqst|separate at ALL_bc_with_context.c:82411.5-33",
+          "loop>=1 at ALL_bc_with_context.c:82446.4-82528.5",
+          "call#BswM_Prv_GetLinSmIdicationInfo_en at ALL_bc_with_context.c:82467.34-142"
+        ],
+        "alarm_text": "ALARM (A) array_out_of_bounds: [0, 255] not included in array index range [0, 1] at ALL_bc_with_context.c:82154.91-106",
+        "source_lines": [
+          "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];"
+        ]
+      }
+    ],
+    "path_classes": [
+      {
+        "class_id": "C1",
+        "sequence": [
+          {
+            "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+            "call_site_line": 82467
+          }
+        ],
+        "member_path_ids": [
+          1
+        ],
+        "representative_path_id": 1,
+        "cluster_note": null
+      }
+    ],
+    "coverage_cap": "full",
+    "symbols": [
+      {
+        "symbol_name": "dataLinSmIndState_aen",
+        "role": "flagged_array",
+        "kind": "array",
+        "declaration_line": 82146,
+        "declaration_text": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "array_dims": "[]",
+        "resolved_sizes": [],
+        "size_known": false,
+        "index_expression": "dataReqMode_u16",
+        "function_sequence": [
+          "BswM_Prv_GetLinSmIdicationInfo_en"
+        ],
+        "write_lines": [
+          82146
+        ],
+        "guard_candidate_lines": []
+      },
+      {
+        "symbol_name": "dataReqMode_u16",
+        "role": "index",
+        "kind": "struct_member",
+        "declaration_line": 82258,
+        "declaration_text": "uint16 dataReqMode_u16;",
+        "array_dims": null,
+        "resolved_sizes": [],
+        "size_known": false,
+        "index_expression": null,
+        "function_sequence": [
+          "global",
+          "BswM_Prv_GetCanSMIndicationInfo_en",
+          "BswM_Prv_GetDcmComModeReqstInfo_en",
+          "BswM_Prv_GetEcuMWkpSrcInfo_en",
+          "BswM_Prv_GetGenReqInfo_en",
+          "BswM_Prv_GetLinSmIdicationInfo_en",
+          "BswM_Prv_IntrptQueueOut",
+          "BswM_Prv_ProcessDelayedReqst",
+          "BswM_Prv_IntrptQueueIn",
+          "BswM_Prv_ReqProcessOrQueue_b"
+        ],
+        "write_lines": [
+          82258,
+          82293,
+          82422,
+          82485,
+          82608
+        ],
+        "guard_candidate_lines": []
+      }
+    ],
+    "local_guard": {
+      "found": false,
+      "function": null,
+      "line": null,
+      "quote": null,
+      "note": "no local bound found in alarm function"
+    },
+    "skip_path_explore": false,
+    "edges": [],
+    "notes": [
+      "array_size recovered from initializer count=2"
+    ]
+  },
+  "merged_coverage": "full",
+  "tp": {
+    "agent": "TP_PROVE",
+    "claim": "no_credible_case",
+    "index_range": "unknown",
+    "array_size": "unknown",
+    "witness": "none",
+    "coverage": "partial",
+    "findings": [],
+    "missing_evidence": [],
+    "addressed_path_classes": [],
+    "unaddressed_path_classes": [],
+    "rationale": "The JSON structure you've provided appears to be a detailed analysis of code elements, likely generated by a static analysis tool. It includes information about **functions**, **variables**, **accesses**, and **declarations** within a codebase. Below is a breakdown of the key components and potential use cases for this data:\n\n---\n\n### **Key Components of the JSON**\n1. **`var` and `var2` Arrays**:\n   - These arrays contain objects with two main fields:\n     - **`type`**: Categorizes the data (e.g., `function`, `variable`, `access`, `declaration`).\n     - **`data`**: Contains detailed information about the element, such as:\n       - **Function names** (e.g., `BswM_Prv_ProcessDelayedReqst`).\n       - **Variable names** (e.g., `BswM_Prv_flgDelayedReqstProgress_b`).\n       - **Line numbers** (e.g., `line: 82432`).\n       - **Code context** (e.g., `BswM_Prv_flgDelayedReqstProgress_b = (1 != 0);`).\n\n2. **Types of Entries**:\n   - **`function`**: Lists functions and their associated metadata (e",
+    "error": "Expecting value: line 1 column 1 (char 0)"
+  },
+  "fp": {
+    "agent": "FP_PROVE",
+    "claim": "no_credible_case",
+    "index_range": "unknown",
+    "array_size": "unknown",
+    "witness": "none",
+    "coverage": "partial",
+    "findings": [],
+    "missing_evidence": [],
+    "addressed_path_classes": [],
+    "unaddressed_path_classes": [
+      "C1"
+    ],
+    "rationale": "",
+    "error": null
+  }
+}
+
+
