@@ -1,3 +1,12 @@
+PVER
+
+4105 · 609 alarms
+single alarm
+single PVER
+/
+2,475
+Search
+4105 · pver
 agent
 4105
 pver · 2,475
@@ -37,9 +46,10 @@ Explorers starting · explore fan-out
 
 CALL_PATH_EXPLORE + VAR_VALUE_EXPLORE (LangGraph + tools)
 agent_input
-Input → CALL_PATH_EXPLORE [CALL_PATH_EXPLORE] · receiving prep pack
+Input → CALL_PATH_EXPLORE [CALL_PATH_EXPLORE] · sequence n=1; must visit all
 
 {
+  "role": "call_path",
   "order": "2,475",
   "location": "ALL_bc_with_context.c:82154.91-106",
   "enclosing_function": "BswM_Prv_GetLinSmIdicationInfo_en",
@@ -55,6 +65,17 @@ Input → CALL_PATH_EXPLORE [CALL_PATH_EXPLORE] · receiving prep pack
     "note": "no local bound found in alarm function"
   },
   "coverage_cap": "full",
+  "function_sequence": [
+    "BswM_Prv_GetLinSmIdicationInfo_en"
+  ],
+  "visit_instructions": [
+    "Start at step 1 (already positioned).",
+    "Call get_current() to load the FULL current function.",
+    "Extract quoted facts from that body.",
+    "Call move_func(direction='next') and repeat until remaining=[].",
+    "Call visit_status() anytime to check coverage.",
+    "Then submit_explore_pack with a non-empty facts array."
+  ],
   "path_classes": [
     {
       "class_id": "C1",
@@ -73,9 +94,10 @@ Input → CALL_PATH_EXPLORE [CALL_PATH_EXPLORE] · receiving prep pack
   "edges": []
 }
 agent_input
-Input → VAR_VALUE_EXPLORE [VAR_VALUE_EXPLORE] · receiving prep pack
+Input → VAR_VALUE_EXPLORE [VAR_VALUE_EXPLORE] · sequence n=9; must visit all
 
 {
+  "role": "var_value",
   "order": "2,475",
   "location": "ALL_bc_with_context.c:82154.91-106",
   "enclosing_function": "BswM_Prv_GetLinSmIdicationInfo_en",
@@ -91,6 +113,25 @@ Input → VAR_VALUE_EXPLORE [VAR_VALUE_EXPLORE] · receiving prep pack
     "note": "no local bound found in alarm function"
   },
   "coverage_cap": "full",
+  "function_sequence": [
+    "BswM_Prv_GetLinSmIdicationInfo_en",
+    "BswM_Prv_GetCanSMIndicationInfo_en",
+    "BswM_Prv_GetDcmComModeReqstInfo_en",
+    "BswM_Prv_GetEcuMWkpSrcInfo_en",
+    "BswM_Prv_GetGenReqInfo_en",
+    "BswM_Prv_IntrptQueueOut",
+    "BswM_Prv_ProcessDelayedReqst",
+    "BswM_Prv_IntrptQueueIn",
+    "BswM_Prv_ReqProcessOrQueue_b"
+  ],
+  "visit_instructions": [
+    "Start at step 1 (already positioned).",
+    "Call get_current() to load the FULL current function.",
+    "Extract quoted facts from that body.",
+    "Call move_func(direction='next') and repeat until remaining=[].",
+    "Call visit_status() anytime to check coverage.",
+    "Then submit_explore_pack with a non-empty facts array."
+  ],
   "path_classes": [
     {
       "class_id": "C1",
@@ -139,64 +180,190 @@ Input → VAR_VALUE_EXPLORE [VAR_VALUE_EXPLORE] · receiving prep pack
       "function_sequence": [
         "global",
         "BswM_Prv_GetCanSMIndicationInfo_en",
-        "BswM_Prv_GetDcmComModeReqstInfo_en",
-        "BswM_Prv_GetEcuMWkpSrcInfo_en",
-        "BswM_Prv_GetGenReqInfo_en",
-        "BswM_Prv_GetLinSmIdicationInfo_en",
-        "BswM_Prv_IntrptQueueOut",
-        "BswM_Prv_ProcessDelayedReqst",
-        "BswM_Prv_IntrptQueueIn",
-        "BswM_Prv_ReqProcessOrQueue_b"
-      ],
-      "write_lines": [
-        82258,
-        82293,
-        82422,
-        82485,
-        82608
-      ],
-      "guard_candidate_lines": []
-    }
-  ]
-}
+       
+… [19 more chars]
 agent_thinking
-CALL_PATH_EXPLORE reasoning [CALL_PATH_EXPLORE] · calling model / planning next tool
+CALL_PATH_EXPLORE reasoning [CALL_PATH_EXPLORE] · planning next move/get/submit
 
 agent_thinking
-VAR_VALUE_EXPLORE reasoning [VAR_VALUE_EXPLORE] · calling model / planning next tool
+VAR_VALUE_EXPLORE reasoning [VAR_VALUE_EXPLORE] · planning next move/get/submit
 
+agent_thinking
+CALL_PATH_EXPLORE reasoning [CALL_PATH_EXPLORE] · planning next move/get/submit
+
+agent_thinking
+VAR_VALUE_EXPLORE reasoning [VAR_VALUE_EXPLORE] · planning next move/get/submit
+
+agent_thinking
+CALL_PATH_EXPLORE reasoning [CALL_PATH_EXPLORE] · planning next move/get/submit
+
+agent_thinking
+VAR_VALUE_EXPLORE reasoning [VAR_VALUE_EXPLORE] · planning next move/get/submit
+
+agent_thinking
+CALL_PATH_EXPLORE reasoning [CALL_PATH_EXPLORE] · planning next move/get/submit
+
+agent_thinking
+VAR_VALUE_EXPLORE reasoning [VAR_VALUE_EXPLORE] · planning next move/get/submit
+
+stage
+CALL_PATH_EXPLORE forced open remaining [CALL_PATH_EXPLORE] · deterministic coverage fill
+
+['BswM_Prv_GetLinSmIdicationInfo_en']
+stage
+VAR_VALUE_EXPLORE forced open remaining [VAR_VALUE_EXPLORE] · deterministic coverage fill
+
+['BswM_Prv_GetLinSmIdicationInfo_en', 'BswM_Prv_GetCanSMIndicationInfo_en', 'BswM_Prv_GetDcmComModeReqstInfo_en', 'BswM_Prv_GetEcuMWkpSrcInfo_en', 'BswM_Prv_GetGenReqInfo_en', 'BswM_Prv_IntrptQueueOut', 'BswM_Prv_ProcessDelayedReqst', 'BswM_Prv_IntrptQueueIn', 'BswM_Prv_ReqProcessOrQueue_b']
 agent_output
-Output ← CALL_PATH_EXPLORE [CALL_PATH_EXPLORE] · produced 0 facts
+Output ← CALL_PATH_EXPLORE [CALL_PATH_EXPLORE] · produced 4 facts; opened=['BswM_Prv_GetLinSmIdicationInfo_en']
 
 {
   "agent": "CALL_PATH_EXPLORE",
-  "facts": [],
-  "notes": [],
+  "facts": [
+    {
+      "kind": "declaration",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82146,
+      "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+      "symbol": "dataLinSmIndState_aen",
+      "path_class_id": null,
+      "note": "seeded from analyzer declaration",
+      "verified": true
+    },
+    {
+      "kind": "declaration",
+      "function": "global",
+      "line": 82258,
+      "quote": "uint16 dataReqMode_u16;",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "seeded from analyzer declaration",
+      "verified": true
+    },
+    {
+      "kind": "alarm_site",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82154,
+      "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "seeded alarm location line",
+      "verified": true
+    },
+    {
+      "kind": "path_step",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82139,
+      "quote": "uint16 dataReqMode_u16,",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "fallback extract after forced open",
+      "verified": null
+    }
+  ],
+  "notes": [
+    "fallback facts after forced open; LLM did not submit",
+    "seeded 3 deterministic facts from prep/source"
+  ],
   "tool_trace": [],
   "error": null
 }
 agent_output
-Output ← VAR_VALUE_EXPLORE [VAR_VALUE_EXPLORE] · produced 0 facts
+Output ← VAR_VALUE_EXPLORE [VAR_VALUE_EXPLORE] · produced 12 facts; opened=['BswM_Prv_GetCanSMIndicationInfo_en', 'BswM_Prv_GetDcmComModeReqstInfo_en', 'BswM_Prv_GetEcuMWkpSrcInfo_en', 'BswM_Prv_GetGenReqInfo_en', 'BswM_Prv_GetLinSmIdicationInfo_en', 'BswM_Prv_IntrptQueueIn', 'BswM_Prv_IntrptQueueOut', 'BswM_Prv_ProcessDelayedReqst', 'BswM_Prv_ReqProcessOrQueue_b']
 
 {
   "agent": "VAR_VALUE_EXPLORE",
-  "facts": [],
-  "notes": [],
-  "tool_trace": [],
-  "error": null
-}
+  "facts": [
+    {
+      "kind": "declaration",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82146,
+      "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+      "symbol": "dataLinSmIndState_aen",
+      "path_class_id": null,
+      "note": "seeded from analyzer declaration",
+      "verified": true
+    },
+    {
+      "kind": "declaration",
+      "function": "global",
+      "line": 82258,
+      "quote": "uint16 dataReqMode_u16;",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "seeded from analyzer declaration",
+      "verified": true
+    },
+    {
+      "kind": "alarm_site",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82154,
+      "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "seeded alarm location line",
+      "verified": true
+    },
+    {
+      "kind": "value_site",
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82139,
+      "quote": "uint16 dataReqMode_u16,",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "fallback extract after forced open",
+      "verified": null
+    },
+    {
+      "kind": "value_site",
+      "function": "BswM_Prv_GetCanSMIndicationInfo_en",
+      "line": 81995,
+      "quote": "uint16 dataReqMode_u16,",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "fallback extract after forced open",
+      "verified": null
+    },
+    {
+      "kind": "value_site",
+      "function": "BswM_Prv_GetDcmComModeReqstInfo_en",
+      "line": 82037,
+      "quote": "uint16 dataReqMode_u16,",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "fallback extract after forced open",
+      "verified": null
+    },
+    {
+      "kind": "value_site",
+      "function": "BswM_Prv_GetEcuMWkpSrcInfo_en",
+      "line": 82071,
+      "quote": "uint16 dataReqMode_u16,",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": null,
+      "note": "fallback extract after forced open",
+      "verified": null
+    },
+    {
+      "kind": "value_site",
+      "function": "BswM_Prv_GetGenReqInfo_en",
+      "line": 82106,
+      "quote": "uint16 dataReqMode_u16,",
+      "symbol": "dataReqMode_u16",
+      "path_class_id": 
+… [20 more chars]
 stage
 Merge + snippet check · attaching facts to path classes
 
 stage
-Merged pack ready · coverage=partial
+Merged pack ready · coverage=full
 
 {
-  "coverage": "partial",
-  "call_facts": 0,
-  "var_facts": 0,
+  "coverage": "full",
+  "call_facts": 4,
+  "var_facts": 12,
   "notes": [
-    "explorers produced no verified facts"
+    "8 facts not tied to a path-class function"
   ]
 }
 stage
@@ -207,9 +374,9 @@ agent_input
 Input → TP_PROVE [TP_PROVE] · consuming merged pack
 
 {
-  "coverage": "partial",
+  "coverage": "full",
   "notes": [
-    "explorers produced no verified facts"
+    "8 facts not tied to a path-class function"
   ],
   "prep": {
     "order": "2,475",
@@ -241,21 +408,63 @@ Input → TP_PROVE [TP_PROVE] · consuming merged pack
     }
   },
   "facts_by_class": {
-    "C1": []
-  },
-  "call_path_facts": [],
-  "var_value_facts": []
-}
-agent_thinking
-TP_PROVE reasoning [TP_PROVE] · proving from merged facts (no tools)
-
+    "C1": [
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "symbol": "dataLinSmIndState_aen",
+        "path_class_id": null,
+        "note": "seeded from analyzer declaration",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "global",
+        "line": 82258,
+        "quote": "uint16 dataReqMode_u16;",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "seeded from analyzer declaration",
+        "verified": true
+      },
+      {
+        "kind": "alarm_site",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "seeded alarm location line",
+        "verified": true
+      },
+      {
+        "kind": "path_step",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82139,
+        "quote": "uint16 dataReqMode_u16,",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "fallback extract after forced open",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "symbol": "dataLinSmIndState_aen",
+        "path_class_id": null,
+        "note": "seeded
+… [6045 more chars]
 agent_input
 Input → FP_PROVE [FP_PROVE] · consuming merged pack
 
 {
-  "coverage": "partial",
+  "coverage": "full",
   "notes": [
-    "explorers produced no verified facts"
+    "8 facts not tied to a path-class function"
   ],
   "prep": {
     "order": "2,475",
@@ -287,11 +496,59 @@ Input → FP_PROVE [FP_PROVE] · consuming merged pack
     }
   },
   "facts_by_class": {
-    "C1": []
-  },
-  "call_path_facts": [],
-  "var_value_facts": []
-}
+    "C1": [
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "symbol": "dataLinSmIndState_aen",
+        "path_class_id": null,
+        "note": "seeded from analyzer declaration",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "global",
+        "line": 82258,
+        "quote": "uint16 dataReqMode_u16;",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "seeded from analyzer declaration",
+        "verified": true
+      },
+      {
+        "kind": "alarm_site",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "seeded alarm location line",
+        "verified": true
+      },
+      {
+        "kind": "path_step",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82139,
+        "quote": "uint16 dataReqMode_u16,",
+        "symbol": "dataReqMode_u16",
+        "path_class_id": null,
+        "note": "fallback extract after forced open",
+        "verified": true
+      },
+      {
+        "kind": "declaration",
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "symbol": "dataLinSmIndState_aen",
+        "path_class_id": null,
+        "note": "seeded
+… [6045 more chars]
+agent_thinking
+TP_PROVE reasoning [TP_PROVE] · proving from merged facts (no tools)
+
 agent_thinking
 FP_PROVE reasoning [FP_PROVE] · proving from merged facts (no tools)
 
@@ -304,19 +561,37 @@ Output ← TP_PROVE [TP_PROVE] · claim=no_credible_case witness=none
   "index_range": "unknown",
   "array_size": "unknown",
   "witness": "none",
-  "coverage": "partial",
-  "findings": [],
+  "coverage": "full",
+  "findings": [
+    {
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82154,
+      "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+      "path_class_id": "C1"
+    },
+    {
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82146,
+      "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+      "path_class_id": "C1"
+    },
+    {
+      "function": "global",
+      "line": 82258,
+      "quote": "uint16 dataReqMode_u16;",
+      "path_class_id": "C1"
+    }
+  ],
   "missing_evidence": [
-    "array_size",
-    "verified_facts_in_path_classes"
+    "Array 'dataLinSmIndState_aen' size is not declared or determinable from context",
+    "No bounds checks or constraints on 'dataReqMode_u16' value",
+    "No information about how 'dataReqMode_u16' is initialized or modified"
   ],
   "addressed_path_classes": [
     "C1"
   ],
-  "unaddressed_path_classes": [
-    "C1"
-  ],
-  "rationale": "No verified facts found in path classes, array size is unknown, and local guard checks were not present. Without array size information and concrete evidence of out-of-bounds access, no credible case can be established.",
+  "unaddressed_path_classes": [],
+  "rationale": "The array 'dataLinSmIndState_aen' is declared as a flexible array with no explicit size, and no evidence exists in the provided data about its actual size or bounds constraints. Without knowing the array's size or how 'dataReqMode_u16' is constrained, it's impossible to confirm whether the index is out-of-bounds. The lack of array size information is critical to determining OOB feasibility.",
   "error": null
 }
 agent_output
@@ -328,18 +603,32 @@ Output ← FP_PROVE [FP_PROVE] · claim=no_credible_case witness=none
   "index_range": "unknown",
   "array_size": "unknown",
   "witness": "none",
-  "coverage": "partial",
-  "findings": [],
-  "missing_evidence": [
-    "array size determination for dataLinSmIndState_aen",
-    "index expression bounds validation for dataReqMode_u16",
-    "path class execution evidence for C1"
+  "coverage": "full",
+  "findings": [
+    {
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82146,
+      "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+      "path_class_id": "C1",
+      "note": "array declaration with unknown size"
+    },
+    {
+      "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+      "line": 82154,
+      "quote": "dataLinSmIndState_aen[dataReqMode_u16]",
+      "path_class_id": "C1",
+      "note": "array access using unbounded index"
+    }
   ],
-  "addressed_path_classes": [],
-  "unaddressed_path_classes": [
+  "missing_evidence": [
+    "array size declaration for dataLinSmIndState_aen",
+    "bounds validation for dataReqMode_u16 index"
+  ],
+  "addressed_path_classes": [
     "C1"
   ],
-  "rationale": "No verified facts exist to establish bounds for dataReqMode_u16 against dataLinSmIndState_aen. Array size is unknown, and no local guard or path execution evidence is available to confirm safety for the only identified path class C1. Coverage remains incomplete due to missing array size information and lack of execution traces.",
+  "unaddressed_path_classes": [],
+  "rationale": "Array size is unknown (declared as flexible array), and index dataReqMode_u16 lacks bounds validation. No local guard found in alarm function. Missing evidence prevents FP classification.",
   "error": null
 }
 stage
@@ -352,9 +641,7 @@ Validation done · reports scrubbed
   "dropped": [],
   "tp_claim": "no_credible_case",
   "fp_claim": "no_credible_case",
-  "fp_unaddressed": [
-    "C1"
-  ]
+  "fp_unaddressed": []
 }
 stage
 Final classification · adjudicating
@@ -364,25 +651,49 @@ agent_input
 Input → FINAL (run 1) [FINAL_CLASSIFICATION] · adjudicating run 1
 
 {
+  "policy": {
+    "wrong_fp_is_worst_error": true,
+    "fp_requires_ironclad_full_trace": true,
+    "default_when_unsure": "uncertain",
+    "fp_currently_ironclad": false
+  },
   "tp": {
     "agent": "TP_PROVE",
     "claim": "no_credible_case",
     "index_range": "unknown",
     "array_size": "unknown",
     "witness": "none",
-    "coverage": "partial",
-    "findings": [],
+    "coverage": "full",
+    "findings": [
+      {
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+        "path_class_id": "C1"
+      },
+      {
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "path_class_id": "C1"
+      },
+      {
+        "function": "global",
+        "line": 82258,
+        "quote": "uint16 dataReqMode_u16;",
+        "path_class_id": "C1"
+      }
+    ],
     "missing_evidence": [
-      "array_size",
-      "verified_facts_in_path_classes"
+      "Array 'dataLinSmIndState_aen' size is not declared or determinable from context",
+      "No bounds checks or constraints on 'dataReqMode_u16' value",
+      "No information about how 'dataReqMode_u16' is initialized or modified"
     ],
     "addressed_path_classes": [
       "C1"
     ],
-    "unaddressed_path_classes": [
-      "C1"
-    ],
-    "rationale": "No verified facts found in path classes, array size is unknown, and local guard checks were not present. Without array size information and concrete evidence of out-of-bounds access, no credible case can be established.",
+    "unaddressed_path_classes": [],
+    "rationale": "The array 'dataLinSmIndState_aen' is declared as a flexible array with no explicit size, and no evidence exists in the provided data about its actual size or bounds constraints. Without knowing the array's size or how 'dataReqMode_u16' is constrained, it's impossible to confirm whether the index is out-of-bounds. The lack of array size information is critical to determining OOB feasibility.",
     "error": null
   },
   "fp": {
@@ -391,60 +702,81 @@ Input → FINAL (run 1) [FINAL_CLASSIFICATION] · adjudicating run 1
     "index_range": "unknown",
     "array_size": "unknown",
     "witness": "none",
-    "coverage": "partial",
-    "findings": [],
-    "missing_evidence": [
-      "array size determination for dataLinSmIndState_aen",
-      "index expression bounds validation for dataReqMode_u16",
-      "path class execution evidence for C1"
-    ],
-    "addressed_path_classes": [],
-    "unaddressed_path_classes": [
-      "C1"
-    ],
-    "rationale": "No verified facts exist to establish bounds for dataReqMode_u16 against dataLinSmIndState_aen. Array size is unknown, and no local guard or path execution evidence is available to confirm safety for the only identified path class C1. Coverage remains incomplete due to missing array size information and lack of execution traces.",
-    "error": null
-  },
-  "dropped_claims": [],
-  "notes": [
-    "validator checked quotes against merged facts and source"
-  ]
-}
+    "coverage": "full",
+    "findings": [
+      {
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "path_class_id": "C1",
+        "note": "array declaration with unknown size"
+      },
+      {
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "dataLinSmIndState_aen[dataReqMode_u16]",
+        "path_class_id": "C1",
+        "note": "array access using 
+… [19 more chars]
 agent_thinking
-FINAL reasoning (run 1) [FINAL_CLASSIFICATION] · strict classification rules
+FINAL reasoning (run 1) [FINAL_CLASSIFICATION] · FP-precision policy (never miss TP)
 
 agent_output
 Output ← FINAL (run 1) [FINAL_CLASSIFICATION] · vote=uncertain
 
 {
   "label": "uncertain",
-  "rationale": "Both agents agree that the claim is 'no_credible_case' and that there is no witness. However, coverage is explicitly stated as 'partial' by both agents, and there is significant missing evidence regarding array sizes and path class execution (C1). According to the hard rules, uncertainty must be returned when coverage is partial or evidence is missing.",
-  "reexplore_requested": true,
-  "reexplore_focus": "Determine the array size for dataLinSmIndState_aen and validate the index expression bounds for dataReqMode_u16 within path class C1."
+  "rationale": "The report is fundamentally inconclusive. Both the TP and FP claims are identical in their findings: they both acknowledge that the array size for 'dataLinSmIndState_aen' is unknown and that there are no visible bounds checks for 'dataReqMode_u16'. Since the array size and index constraints are missing, it is impossible to prove either a True Positive (OOB) or a False Positive (Safe). Per the policy, when evidence is thin or missing (specifically array size and index bounds), the result must be 'uncertain'.",
+  "reexplore_requested": false,
+  "reexplore_focus": null
 }
 agent_input
 Input → FINAL (run 2) [FINAL_CLASSIFICATION] · adjudicating run 2
 
 {
+  "policy": {
+    "wrong_fp_is_worst_error": true,
+    "fp_requires_ironclad_full_trace": true,
+    "default_when_unsure": "uncertain",
+    "fp_currently_ironclad": false
+  },
   "tp": {
     "agent": "TP_PROVE",
     "claim": "no_credible_case",
     "index_range": "unknown",
     "array_size": "unknown",
     "witness": "none",
-    "coverage": "partial",
-    "findings": [],
+    "coverage": "full",
+    "findings": [
+      {
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+        "path_class_id": "C1"
+      },
+      {
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "path_class_id": "C1"
+      },
+      {
+        "function": "global",
+        "line": 82258,
+        "quote": "uint16 dataReqMode_u16;",
+        "path_class_id": "C1"
+      }
+    ],
     "missing_evidence": [
-      "array_size",
-      "verified_facts_in_path_classes"
+      "Array 'dataLinSmIndState_aen' size is not declared or determinable from context",
+      "No bounds checks or constraints on 'dataReqMode_u16' value",
+      "No information about how 'dataReqMode_u16' is initialized or modified"
     ],
     "addressed_path_classes": [
       "C1"
     ],
-    "unaddressed_path_classes": [
-      "C1"
-    ],
-    "rationale": "No verified facts found in path classes, array size is unknown, and local guard checks were not present. Without array size information and concrete evidence of out-of-bounds access, no credible case can be established.",
+    "unaddressed_path_classes": [],
+    "rationale": "The array 'dataLinSmIndState_aen' is declared as a flexible array with no explicit size, and no evidence exists in the provided data about its actual size or bounds constraints. Without knowing the array's size or how 'dataReqMode_u16' is constrained, it's impossible to confirm whether the index is out-of-bounds. The lack of array size information is critical to determining OOB feasibility.",
     "error": null
   },
   "fp": {
@@ -453,60 +785,81 @@ Input → FINAL (run 2) [FINAL_CLASSIFICATION] · adjudicating run 2
     "index_range": "unknown",
     "array_size": "unknown",
     "witness": "none",
-    "coverage": "partial",
-    "findings": [],
-    "missing_evidence": [
-      "array size determination for dataLinSmIndState_aen",
-      "index expression bounds validation for dataReqMode_u16",
-      "path class execution evidence for C1"
-    ],
-    "addressed_path_classes": [],
-    "unaddressed_path_classes": [
-      "C1"
-    ],
-    "rationale": "No verified facts exist to establish bounds for dataReqMode_u16 against dataLinSmIndState_aen. Array size is unknown, and no local guard or path execution evidence is available to confirm safety for the only identified path class C1. Coverage remains incomplete due to missing array size information and lack of execution traces.",
-    "error": null
-  },
-  "dropped_claims": [],
-  "notes": [
-    "validator checked quotes against merged facts and source"
-  ]
-}
+    "coverage": "full",
+    "findings": [
+      {
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "path_class_id": "C1",
+        "note": "array declaration with unknown size"
+      },
+      {
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "dataLinSmIndState_aen[dataReqMode_u16]",
+        "path_class_id": "C1",
+        "note": "array access using 
+… [19 more chars]
 agent_thinking
-FINAL reasoning (run 2) [FINAL_CLASSIFICATION] · strict classification rules
+FINAL reasoning (run 2) [FINAL_CLASSIFICATION] · FP-precision policy (never miss TP)
 
 agent_output
 Output ← FINAL (run 2) [FINAL_CLASSIFICATION] · vote=uncertain
 
 {
   "label": "uncertain",
-  "rationale": "Both agents agree that the claim is 'no_credible_case' and that there is no witness. However, coverage is explicitly reported as partial, with missing evidence regarding the array size and execution traces for path class C1. According to the hard rules, FP requires full coverage and all path classes addressed, which is not the case here. Since there is no validated witness and coverage is incomplete, the result must be uncertain.",
-  "reexplore_requested": true,
-  "reexplore_focus": "array size determination and execution evidence for path class C1"
+  "rationale": "The report is fundamentally inconclusive. Both the TP and FP claims are identical in their findings: they both acknowledge that the array size for 'dataLinSmIndState_aen' is unknown and that there are no visible bounds checks for 'dataReqMode_u16'. Since the array size and index constraints are missing, it is impossible to prove either a True Positive (OOB exists) or a False Positive (OOB is impossible). Per the policy, when evidence is thin or missing critical bounds/size information, the result must be 'uncertain'.",
+  "reexplore_requested": false,
+  "reexplore_focus": null
 }
 agent_input
 Input → FINAL (run 3) [FINAL_CLASSIFICATION] · adjudicating run 3
 
 {
+  "policy": {
+    "wrong_fp_is_worst_error": true,
+    "fp_requires_ironclad_full_trace": true,
+    "default_when_unsure": "uncertain",
+    "fp_currently_ironclad": false
+  },
   "tp": {
     "agent": "TP_PROVE",
     "claim": "no_credible_case",
     "index_range": "unknown",
     "array_size": "unknown",
     "witness": "none",
-    "coverage": "partial",
-    "findings": [],
+    "coverage": "full",
+    "findings": [
+      {
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "BswM_Cfg_LinSmCurrentStateInfo_ast[idxMRPChnl_u16].dataMode_en = dataLinSmIndState_aen[dataReqMode_u16];",
+        "path_class_id": "C1"
+      },
+      {
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "path_class_id": "C1"
+      },
+      {
+        "function": "global",
+        "line": 82258,
+        "quote": "uint16 dataReqMode_u16;",
+        "path_class_id": "C1"
+      }
+    ],
     "missing_evidence": [
-      "array_size",
-      "verified_facts_in_path_classes"
+      "Array 'dataLinSmIndState_aen' size is not declared or determinable from context",
+      "No bounds checks or constraints on 'dataReqMode_u16' value",
+      "No information about how 'dataReqMode_u16' is initialized or modified"
     ],
     "addressed_path_classes": [
       "C1"
     ],
-    "unaddressed_path_classes": [
-      "C1"
-    ],
-    "rationale": "No verified facts found in path classes, array size is unknown, and local guard checks were not present. Without array size information and concrete evidence of out-of-bounds access, no credible case can be established.",
+    "unaddressed_path_classes": [],
+    "rationale": "The array 'dataLinSmIndState_aen' is declared as a flexible array with no explicit size, and no evidence exists in the provided data about its actual size or bounds constraints. Without knowing the array's size or how 'dataReqMode_u16' is constrained, it's impossible to confirm whether the index is out-of-bounds. The lack of array size information is critical to determining OOB feasibility.",
     "error": null
   },
   "fp": {
@@ -515,47 +868,44 @@ Input → FINAL (run 3) [FINAL_CLASSIFICATION] · adjudicating run 3
     "index_range": "unknown",
     "array_size": "unknown",
     "witness": "none",
-    "coverage": "partial",
-    "findings": [],
-    "missing_evidence": [
-      "array size determination for dataLinSmIndState_aen",
-      "index expression bounds validation for dataReqMode_u16",
-      "path class execution evidence for C1"
-    ],
-    "addressed_path_classes": [],
-    "unaddressed_path_classes": [
-      "C1"
-    ],
-    "rationale": "No verified facts exist to establish bounds for dataReqMode_u16 against dataLinSmIndState_aen. Array size is unknown, and no local guard or path execution evidence is available to confirm safety for the only identified path class C1. Coverage remains incomplete due to missing array size information and lack of execution traces.",
-    "error": null
-  },
-  "dropped_claims": [],
-  "notes": [
-    "validator checked quotes against merged facts and source"
-  ]
-}
+    "coverage": "full",
+    "findings": [
+      {
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82146,
+        "quote": "LinSM_ModeType dataLinSmIndState_aen[] =",
+        "path_class_id": "C1",
+        "note": "array declaration with unknown size"
+      },
+      {
+        "function": "BswM_Prv_GetLinSmIdicationInfo_en",
+        "line": 82154,
+        "quote": "dataLinSmIndState_aen[dataReqMode_u16]",
+        "path_class_id": "C1",
+        "note": "array access using 
+… [19 more chars]
 agent_thinking
-FINAL reasoning (run 3) [FINAL_CLASSIFICATION] · strict classification rules
+FINAL reasoning (run 3) [FINAL_CLASSIFICATION] · FP-precision policy (never miss TP)
 
 agent_output
 Output ← FINAL (run 3) [FINAL_CLASSIFICATION] · vote=uncertain
 
 {
   "label": "uncertain",
-  "rationale": "Both the TP and FP reports agree that the coverage is partial and that critical evidence, such as the array size and verified facts within path class C1, is missing. According to the hard rules, uncertainty must be declared when coverage is partial or evidence is missing.",
-  "reexplore_requested": true,
-  "reexplore_focus": "Determine the array size for dataLinSmIndState_aen and provide execution traces or bounds validation for the index expression dataReqMode_u16 within path class C1."
+  "rationale": "The report is a self-contradiction. The TP agent claims 'no_credible_case' (which is a claim of no bug), but the evidence provided is actually an admission of missing information (unknown array size, unknown index bounds, unknown initialization). The FP agent also admits 'Missing evidence prevents FP classification'. Since the array size and index constraints are unknown, it is impossible to prove a False Positive (FP) or a True Positive (TP). According to the policy, when evidence is thin or bounds are unknown, the result must be 'uncertain'.",
+  "reexplore_requested": false,
+  "reexplore_focus": null
 }
 agent_output
 Final verdict [FINAL_CLASSIFICATION] · label=uncertain
 
 {
   "label": "uncertain",
-  "rationale": "Both the TP and FP reports agree that the coverage is partial and that critical evidence, such as the array size and verified facts within path class C1, is missing. According to the hard rules, uncertainty must be declared when coverage is partial or evidence is missing.",
-  "tp_summary": "No verified facts found in path classes, array size is unknown, and local guard checks were not present. Without array size information and concrete evidence of out-of-bounds access, no credible case can be established.",
-  "fp_summary": "No verified facts exist to establish bounds for dataReqMode_u16 against dataLinSmIndState_aen. Array size is unknown, and no local guard or path execution evidence is available to confirm safety for the only identified path class C1. Coverage remains incomplete due to missing array size information and lack of execution traces.",
-  "reexplore_requested": true,
-  "reexplore_focus": "Determine the array size for dataLinSmIndState_aen and provide execution traces or bounds validation for the index expression dataReqMode_u16 within path class C1.",
+  "rationale": "The report is a self-contradiction. The TP agent claims 'no_credible_case' (which is a claim of no bug), but the evidence provided is actually an admission of missing information (unknown array size, unknown index bounds, unknown initialization). The FP agent also admits 'Missing evidence prevents FP classification'. Since the array size and index constraints are unknown, it is impossible to prove a False Positive (FP) or a True Positive (TP). According to the policy, when evidence is thin or bounds are unknown, the result must be 'uncertain'.",
+  "tp_summary": "The array 'dataLinSmIndState_aen' is declared as a flexible array with no explicit size, and no evidence exists in the provided data about its actual size or bounds constraints. Without knowing the array's size or how 'dataReqMode_u16' is constrained, it's impossible to confirm whether the index is out-of-bounds. The lack of array size information is critical to determining OOB feasibility.",
+  "fp_summary": "Array size is unknown (declared as flexible array), and index dataReqMode_u16 lacks bounds validation. No local guard found in alarm function. Missing evidence prevents FP classification.",
+  "reexplore_requested": false,
+  "reexplore_focus": null,
   "votes": [
     "uncertain",
     "uncertain",
@@ -564,529 +914,28 @@ Final verdict [FINAL_CLASSIFICATION] · label=uncertain
   "run_details": [
     {
       "label": "uncertain",
-      "rationale": "Both agents agree that the claim is 'no_credible_case' and that there is no witness. However, coverage is explicitly stated as 'partial' by both agents, and there is significant missing evidence regarding array sizes and path class execution (C1). According to the hard rules, uncertainty must be returned when coverage is partial or evidence is missing.",
-      "reexplore_requested": true,
-      "reexplore_focus": "Determine the array size for dataLinSmIndState_aen and validate the index expression bounds for dataReqMode_u16 within path class C1."
+      "rationale": "The report is fundamentally inconclusive. Both the TP and FP claims are identical in their findings: they both acknowledge that the array size for 'dataLinSmIndState_aen' is unknown and that there are no visible bounds checks for 'dataReqMode_u16'. Since the array size and index constraints are missing, it is impossible to prove either a True Positive (OOB) or a False Positive (Safe). Per the policy, when evidence is thin or missing (specifically array size and index bounds), the result must be 'uncertain'.",
+      "reexplore_requested": false,
+      "reexplore_focus": null
     },
     {
       "label": "uncertain",
-      "rationale": "Both agents agree that the claim is 'no_credible_case' and that there is no witness. However, coverage is explicitly reported as partial, with missing evidence regarding the array size and execution traces for path class C1. According to the hard rules, FP requires full coverage and all path classes addressed, which is not the case here. Since there is no validated witness and coverage is incomplete, the result must be uncertain.",
-      "reexplore_requested": true,
-      "reexplore_focus": "array size determination
-… [19 more chars]
-stage
-Bounded re-explore · one re-explore pass
-
-Determine the array size for dataLinSmIndState_aen and provide execution traces or bounds validation for the index expression dataReqMode_u16 within path class C1.
-agent_input
-Input → CALL_PATH_EXPLORE [CALL_PATH_EXPLORE] · receiving prep pack
-
-{
-  "order": "2,475",
-  "location": "ALL_bc_with_context.c:82154.91-106",
-  "enclosing_function": "BswM_Prv_GetLinSmIdicationInfo_en",
-  "alarm_line": 82154,
-  "index_expression": "dataReqMode_u16",
-  "array_name": "dataLinSmIndState_aen",
-  "array_size": null,
-  "local_guard": {
-    "found": false,
-    "function": null,
-    "line": null,
-    "quote": null,
-    "note": "no local bound found in alarm function"
-  },
-  "coverage_cap": "full",
-  "path_classes": [
-    {
-      "class_id": "C1",
-      "sequence": [
-        {
-          "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-          "call_site_line": 82467
-        }
-      ],
-      "member_path_ids": [
-        1
-      ],
-      "cluster_note": null
-    }
-  ],
-  "edges": [],
-  "reexplore_focus": "Determine the array size for dataLinSmIndState_aen and provide execution traces or bounds validation for the index expression dataReqMode_u16 within path class C1."
-}
-agent_thinking
-CALL_PATH_EXPLORE reasoning [CALL_PATH_EXPLORE] · calling model / planning next tool
-
-agent_output
-Output ← CALL_PATH_EXPLORE [CALL_PATH_EXPLORE] · produced 0 facts
-
-{
-  "agent": "CALL_PATH_EXPLORE",
-  "facts": [],
-  "notes": [],
-  "tool_trace": [],
-  "error": null
-}
-agent_input
-Input → VAR_VALUE_EXPLORE [VAR_VALUE_EXPLORE] · receiving prep pack
-
-{
-  "order": "2,475",
-  "location": "ALL_bc_with_context.c:82154.91-106",
-  "enclosing_function": "BswM_Prv_GetLinSmIdicationInfo_en",
-  "alarm_line": 82154,
-  "index_expression": "dataReqMode_u16",
-  "array_name": "dataLinSmIndState_aen",
-  "array_size": null,
-  "local_guard": {
-    "found": false,
-    "function": null,
-    "line": null,
-    "quote": null,
-    "note": "no local bound found in alarm function"
-  },
-  "coverage_cap": "full",
-  "path_classes": [
-    {
-      "class_id": "C1",
-      "sequence": [
-        {
-          "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-          "call_site_line": 82467
-        }
-      ],
-      "member_path_ids": [
-        1
-      ],
-      "cluster_note": null
-    }
-  ],
-  "edges": [],
-  "symbols": [
-    {
-      "symbol_name": "dataLinSmIndState_aen",
-      "role": "flagged_array",
-      "kind": "array",
-      "declaration_line": 82146,
-      "declaration_text": "LinSM_ModeType dataLinSmIndState_aen[] =",
-      "array_dims": "[]",
-      "resolved_sizes": [],
-      "size_known": false,
-      "index_expression": "dataReqMode_u16",
-      "function_sequence": [
-        "BswM_Prv_GetLinSmIdicationInfo_en"
-      ],
-      "write_lines": [
-        82146
-      ],
-      "guard_candidate_lines": []
-    },
-    {
-      "symbol_name": "dataReqMode_u16",
-      "role": "index",
-      "kind": "struct_member",
-      "declaration_line": 82258,
-      "declaration_text": "uint16 dataReqMode_u16;",
-      "array_dims": null,
-      "resolved_sizes": [],
-      "size_known": false,
-      "index_expression": null,
-      "function_sequence": [
-        "global",
-        "BswM_Prv_GetCanSMIndicationInfo_en",
-        "BswM_Prv_GetDcmComModeReqstInfo_en",
-        "BswM_Prv_GetEcuMWkpSrcInfo_en",
-        "BswM_Prv_GetGenReqInfo_en",
-        "BswM_Prv_GetLinSmIdicationInfo_en",
-        "BswM_Prv_IntrptQueueOut",
-        "BswM_Prv_ProcessDelayedReqst",
-        "BswM_Prv_IntrptQueueIn",
-        "BswM_Prv_ReqProcessOrQueue_b"
-      ],
-      "write_lines": [
-        82258,
-        82293,
-        82422,
-        82485,
-        82608
-      ],
-      "guard_candidate_lines": []
-    }
-  ],
-  "reexplore_focus": "Determine the array size for dataLinSmIndState_aen and provide execution traces or bounds validation for the index expression dataReqMode_u16 within path class C1."
-}
-agent_thinking
-VAR_VALUE_EXPLORE reasoning [VAR_VALUE_EXPLORE] · calling model / planning next tool
-
-agent_output
-Output ← VAR_VALUE_EXPLORE [VAR_VALUE_EXPLORE] · produced 0 facts
-
-{
-  "agent": "VAR_VALUE_EXPLORE",
-  "facts": [],
-  "notes": [],
-  "tool_trace": [],
-  "error": null
-}
-agent_input
-Input → TP_PROVE [TP_PROVE] · consuming merged pack
-
-{
-  "coverage": "partial",
-  "notes": [
-    "explorers produced no verified facts"
-  ],
-  "prep": {
-    "order": "2,475",
-    "index_expression": "dataReqMode_u16",
-    "array_name": "dataLinSmIndState_aen",
-    "array_size": null,
-    "path_classes": [
-      {
-        "class_id": "C1",
-        "sequence": [
-          {
-            "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-            "call_site_line": 82467
-          }
-        ],
-        "member_path_ids": [
-          1
-        ],
-        "representative_path_id": 1,
-        "cluster_note": null
-      }
-    ],
-    "local_guard": {
-      "found": false,
-      "function": null,
-      "line": null,
-      "quote": null,
-      "note": "no local bound found in alarm function"
-    }
-  },
-  "facts_by_class": {
-    "C1": []
-  },
-  "call_path_facts": [],
-  "var_value_facts": []
-}
-agent_thinking
-TP_PROVE reasoning [TP_PROVE] · proving from merged facts (no tools)
-
-agent_output
-Output ← TP_PROVE [TP_PROVE] · claim=no_credible_case witness=none
-
-{
-  "agent": "TP_PROVE",
-  "claim": "no_credible_case",
-  "index_range": "unknown",
-  "array_size": "unknown",
-  "witness": "none",
-  "coverage": "partial",
-  "findings": [],
-  "missing_evidence": [
-    "array_size",
-    "verified_facts_for_oob"
-  ],
-  "addressed_path_classes": [
-    "C1"
-  ],
-  "unaddressed_path_classes": [],
-  "rationale": "No verified facts about array bounds or index values were found. Array size is unknown, making it impossible to determine if the index is out-of-bounds. The path class C1 has no associated findings or evidence of OOB.",
-  "error": null
-}
-agent_input
-Input → FP_PROVE [FP_PROVE] · consuming merged pack
-
-{
-  "coverage": "partial",
-  "notes": [
-    "explorers produced no verified facts"
-  ],
-  "prep": {
-    "order": "2,475",
-    "index_expression": "dataReqMode_u16",
-    "array_name": "dataLinSmIndState_aen",
-    "array_size": null,
-    "path_classes": [
-      {
-        "class_id": "C1",
-        "sequence": [
-          {
-            "function": "BswM_Prv_GetLinSmIdicationInfo_en",
-            "call_site_line": 82467
-          }
-        ],
-        "member_path_ids": [
-          1
-        ],
-        "representative_path_id": 1,
-        "cluster_note": null
-      }
-    ],
-    "local_guard": {
-      "found": false,
-      "function": null,
-      "line": null,
-      "quote": null,
-      "note": "no local bound found in alarm function"
-    }
-  },
-  "facts_by_class": {
-    "C1": []
-  },
-  "call_path_facts": [],
-  "var_value_facts": []
-}
-agent_thinking
-FP_PROVE reasoning [FP_PROVE] · proving from merged facts (no tools)
-
-agent_output
-Output ← FP_PROVE [FP_PROVE] · claim=no_credible_case witness=none
-
-{
-  "agent": "FP_PROVE",
-  "claim": "no_credible_case",
-  "index_range": "unknown",
-  "array_size": "unknown",
-  "witness": "none",
-  "coverage": "partial",
-  "findings": [],
-  "missing_evidence": [
-    "array_size of dataLinSmIndState_aen",
-    "guards/clamps/masks on dataReqMode_u16",
-    "verified path class evidence for C1"
-  ],
-  "addressed_path_classes": [],
-  "unaddressed_path_classes": [
-    "C1"
-  ],
-  "rationale": "No array size is known for dataLinSmIndState_aen, and no bounds checks (guards/clamps/masks) are verified for index expression dataReqMode_u16. The single path class C1 has no associated facts or evidence to establish safety. Explorers produced no verified facts, and local guard analysis found no bounds in the alarm function.",
-  "error": null
-}
-agent_input
-Input → FINAL (run 1) [FINAL_CLASSIFICATION] · adjudicating run 1
-
-{
-  "tp": {
-    "agent": "TP_PROVE",
-    "claim": "no_credible_case",
-    "index_range": "unknown",
-    "array_size": "unknown",
-    "witness": "none",
-    "coverage": "partial",
-    "findings": [],
-    "missing_evidence": [
-      "array_size",
-      "verified_facts_for_oob"
-    ],
-    "addressed_path_classes": [
-      "C1"
-    ],
-    "unaddressed_path_classes": [],
-    "rationale": "No verified facts about array bounds or index values were found. Array size is unknown, making it impossible to determine if the index is out-of-bounds. The path class C1 has no associated findings or evidence of OOB.",
-    "error": null
-  },
-  "fp": {
-    "agent": "FP_PROVE",
-    "claim": "no_credible_case",
-    "index_range": "unknown",
-    "array_size": "unknown",
-    "witness": "none",
-    "coverage": "partial",
-    "findings": [],
-    "missing_evidence": [
-      "array_size of dataLinSmIndState_aen",
-      "guards/clamps/masks on dataReqMode_u16",
-      "verified path class evidence for C1"
-    ],
-    "addressed_path_classes": [],
-    "unaddressed_path_classes": [
-      "C1"
-    ],
-    "rationale": "No array size is known for dataLinSmIndState_aen, and no bounds checks (guards/clamps/masks) are verified for index expression dataReqMode_u16. The single path class C1 has no associated facts or evidence to establish safety. Explorers produced no verified facts, and local guard analysis found no bounds in the alarm function.",
-    "error": null
-  },
-  "dropped_claims": [],
-  "notes": [
-    "validator checked quotes against merged facts and source"
-  ]
-}
-agent_thinking
-FINAL reasoning (run 1) [FINAL_CLASSIFICATION] · strict classification rules
-
-agent_output
-Output ← FINAL (run 1) [FINAL_CLASSIFICATION] · vote=uncertain
-
-{
-  "label": "uncertain",
-  "rationale": "Both reports agree that the claim is 'no_credible_case' and that there is no witness. However, coverage is explicitly stated as 'partial' in both reports, and there is a conflict regarding whether path class C1 has been addressed. Since coverage is not full and essential evidence (array size and bounds checks) is missing, the criteria for FP are not met, and the criteria for TP (witness found) are not met.",
-  "reexplore_requested": true,
-  "reexplore_focus": "Verification of the array size for 'dataLinSmIndState_aen' and analysis of bounds checks/guards for the index 'dataReqMode_u16' to determine if C1 is safely bounded."
-}
-agent_input
-Input → FINAL (run 2) [FINAL_CLASSIFICATION] · adjudicating run 2
-
-{
-  "tp": {
-    "agent": "TP_PROVE",
-    "claim": "no_credible_case",
-    "index_range": "unknown",
-    "array_size": "unknown",
-    "witness": "none",
-    "coverage": "partial",
-    "findings": [],
-    "missing_evidence": [
-      "array_size",
-      "verified_facts_for_oob"
-    ],
-    "addressed_path_classes": [
-      "C1"
-    ],
-    "unaddressed_path_classes": [],
-    "rationale": "No verified facts about array bounds or index values were found. Array size is unknown, making it impossible to determine if the index is out-of-bounds. The path class C1 has no associated findings or evidence of OOB.",
-    "error": null
-  },
-  "fp": {
-    "agent": "FP_PROVE",
-    "claim": "no_credible_case",
-    "index_range": "unknown",
-    "array_size": "unknown",
-    "witness": "none",
-    "coverage": "partial",
-    "findings": [],
-    "missing_evidence": [
-      "array_size of dataLinSmIndState_aen",
-      "guards/clamps/masks on dataReqMode_u16",
-      "verified path class evidence for C1"
-    ],
-    "addressed_path_classes": [],
-    "unaddressed_path_classes": [
-      "C1"
-    ],
-    "rationale": "No array size is known for dataLinSmIndState_aen, and no bounds checks (guards/clamps/masks) are verified for index expression dataReqMode_u16. The single path class C1 has no associated facts or evidence to establish safety. Explorers produced no verified facts, and local guard analysis found no bounds in the alarm function.",
-    "error": null
-  },
-  "dropped_claims": [],
-  "notes": [
-    "validator checked quotes against merged facts and source"
-  ]
-}
-agent_thinking
-FINAL reasoning (run 2) [FINAL_CLASSIFICATION] · strict classification rules
-
-agent_output
-Output ← FINAL (run 2) [FINAL_CLASSIFICATION] · vote=uncertain
-
-{
-  "label": "uncertain",
-  "rationale": "Both agents agree that there is no witness and that coverage is partial. The TP agent claims C1 is addressed while the FP agent claims it is unaddressed, but both agree that no verified facts or array sizes exist. Since coverage is not full and there is missing evidence (array size and bounds checks), the classification must be uncertain according to the hard rules.",
-  "reexplore_requested": true,
-  "reexplore_focus": "Verification of the array size for 'dataLinSmIndState_aen' and checking for any existing guards, clamps, or masks on the index 'dataReqMode_u16' to determine if path class C1 can be fully addressed."
-}
-agent_input
-Input → FINAL (run 3) [FINAL_CLASSIFICATION] · adjudicating run 3
-
-{
-  "tp": {
-    "agent": "TP_PROVE",
-    "claim": "no_credible_case",
-    "index_range": "unknown",
-    "array_size": "unknown",
-    "witness": "none",
-    "coverage": "partial",
-    "findings": [],
-    "missing_evidence": [
-      "array_size",
-      "verified_facts_for_oob"
-    ],
-    "addressed_path_classes": [
-      "C1"
-    ],
-    "unaddressed_path_classes": [],
-    "rationale": "No verified facts about array bounds or index values were found. Array size is unknown, making it impossible to determine if the index is out-of-bounds. The path class C1 has no associated findings or evidence of OOB.",
-    "error": null
-  },
-  "fp": {
-    "agent": "FP_PROVE",
-    "claim": "no_credible_case",
-    "index_range": "unknown",
-    "array_size": "unknown",
-    "witness": "none",
-    "coverage": "partial",
-    "findings": [],
-    "missing_evidence": [
-      "array_size of dataLinSmIndState_aen",
-      "guards/clamps/masks on dataReqMode_u16",
-      "verified path class evidence for C1"
-    ],
-    "addressed_path_classes": [],
-    "unaddressed_path_classes": [
-      "C1"
-    ],
-    "rationale": "No array size is known for dataLinSmIndState_aen, and no bounds checks (guards/clamps/masks) are verified for index expression dataReqMode_u16. The single path class C1 has no associated facts or evidence to establish safety. Explorers produced no verified facts, and local guard analysis found no bounds in the alarm function.",
-    "error": null
-  },
-  "dropped_claims": [],
-  "notes": [
-    "validator checked quotes against merged facts and source"
-  ]
-}
-agent_thinking
-FINAL reasoning (run 3) [FINAL_CLASSIFICATION] · strict classification rules
-
-agent_output
-Output ← FINAL (run 3) [FINAL_CLASSIFICATION] · vote=uncertain
-
-{
-  "label": "uncertain",
-  "rationale": "Both agents agree that there is no witness and that the array size is unknown. However, there is a conflict regarding the coverage of path class C1 (TP claims it is addressed, FP claims it is unaddressed). Since the array size and bounds checks (guards/clamps) are missing, neither a TP nor an FP can be definitively established.",
-  "reexplore_requested": true,
-  "reexplore_focus": "Verification of array size for dataLinSmIndState_aen and presence of bounds checks/guards for dataReqMode_u16 to resolve coverage of path class C1."
-}
-agent_output
-Final verdict [FINAL_CLASSIFICATION] · label=uncertain
-
-{
-  "label": "uncertain",
-  "rationale": "Both agents agree that there is no witness and that the array size is unknown. However, there is a conflict regarding the coverage of path class C1 (TP claims it is addressed, FP claims it is unaddressed). Since the array size and bounds checks (guards/clamps) are missing, neither a TP nor an FP can be definitively established.",
-  "tp_summary": "No verified facts about array bounds or index values were found. Array size is unknown, making it impossible to determine if the index is out-of-bounds. The path class C1 has no associated findings or evidence of OOB.",
-  "fp_summary": "No array size is known for dataLinSmIndState_aen, and no bounds checks (guards/clamps/masks) are verified for index expression dataReqMode_u16. The single path class C1 has no associated facts or evidence to establish safety. Explorers produced no verified facts, and local guard analysis found no bounds in the alarm function.",
-  "reexplore_requested": true,
-  "reexplore_focus": "Verification of array size for dataLinSmIndState_aen and presence of bounds checks/guards for dataReqMode_u16 to resolve coverage of path class C1.",
-  "votes": [
-    "uncertain",
-    "uncertain",
-    "uncertain"
-  ],
-  "run_details": [
-    {
-      "label": "uncertain",
-      "rationale": "Both reports agree that the claim is 'no_credible_case' and that there is no witness. However, coverage is explicitly stated as 'partial' in both reports, and there is a conflict regarding whether path class C1 has been addressed. Since coverage is not full and essential evidence (array size and bounds checks) is missing, the criteria for FP are not met, and the criteria for TP (witness found) are not met.",
-      "reexplore_requested": true,
-      "reexplore_focus": "Verification of the array size for 'dataLinSmIndState_aen' and analysis of bounds checks/guards for the index 'dataReqMode_u16' to determine if C1 is safely bounded."
-    },
-    {
-      "label": "uncertain",
-      "rationale": "Both agents agree that there is no witness and that coverage is partial. The TP agent claims C1 is addressed while the FP agent claims it is unaddressed, but both agree that no verified facts or array sizes exist. Since coverage is not full and there is missing evidence (array size and bounds checks), the classification must be uncertain according to the hard rules.",
-      "reexplore_requested
-… [19 more chars]
+      "rationale": "The report is fundamentally inconclusive. Both the TP and FP claims are identical in their findings: they both acknowledge that the array size for 'dataLinSmIndState_aen' is unknown and that there are no visible bounds checks for 'dataReqMode_u16'. Since the array size and index constraints are missing, it is impossible to prove either a True
+… [20 more chars]
 done
 Verdict: uncertain · uncertain
 
 {
   "pver_id": "4105",
   "order": "2,475",
-  "run_dir": "C:\\Users\\URE2COB\\Downloads\\AOOB-9-9 (2)\\AOOB-9-9\\AOOB-SANJEEV\\PVERs\\4105\\agent_runs\\2_475\\20260919T141117Z",
+  "run_dir": "C:\\Users\\URE2COB\\Downloads\\AOOB-9-9 (2)\\AOOB-9-9\\AOOB-SANJEEV\\PVERs\\4105\\agent_runs\\2_475\\20260919T145917Z",
   "verdict": {
     "label": "uncertain",
-    "rationale": "Both agents agree that there is no witness and that the array size is unknown. However, there is a conflict regarding the coverage of path class C1 (TP claims it is addressed, FP claims it is unaddressed). Since the array size and bounds checks (guards/clamps) are missing, neither a TP nor an FP can be definitively established.",
-    "tp_summary": "No verified facts about array bounds or index values were found. Array size is unknown, making it impossible to determine if the index is out-of-bounds. The path class C1 has no associated findings or evidence of OOB.",
-    "fp_summary": "No array size is known for dataLinSmIndState_aen, and no bounds checks (guards/clamps/masks) are verified for index expression dataReqMode_u16. The single path class C1 has no associated facts or evidence to establish safety. Explorers produced no verified facts, and local guard analysis found no bounds in the alarm function.",
+    "rationale": "The report is a self-contradiction. The TP agent claims 'no_credible_case' (which is a claim of no bug), but the evidence provided is actually an admission of missing information (unknown array size, unknown index bounds, unknown initialization). The FP agent also admits 'Missing evidence prevents FP classification'. Since the array size and index constraints are unknown, it is impossible to prove a False Positive (FP) or a True Positive (TP). According to the policy, when evidence is thin or bounds are unknown, the result must be 'uncertain'.",
+    "tp_summary": "The array 'dataLinSmIndState_aen' is declared as a flexible array with no explicit size, and no evidence exists in the provided data about its actual size or bounds constraints. Without knowing the array's size or how 'dataReqMode_u16' is constrained, it's impossible to confirm whether the index is out-of-bounds. The lack of array size information is critical to determining OOB feasibility.",
+    "fp_summary": "Array size is unknown (declared as flexible array), and index dataReqMode_u16 lacks bounds validation. No local guard found in alarm function. Missing evidence prevents FP classification.",
     "reexplore_requested": false,
-    "reexplore_focus": "Verification of array size for dataLinSmIndState_aen and presence of bounds checks/guards for dataReqMode_u16 to resolve coverage of path class C1.",
+    "reexplore_focus": null,
     "votes": [
       "uncertain",
       "uncertain",
@@ -1095,18 +944,18 @@ Verdict: uncertain · uncertain
     "run_details": [
       {
         "label": "uncertain",
-        "rationale": "Both reports agree that the claim is 'no_credible_case' and that there is no witness. However, coverage is explicitly stated as 'partial' in both reports, and there is a conflict regarding whether path class C1 has been addressed. Since coverage is not full and essential evidence (array size and bounds checks) is missing, the criteria for FP are not met, and the criteria for TP (witness found) are not met.",
-        "reexplore_requested": true,
-        "reexplore_focus": "Verification of the array size for 'dataLinSmIndState_aen' and analysis of bounds checks/guards for the index 'dataReqMode_u16' to determine if C1 is safely bounded."
+        "rationale": "The report is fundamentally inconclusive. Both the TP and FP claims are identical in their findings: they both acknowledge that the array size for 'dataLinSmIndState_aen' is unknown and that there are no visible bounds checks for 'dataReqMode_u16'. Since the array size and index constraints are missing, it is impossible to prove either a True Positive (OOB) or a False Positive (Safe). Per the policy, when evidence is thin or missing (specifically array size and index bounds), the result must be 'uncertain'.",
+        "reexplore_requested": false,
+        "reexplore_focus": null
       },
       {
         "label": "uncertain",
-        "rationale": "Both agents agree that there is no witness and that coverage is partial. The TP agent claims C1 is addressed while the FP agent claims it is unaddressed, but both a
+        "rationale": "The report is fundamentally inconclusive. Both the TP and FP claims are identical in their findings: they both a
 … [20 more chars]
 assistant
 Verdict: uncertain
-Rationale: Both agents agree that there is no witness and that the array size is unknown. However, there is a conflict regarding the coverage of path class C1 (TP claims it is addressed, FP claims it is unaddressed). Since the array size and bounds checks (guards/clamps) are missing, neither a TP nor an FP can be definitively established.
+Rationale: The report is a self-contradiction. The TP agent claims 'no_credible_case' (which is a claim of no bug), but the evidence provided is actually an admission of missing information (unknown array size, unknown index bounds, unknown initialization). The FP agent also admits 'Missing evidence prevents FP classification'. Since the array size and index constraints are unknown, it is impossible to prove a False Positive (FP) or a True Positive (TP). According to the policy, when evidence is thin or bounds are unknown, the result must be 'uncertain'.
 Votes: uncertain, uncertain, uncertain
 TP: claim=no_credible_case witness=none
-FP: claim=no_credible_case coverage=partial
-Artifacts: C:\Users\URE2COB\Downloads\AOOB-9-9 (2)\AOOB-9-9\AOOB-SANJEEV\PVERs\4105\agent_runs\2_475\20260919T141117Z
+FP: claim=no_credible_case coverage=full
+Artifacts: C:\Users\URE2COB\Downloads\AOOB-9-9 (2)\AOOB-9-9\AOOB-SANJEEV\PVERs\4105\agent_runs\2_475\20260919T145917Z
