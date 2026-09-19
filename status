@@ -3918,3 +3918,71 @@ Votes: uncertain, uncertain, uncertain
 TP: claim=no_credible_case witness=none
 FP: claim=no_credible_case coverage=partial
 Artifacts: C:\Users\URE2COB\Downloads\AOOB-9-9 (2)\AOOB-9-9\AOOB-SANJEEV\PVERs\4105\agent_runs\853\20260919T154637Z
+
+
+
+# =============================================================================
+# Multi-agent backends — one choice per agent: local | network | bosch
+# =============================================================================
+# CALL_PATH_EXPLORE_AGENT  — walks every unique Astree control-flow path
+# VAR_VALUE_EXPLORE_AGENT   — gathers declaration / write / value-shaping facts
+#                            (no read-only sites; reads do not change the value)
+# TP_PROVE_AGENT           — argues true-positive with confidence + evidence
+# FP_PROVE_AGENT           — argues false-positive with confidence + evidence
+# FINAL_CLASSIFICATION_AGENT — adjudicates TP vs FP reports into the verdict
+#
+# Optional *_MODEL overrides the default model for that agent's backend.
+# Leave empty to use the backend default (OLLAMA_*_MODEL or BOSCH_MODEL).
+
+CALL_PATH_EXPLORE_AGENT=local
+CALL_PATH_EXPLORE_MODEL=qwen2.5-coder:7b            
+
+VAR_VALUE_EXPLORE_AGENT=local
+VAR_VALUE_EXPLORE_MODEL=qwen2.5-coder:7b
+
+TP_PROVE_AGENT=network
+TP_PROVE_MODEL=qwen3:14b
+
+FP_PROVE_AGENT=network 
+FP_PROVE_MODEL=qwen3:14b
+
+FINAL_CLASSIFICATION_AGENT=network
+FINAL_CLASSIFICATION_MODEL=gemma4:26b
+
+# Shared fallback when an Ollama-backed agent fails at runtime
+AOOB_OLLAMA_RUNTIME_FALLBACK=1
+AOOB_MAX_VISIBLE_TOOLS=10
+
+# Pipeline knobs (LangGraph orchestrator)
+AOOB_PATH_CLASS_CAP=15
+AOOB_FINAL_RUNS=3
+AOOB_MAX_TOOL_ROUNDS=12
+AOOB_MAX_REEXPLORE=1
+# type_legal = any feasible C witness; operating_range = realistic use only
+AOOB_TP_POLICY=type_legal
+
+# =============================================================================
+# Bosch AOAI Model Farm  (backend = bosch)
+# =============================================================================
+MODEL_FARM_API_KEY=915f68171d9d4b21af7417217e2952b1
+BOSCH_BASE_URL=https://aoai-farm.bosch-temp.com/api/openai/deployments/gpt-5-nano-2025-08-07
+# BOSCH_MODEL=GPT-5-nano
+BOSCH_API_VERSION=2024-05-01-preview
+BOSCH_TIMEOUT=180
+# BOSCH_SUBSCRIPTION_ID=        # optional — Token Tracking Dashboard only, not auth
+
+# =============================================================================
+# Local Ollama  (backend = local)
+# =============================================================================
+# OLLAMA_LOCAL_MODEL=qwen3:14b
+# OLLAMA_LOCAL_MODEL=parable/qwen3-fable:latest
+OLLAMA_LOCAL_BASE_URL=http://127.0.0.1:11434
+OLLAMA_NUM_CTX=4096
+OLLAMA_TIMEOUT=180
+
+# =============================================================================
+# Network Ollama  (backend = network)
+# =============================================================================
+OLLAMA_NETWORK_BASE_URL=http://cob-c-018qh.cob.apac.bosch.com:8503
+#OLLAMA_NETWORK_MODEL=qwen3:14b
+
